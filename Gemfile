@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'rake'
 gem 'pg'
 gem 'paperclip'
+gem 'aws-sdk'
 gem 'rspec-rails'
 
 group :assets do
