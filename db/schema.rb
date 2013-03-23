@@ -25,4 +25,10 @@ ActiveRecord::Schema.define(:version => 20130323190633) do
     t.datetime "image_updated_at"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
 end
