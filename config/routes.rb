@@ -1,4 +1,7 @@
 StoreEngine::Application.routes.draw do
+  resources :categories
+
+
   get "home/show"
 
   root :to => 'home#show'
