@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323190633) do
+ActiveRecord::Schema.define(:version => 20130323195536) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -30,5 +30,17 @@ ActiveRecord::Schema.define(:version => 20130323190633) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "salt"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "remember_me_token"
+    t.datetime "remember_me_token_expires_at"
+  end
+
+  add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
 
 end
