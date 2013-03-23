@@ -1,14 +1,12 @@
 StoreEngine::Application.routes.draw do
   resources :products
-
-
+  resources :users
+  resources :sessions
+  
+  get "logout" => "sessions#destroy", :as => "logout"
+  get "login" => "sessions#new", :as => "login"
+  get "signup" => "users#new", :as => "signup"
   get "home/show"
 
   root :to => 'home#show'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

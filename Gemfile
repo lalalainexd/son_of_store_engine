@@ -13,6 +13,7 @@ group :assets do
   gem "twitter-bootstrap-rails"
   gem 'bootstrap_helper'
   gem 'uglifier', '>= 1.0.3'
+  gem 'sorcery'
 end
 
 group :development, :test do
