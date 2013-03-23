@@ -1,4 +1,5 @@
-<%= form_for @product, :html => { :class => 'form-horizontal' } do |f| %>
+
+<%= form_for @product, :html => {class: 'form-horizontal', multipart: true } do |f| %>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
@@ -17,10 +18,19 @@
       <%= f.number_field :price, :class => 'number_field' %>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label :image, "Attach an Image", :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :image, :class => 'text_area' %>
+    </div>
+  </div>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 products_path, :class => 'btn' %>
   </div>
+
+  
+
 <% end %>
