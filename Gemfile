@@ -18,6 +18,7 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem 'unicorn'
+  gem 'simplecov'
   gem 'fabrication'
   gem 'rspec-rails'
   gem 'capybara'
