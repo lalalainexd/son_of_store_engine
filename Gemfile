@@ -5,6 +5,7 @@ gem 'jquery-rails'
 gem 'rake'
 gem 'pg'
 gem 'paperclip'
+gem 'rspec-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -21,7 +22,6 @@ group :development, :test do
   gem 'unicorn'
   gem 'simplecov'
   gem 'fabrication'
-  gem 'rspec-rails'
   gem 'capybara'
   gem 'launchy'
   gem 'guard-rspec'
