@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/support/example_data/projects.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/support/example_data/projects.rb": [
         1,
         1,
         1,
@@ -23,7 +23,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/controllers/home_controller_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/controllers/home_controller_spec.rb": [
         1,
         null,
         1,
@@ -37,7 +37,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/controllers/products_controller_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/controllers/products_controller_spec.rb": [
         1,
         null,
         null,
@@ -203,7 +203,42 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/helpers/home_helper_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/controllers/sessions_controller_spec.rb": [
+        1,
+        null,
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/controllers/users_controller_spec.rb": [
+        1,
+        null,
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/helpers/home_helper_spec.rb": [
         1,
         null,
         null,
@@ -220,7 +255,7 @@
         1,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/helpers/products_helper_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/helpers/products_helper_spec.rb": [
         1,
         null,
         null,
@@ -237,14 +272,123 @@
         1,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/models/product_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/helpers/sessions_helper_spec.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/helpers/users_helper_spec.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/models/product_spec.rb": [
         1,
         null,
         1,
         1,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/requests/products_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/models/user_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        4,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        6,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        1,
+        2,
+        null,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/requests/products_spec.rb": [
         1,
         null,
         1,
@@ -257,7 +401,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/routing/products_routing_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/routing/products_routing_spec.rb": [
         1,
         null,
         1,
@@ -294,14 +438,14 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/views/home/show.html.erb_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/views/home/show.html.erb_spec.rb": [
         1,
         null,
         1,
         1,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/views/products/edit.html.erb_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/views/products/edit.html.erb_spec.rb": [
         1,
         null,
         1,
@@ -325,7 +469,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/views/products/index.html.erb_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/views/products/index.html.erb_spec.rb": [
         1,
         null,
         1,
@@ -353,7 +497,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/views/products/new.html.erb_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/views/products/new.html.erb_spec.rb": [
         1,
         null,
         1,
@@ -377,7 +521,7 @@
         null,
         null
       ],
-      "/Users/johnmaddux/Dropbox/Code/store_engine/spec/views/products/show.html.erb_spec.rb": [
+      "/Users/gschorkopf/projects/store_engine/spec/views/products/show.html.erb_spec.rb": [
         1,
         null,
         1,
@@ -397,8 +541,22 @@
         1,
         null,
         null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/views/sessions/new.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/gschorkopf/projects/store_engine/spec/views/users/new.html.erb_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        null
       ]
     },
-    "timestamp": 1364062844
+    "timestamp": 1364081512
   }
 }
