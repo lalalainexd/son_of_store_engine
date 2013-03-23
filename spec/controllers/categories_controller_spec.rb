@@ -139,7 +139,7 @@ describe CategoriesController do
     it "redirects to the categories list" do
       category = Category.create! valid_attributes
       delete :destroy, {:id => category.to_param}, valid_session
-      response.should redirect_to(categories_url)
+      response.should redirect_to(categories_path)
     end
   end
 
