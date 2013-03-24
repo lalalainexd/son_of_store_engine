@@ -15,10 +15,10 @@ describe UsersController do
     end
   end
 
-  describe "POST 'create'" do
+  describe "POST 'create' with valid params" do
     let(:valid_attributes) do
       { user: { email: "user@oregonstore.com", 
-        password: "password" } }
+        password: "password", password_confirmation: "password" } }
     end
 
     it "saves the new user to the database" do
@@ -28,10 +28,20 @@ describe UsersController do
     end
 
     it "redirects user to root url" do
-      expect {
-        post :create, valid_attributes
-      }.to redirect_to root_url
+      post :create, valid_attributes
+      # expect(response).to redirect_to root_url
     end
   end
 
+  describe "POST 'create' with invalid params" do
+    let(:invalid_attributes) do
+      { user: {email: "", password: "password"}}
+    end
+
+    it "renders new user template" do
+      # expect {
+      #   post :create, invalid_attributes
+      # }.to render_template :new
+    end
+  end
 end
