@@ -41,6 +41,7 @@ GEM
       thor (~> 0.14)
       will_paginate (>= 3.0.3)
     builder (3.0.4)
+    cancan (1.6.9)
     cane (2.5.2)
       parallel
     capybara (2.0.2)
@@ -247,6 +248,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   bootstrap_helper
+  cancan
   cane
   capybara
   coffee-rails (~> 3.2.1)
