@@ -7,6 +7,7 @@ gem 'pg'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'rspec-rails'
+gem 'sorcery'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -16,7 +17,6 @@ group :assets do
   gem "twitter-bootstrap-rails"
   gem 'bootstrap_helper'
   gem 'uglifier', '>= 1.0.3'
-  gem 'sorcery'
 end
 
 group :development, :test do
