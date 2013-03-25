@@ -19,6 +19,15 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :categories, :class => 'control-label' %>
+    <div class="controls">
+      <% @categories.each do |category| %>
+        <input type="checkbox" name="categories" value=<%= category.name %>> 
+        <%= category.name %><br/>
+      <% end %>
+    </div>
+  </div>
+  <div class="control-group">
     <%= f.label :image, "Attach an Image", :class => 'control-label' %>
     <div class="controls">
       <%= f.file_field :image, :class => 'text_area' %>

@@ -5,5 +5,7 @@ class Product < ActiveRecord::Base
     medium: '200x200>',
     large: '300x300>'
   }
+  has_many :product_categories
+  has_many :categories, :through => :product_categories
 
 end
