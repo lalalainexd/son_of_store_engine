@@ -50,6 +50,7 @@ describe LineItemsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested line_item" do
+        pending
         line_item = LineItem.create! valid_attributes
         # Assuming there are no other line_items in the database, this
         # specifies that the LineItem created on the previous line
