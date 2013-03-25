@@ -3,12 +3,9 @@ class Ability
   
   def initialize(user)
     if user
-      # logged in user
-      if user.role? #create this method in user model
-        # admin user
-      end
+      can :manage, :all
     else
-      # non-logged in user
+      can :read, :all
     end
   end
 end
