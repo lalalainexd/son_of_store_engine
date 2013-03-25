@@ -6,6 +6,7 @@ gem 'rake'
 gem 'pg'
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'rspec-rails'
 gem 'sorcery'
 
 group :assets do
