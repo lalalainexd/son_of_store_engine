@@ -21,10 +21,14 @@
   <div class="control-group">
     <%= f.label :categories, :class => 'control-label' %>
     <div class="controls">
-      <% @categories.each do |category| %>
-        <input type="checkbox" name="categories" value=<%= category.name %>> 
-        <%= category.name %><br/>
+
+      <% for category in Category.find(:all) %>
+      <div>
+        <%= check_box_tag "product[category_ids][]", category.id, @product.categories.include?(category) %>
+        <%= category.name %>
+      </div>
       <% end %>
+
     </div>
   </div>
   <div class="control-group">

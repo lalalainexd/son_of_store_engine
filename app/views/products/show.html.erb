@@ -12,10 +12,14 @@
   <dd><%= @product.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:price) %>:</strong></dt>
   <dd><%= @product.price %></dd>
+<<<<<<< HEAD
   <dt><strong>Categories:</strong>
     <% @product.categories.each do |category| %>
     <dd><%= category.name %></dd>
     <% end %>
+=======
+  <%= button_to 'Add to Cart', line_items_path(:product_id => @product) %>
+>>>>>>> d0fed4b66d72883b68e28d59d21ba6bfdd27ee64
 </dl>
 
 <div class="form-actions">
