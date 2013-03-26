@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(:version => 20130325202154) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "salt"
-    t.string   "role"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.string   "remember_me_token"
