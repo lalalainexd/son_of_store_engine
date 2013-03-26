@@ -68,7 +68,7 @@ describe ProductsController do
   end
 
   describe "POST create" do
-    describe "with valid params" do
+    describe "with valid params and admin access" do
       it "creates a new Product" do
         expect {
           post :create, {:product => valid_attributes}, valid_session
