@@ -10,10 +10,6 @@ class User < ActiveRecord::Base
 
   ROLES = %w[superuser admin user]
 
-  # def role_symbols
-  #   [role.to_sym]
-  # end
-
   def role?(role)
     self.role == role.to_s
   end
