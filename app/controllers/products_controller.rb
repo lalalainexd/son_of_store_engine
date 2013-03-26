@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.all
-    # authorize! :manage, @product
+    authorize! :manage, @product
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
   # GET /products/new.json
   def new
     @product = Product.new
-    # authorize! :create, @product
+    authorize! :create, @product
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @product = Product.find(params[:id])
-    # authorize! :update, @product
+    authorize! :update, @product
 
     @categories = Category.all
   end
@@ -47,6 +47,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     # authorize! :create, @product
+    # Find out way to test authorization
 
     respond_to do |format|
       if @product.save
@@ -63,7 +64,7 @@ class ProductsController < ApplicationController
   # PUT /products/1.json
   def update
     @product = Product.find(params[:id])
-    # authorize! :update, @product
+    authorize! :update, @product
 
     params[:product][:category_ids] ||= []
     @product = Product.find(params[:id])

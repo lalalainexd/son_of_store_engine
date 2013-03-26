@@ -2,10 +2,16 @@ require 'spec_helper'
 
 describe "Products" do
   describe "GET /products" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+    it "returns 200 message when logged in as admin" do
+      User.create(email:"email", password:"pw", role: "admin")
+      post '/sessions', {email:"email", password:"pw"}
       get products_path
       response.status.should be(200)
+   end
+
+    it "returns 302 access denied when not logged in" do
+      get products_path
+      response.status.should be(302)
     end
   end
 end

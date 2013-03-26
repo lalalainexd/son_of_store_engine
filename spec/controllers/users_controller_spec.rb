@@ -29,7 +29,7 @@ describe UsersController do
 
     it "redirects user to root url" do
       post :create, valid_attributes
-      # expect(response).to redirect_to root_url
+      # expect(response).to redirect_back_or_to root_url
     end
   end
 
