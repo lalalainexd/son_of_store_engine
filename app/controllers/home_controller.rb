@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def show
-    @categories = Category.all
+    @categories = Category.all.sort
   end
 end

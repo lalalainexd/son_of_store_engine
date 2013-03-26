@@ -3,6 +3,11 @@
   <div class="span3">
     <div class="cat_col">
       <h2>Categories:</h2>
+      <ul>
+      <% @categories.each do |category| %>
+        <li><%= link_to category.name, category_path(category.id) %> (<%= category.products.count %>)</li>
+      <% end %>
+      </ul>
     </div>
   </div>
 
