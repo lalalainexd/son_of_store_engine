@@ -47,7 +47,7 @@ Product.create( name: "Buffalo Rifle", price: 1000,
 
 #TOOLS
 Product.create( name: "Stone Hunting Knife", price: 98,
-  description: "Good fer fur.", category_ids: ["4"])
+  description: "Good fer fur.", category_ids: ["3", "4"])
 Product.create( name: "Snake Charm", price: 25,
   description: "Never git bit by a slippery snake 'gin!", category_ids: ["4"])
 Product.create( name: "Compass", price: 62,
@@ -63,7 +63,7 @@ Product.create( name: "Miracle Cure", price: 3000,
 Product.create( name: "Antivenom", price: 15,
   description: "Heals yer snakebite in a jiff.", category_ids: ["5"])
 Product.create( name: "Lemon", price: 15,
-  description: "Cures scurvy and tastes great too!", category_ids: ["5"])
+  description: "Cures scurvy and tastes great too!", category_ids: ["1", "5"])
 Product.create( name: "Medicine bag", price: 1000,
   description: "All yer fixin's in one handy sack.", category_ids: ["5"])
 Product.create( name: "Cod Liver Oil", price: 10,
