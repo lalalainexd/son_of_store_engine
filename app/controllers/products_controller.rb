@@ -57,8 +57,8 @@ class ProductsController < ApplicationController
   # PUT /products/1
   # PUT /products/1.json
   def update
-    @product = Product.find(params[:id])
     params[:product][:category_ids] ||= []
+    @product = Product.find(params[:id])
     
     respond_to do |format|
       if @product.update_attributes(params[:product])

@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  attr_accessible :description, :name, :price, :image
+  attr_accessible :description, :name, :price, :image, :category_ids
 
   has_many :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
