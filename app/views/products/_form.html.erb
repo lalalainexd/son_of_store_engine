@@ -19,6 +19,19 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :categories, :class => 'control-label' %>
+    <div class="controls">
+
+      <% for category in Category.find(:all) %>
+      <div>
+        <%= check_box_tag "product[category_id][]", category.id, @product.categories.include?(category) %>
+        <%= category.name %>
+      </div>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="control-group">
     <%= f.label :image, "Attach an Image", :class => 'control-label' %>
     <div class="controls">
       <%= f.file_field :image, :class => 'text_area' %>

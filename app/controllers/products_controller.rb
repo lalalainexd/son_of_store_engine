@@ -38,6 +38,8 @@ class ProductsController < ApplicationController
   def edit
     @product = Product.find(params[:id])
     authorize! :update, @product
+
+    @categories = Category.all
   end
 
   # POST /products
@@ -63,6 +65,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     authorize! :update, @product
 
+    params[:product][:category_ids] ||= []
+    
     respond_to do |format|
       if @product.update_attributes(params[:product])
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
