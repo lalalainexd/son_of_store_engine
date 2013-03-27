@@ -32,4 +32,6 @@ group :development, :test do
   gem 'rb-fsevent', '~> 0.9'
   gem 'cane'
   gem 'reek'
+  gem 'database_cleaner'
+  gem 'selenium-webdriver', '2.31.0'
 end
