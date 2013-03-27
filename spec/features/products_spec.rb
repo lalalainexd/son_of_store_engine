@@ -11,11 +11,5 @@ describe "Products" do
       visit products_path
       page.should have_content "Oregon Sale"
     end
-
-    it "clicking on name redirects to product's page" do
-      visit products_path
-      click_link("Gun")
-      page.should have_content 'For hunting deerz'
-    end
   end
 end
