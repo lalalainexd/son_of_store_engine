@@ -38,14 +38,14 @@ describe "Sessions", js: true do
           password_confirmation: 'password',
           role: 'admin'
 
-        visit '/login'
-        fill_in 'email', with: 'user@oregonsale.com'
-        fill_in 'password', with: 'password'
-        click_button "Log in"
+      visit '/login'
+      fill_in 'email', with: 'user@oregonsale.com'
+      fill_in 'password', with: 'password'
+      click_button "Log in"
 
-        click_link "Log out"
+      click_link "Log out"
 
-        page.should have_content "Logged out."
+      page.should have_content "Logged out."
     end
   end
 end
