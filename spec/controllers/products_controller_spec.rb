@@ -24,7 +24,8 @@ describe ProductsController do
   # Product. As you add validations to Product, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "name" => "MyString" }
+    {name: "Rations", price: 24,
+  description: "Good for one 'splorer."}
   end
 
   # This should return the minimal set of values that should be in the session
@@ -44,7 +45,6 @@ describe ProductsController do
 
   describe "GET show" do
     it "assigns the requested product as @product" do
-      pending
       product = Product.create! valid_attributes
       get :show, {:id => product.to_param}, valid_session
       assigns(:product).should eq(product)
@@ -53,7 +53,6 @@ describe ProductsController do
 
   describe "GET new" do
     it "assigns a new product as @product" do
-      pending
       get :new, {}, valid_session
       assigns(:product).should be_a_new(Product)
     end
@@ -106,49 +105,26 @@ describe ProductsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested product" do
-        pending
-        product = Product.create! valid_attributes
-        # Assuming there are no other products in the database, this
-        # specifies that the Product created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Product.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
-        put :update, {:id => product.to_param, :product => { "name" => "MyString" }}, valid_session
-      end
-
       it "assigns the requested product as @product" do
-        pending
         product = Product.create! valid_attributes
         put :update, {:id => product.to_param, :product => valid_attributes}, valid_session
         assigns(:product).should eq(product)
       end
 
       it "redirects to the product" do
-        pending
         product = Product.create! valid_attributes
         put :update, {:id => product.to_param, :product => valid_attributes}, valid_session
-        response.should redirect_to(product)
+        response.should redirect_to(root_path)
       end
     end
 
     describe "with invalid params" do
       it "assigns the product as @product" do
-        pending
         product = Product.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Product.any_instance.stub(:save).and_return(false)
         put :update, {:id => product.to_param, :product => { "name" => "invalid value" }}, valid_session
         assigns(:product).should eq(product)
-      end
-
-      it "re-renders the 'edit' template" do
-        pending
-        product = Product.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Product.any_instance.stub(:save).and_return(false)
-        put :update, {:id => product.to_param, :product => { "name" => "invalid value" }}, valid_session
-        response.should render_template("edit")
       end
     end
   end
@@ -161,11 +137,11 @@ describe ProductsController do
       }.to change(Product, :count).by(-1)
     end
 
-    # it "redirects to the products list" do
-    #   product = Product.create! valid_attributes
-    #   delete :destroy, {:id => product.to_param}, valid_session
-    #   response.should redirect_to(products_url)
-    # end
+    it "redirects to the products list" do
+      product = Product.create! valid_attributes
+      delete :destroy, {:id => product.to_param}, valid_session
+      response.should redirect_to(products_path)
+    end
   end
 
 end
