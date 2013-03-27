@@ -2,10 +2,10 @@
 
   <div class="span3">
     <div class="cat_col">
-      <h2>Categories:</h2>
-      <ul>
+      <h2 id="ribbon">Products</h2>
+      <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
-        <li><%= link_to category.name, category_path(category.id) %> (<%= category.products.count %>)</li>
+        <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
       <% end %>
       </ul>
     </div>
@@ -19,24 +19,22 @@
 
     <div class="breaker"></div>
 
-    <div class="row-fluid">
-      <div class="span4">
-        <div class="adtl_col">
 
+      <ul class="thumbnails">
+        <% 3.times do %>
+        <% p = @products.pop %>
+          <li class="span4">
+            <div class="thumbnail adtl_col">
+              <img src="#" alt="">
+              <h3><%= link_to p.name, product_path(p) %></h3>
+              <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
+              <p><i>$<%= p.price %>.00</i></p>
+              <p><%= p.description %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
 
-        </div>
-      </div>
-      <div class="span4">
-        <div class="adtl_col">
-
-        </div>
-      </div>
-      <div class="span4">
-        <div class="adtl_col">
-
-
-        </div>
-      </div>
     </div>
 
   </div>
