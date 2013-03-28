@@ -36,16 +36,14 @@ describe "Products", js: true do
         visit '/products/1/edit'
         fill_in 'product_name', with: "Gun"
         click_button 'Update Product'
-        sleep 5
         expect(Product.all.first.name).to_not equal initial_name
       end
     end
 
     context "user not logged in" do
       it "cannot create new product" do
-        # visit '/products/new'
-        # page.should have_content "Access denied."
-        # weird error
+        visit '/products/new'
+        page.should have_content "Access denied."
       end
     end
   end
