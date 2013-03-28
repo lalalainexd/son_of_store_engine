@@ -1,8 +1,37 @@
-<p id="notice"><%= notice %></p>
-
-<% @cart.line_items.each do |item| %>
-  <%= item.product.name %><br />
-<% end %>
+<h2>Your Cart</h2>
+<table class="table">
+  <tr>
+    <th>Product Name</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+  <% @cart.line_items.each do |item| %>
+    <tr>
+      <td><%= item.product.name %></td>
+      <td>
+        <%= link_to "",
+          line_item_path(:id => item.id, :line_item => {:quantity => item.quantity - 1}),
+            :method => :put, 
+            :class => 'icon-minus-sign icon-large'
+          %>
+        <span class="quantity"><%= item.quantity %></span>
+        <%= link_to "",
+            line_item_path(:id => item.id, :line_item => { :quantity => item.quantity + 1}),
+            :method => :put,
+            :class => 'icon-plus-sign icon-large'
+          %>
+      </td>
+      <td><%= item.product.price%></td>
+      <td>
+        <%= link_to (''),
+                    line_item_path(item),
+                    :method => :delete,
+                    :class => 'icon-trash btn btn-medium btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
 
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
