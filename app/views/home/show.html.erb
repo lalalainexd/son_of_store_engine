@@ -2,7 +2,7 @@
 
   <div class="span3">
     <div class="cat_col">
-      <h2 id="ribbon">Categories</h2>
+      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
         <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
