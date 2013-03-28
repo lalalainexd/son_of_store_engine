@@ -2,7 +2,7 @@
 
   <div class="span3">
     <div class="cat_col">
-      <h2 id="ribbon">Products</h2>
+      <h2 id="ribbon">Categories</h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
         <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
@@ -13,8 +13,6 @@
 
   <div class="span9">
     <div class="choice_area">
-
-
     </div>
 
     <div class="breaker"></div>
