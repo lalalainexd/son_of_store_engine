@@ -2,7 +2,7 @@
 
   <div class="span3">
     <div class="cat_col">
-      <h2 id="ribbon">Categories</h2>
+      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
         <% if category.id == @category.id %>
