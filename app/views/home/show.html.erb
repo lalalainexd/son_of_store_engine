@@ -36,6 +36,15 @@
       </ul>
 
     </div>
-
   </div>
+
+  <% @products.each do |product| %>
+    <div class="big_product">
+     <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+    </div>
+  <% end %>
+
 </div>
+
+
+
