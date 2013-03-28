@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 
   <div class="span3">
     <div class="cat_col">
@@ -13,6 +13,22 @@
 
   <div class="span9">
     <div class="choice_area">
+      <div id="myCarousel" class="carousel slide">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <div class="active item"><%= image_tag("slider-01.png") %></div>
+          <div class="item"><%= image_tag("slider-01.png") %></div>
+          <div class="item"><%= image_tag("slider-01.png") %></div>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      </div>
     </div>
 
     <div class="breaker"></div>
@@ -22,7 +38,7 @@
         <% products_array = @products[0..2] %>
         <% 3.times do |x| %>
           <% p = products_array[x] %>
-          <li class="span4">
+          <li class="span3">
             <div class="thumbnail adtl_col">
               <span id="<%= p.id %>" class="small_product">
                 <img src="#" alt="">
