@@ -17,6 +17,8 @@ logo.png: logo.png
 logo/index.png: logo.png
 slider-01.png: slider-01.png
 slider-01/index.png: slider-01.png
+slider-02.png: slider-02.png
+slider-02/index.png: slider-02.png
 application.js: application.js
 application/index.js: application.js
 application.css: application.css

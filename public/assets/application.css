@@ -8383,9 +8383,11 @@ body {
   background-color: #EEEDC8;
   height: 300px;
 }
-.nav-tabs.nav-stacked > li > a:hover,
-.marked {
+.nav-tabs.nav-stacked > li > a:hover {
   background-color: white;
+  color: black;
+}
+.marked a {
   color: black;
 }
 .quantity {
