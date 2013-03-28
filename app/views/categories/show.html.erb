@@ -6,7 +6,7 @@
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
         <% if category.id == @category.id %>
-          <li class="active"><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
+          <li class="active marked"><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
           <% else %>
           <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
           <% end %>

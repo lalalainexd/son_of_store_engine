@@ -8350,6 +8350,7 @@ body {
   padding-top: 0px;
 }
 .tophead {
+  padding-top: 15px;
   background-color: #E4B742;
   height: 50px;
 }
@@ -8358,7 +8359,7 @@ body {
 }
 .oheader {
   background-color: #EEEDC8;
-  height: 60px;
+  height: 70px;
 }
 .oheader a {
   text-transform: uppercase;
@@ -8378,16 +8379,12 @@ body {
   text-align: left;
   text-decoration: none;
 }
-.choice_area {
-  height: 240px;
-  background-color: #8D2618;
-  text-align: center;
-}
 .adtl_col {
   background-color: #EEEDC8;
   height: 300px;
 }
-.nav-tabs.nav-stacked > li > a:hover {
+.nav-tabs.nav-stacked > li > a:hover,
+.marked {
   background-color: white;
   color: black;
 }
@@ -8395,4 +8392,22 @@ body {
   font-weight: bold;
   font-size: 24px;
   padding: 3px;
+}
+.big_product {
+  width: 650px;
+  height: 350px;
+  border: 2px solid green;
+  background-color: #EEEDC8;
+  margin-top: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  -moz-box-shadow: 6px 6px 4px #000;
+  -webkit-box-shadow: 6px 6px 4px #000;
+  box-shadow: 6px 6px 4px #000;
+  /* For IE 8 */
+
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+  /* For IE 5.5 - 7 */
+
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }

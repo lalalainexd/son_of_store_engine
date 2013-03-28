@@ -12,7 +12,8 @@
   </div>
 
   <div class="span9">
-    <div class="choice_area">
+
+    <div>
       <div id="myCarousel" class="carousel slide">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -31,67 +32,53 @@
       </div>
     </div>
 
-    <div class="breaker"></div>
+    <ul class="thumbnails">
+      <% products_array = @products[0..2] %>
+      <% 3.times do |x| %>
+        <% p = products_array[x] %>
+        <li class="span3">
+          <div class="thumbnail adtl_col">
+            <span id="<%= p.id %>" class="small_product">
+              <img src="#" alt="">
+            </span>
+            <h3 id="<%= p.id %>" class="small_product">
+              <%= p.name %>
+            </h3>
+            <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
+            <p><i>$<%= p.price %>.00</i></p>
+            <p><%= p.description %></p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
 
-
-      <ul class="thumbnails">
-        <% products_array = @products[0..2] %>
-        <% 3.times do |x| %>
-          <% p = products_array[x] %>
-          <li class="span3">
-            <div class="thumbnail adtl_col">
-              <span id="<%= p.id %>" class="small_product">
-                <img src="#" alt="">
-              </span>
-              <h3 id="<%= p.id %>" class="small_product">
-                <%= p.name %>
-              </h3>
-              <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
-              <p><i>$<%= p.price %>.00</i></p>
-              <p><%= p.description %></p>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-
-    </div>
   </div>
-
-  <% products_array.each do |product| %>
-    <div class="big_product" id="big_product_<%= product.id %>" >
-     <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-    </div>
-  <% end %>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.big_product').hide();
-
-      $(".small_product").click(function(){
-        $('.big_product').hide();
-        var current_id = $(this).attr('id');
-        $("#big_product_"+current_id).css({
-          "position":"absolute", 
-          "top": "200px",
-          "left": "350px",
-        });
-        $("#big_product_"+current_id).fadeIn(200);
-      });
-
-      $(".big_product_title").click(function(){
-        $('.big_product').fadeOut(200);
-      });
-
-    });
-  </script>
 </div>
 
+<% products_array.each do |product| %>
+  <div class="big_product" id="big_product_<%= product.id %>" >
+   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+  </div>
+<% end %>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.big_product').hide();
 
+    $(".small_product").click(function(){
+      $('.big_product').hide();
+      var current_id = $(this).attr('id');
+      $("#big_product_"+current_id).css({
+        "position":"absolute", 
+        "top": "200px",
+        "left": "350px",
+      });
+      $("#big_product_"+current_id).fadeIn(200);
+    });
 
+    $(".big_product_title").click(function(){
+      $('.big_product').fadeOut(200);
+    });
 
-
-
-
-
-
+  });
+</script>
