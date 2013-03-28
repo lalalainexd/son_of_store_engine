@@ -8385,6 +8385,7 @@ body {
 }
 .adtl_col {
   background-color: #EEEDC8;
+  height: 300px;
 }
 .nav-tabs.nav-stacked > li > a:hover {
   background-color: white;

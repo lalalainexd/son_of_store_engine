@@ -13,6 +13,8 @@ iconic_stroke.woff: iconic_stroke.woff
 iconic_stroke/index.woff: iconic_stroke.woff
 cart.png: cart.png
 cart/index.png: cart.png
+logo.png: logo.png
+logo/index.png: logo.png
 application.js: application.js
 application/index.js: application.js
 application.css: application.css
