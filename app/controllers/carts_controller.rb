@@ -1,23 +1,14 @@
 class CartsController < ApplicationController
-  # GET /carts
-  # GET /carts.json
   def index
     @carts = Cart.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @carts }
-    end
   end
 
-  # GET /carts/1
-  # GET /carts/1.json
   def show
-    @cart = Cart.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @cart }
+    begin
+      @cart = Cart.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      logger.error "Attempt to access invalid cart #{params[:id]}"
+      redirect_to root_path, :notice => 'Invalid Cart'
     end
   end
 
