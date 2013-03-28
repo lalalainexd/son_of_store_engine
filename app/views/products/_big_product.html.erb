@@ -3,5 +3,6 @@
 </div>
 
 <%= button_to 'Add to Cart', line_items_path(:product_id => product) %>
+<h2 class="big_product_title" ><%= product.name %></h2>
 <%= product.description %>
 <%= product.price %>
