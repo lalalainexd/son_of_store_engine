@@ -1,8 +1,8 @@
-<div class="row-fluid">
+<div class="row">
 
   <div class="span3">
     <div class="cat_col">
-      <h2 id="ribbon">Categories</h2>
+      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
         <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
@@ -12,70 +12,73 @@
   </div>
 
   <div class="span9">
-    <div class="choice_area">
+
+    <div>
+      <div id="myCarousel" class="carousel slide">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Carousel items -->
+        <div class="carousel-inner">
+          <div class="active item"><%= image_tag("slider-01.png") %></div>
+          <div class="item"><%= image_tag("slider-02.png") %></div>
+          <div class="item"><%= image_tag("slider-03.png") %></div>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      </div>
     </div>
 
-    <div class="breaker"></div>
+    <ul class="thumbnails">
+      <% products_array = @products[0..2] %>
+      <% 3.times do |x| %>
+        <% p = products_array[x] %>
+        <li class="span3">
+          <div class="thumbnail adtl_col">
+            <span id="<%= p.id %>" class="small_product">
+              <img src="#" alt="">
+            </span>
+            <h3 id="<%= p.id %>" class="small_product">
+              <%= p.name %>
+            </h3>
+            <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
+            <p><i>$<%= p.price %>.00</i></p>
+            <p><%= p.description %></p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
 
-
-      <ul class="thumbnails">
-        <% products_array = @products[0..2] %>
-        <% 3.times do |x| %>
-          <% p = products_array[x] %>
-          <li class="span4">
-            <div class="thumbnail adtl_col">
-              <span id="<%= p.id %>" class="small_product">
-                <img src="#" alt="">
-              </span>
-              <h3 id="<%= p.id %>" class="small_product">
-                <%= p.name %>
-              </h3>
-              <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
-              <p><i>$<%= p.price %>.00</i></p>
-              <p><%= p.description %></p>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-
-    </div>
   </div>
-
-  <% products_array.each do |product| %>
-    <div class="big_product" id="big_product_<%= product.id %>" >
-     <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-    </div>
-  <% end %>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.big_product').hide();
-
-      $(".small_product").click(function(){
-        $('.big_product').hide();
-        var current_id = $(this).attr('id');
-        $("#big_product_"+current_id).css({
-          "position":"absolute", 
-          "top": "200px",
-          "left": "350px",
-        });
-        $("#big_product_"+current_id).fadeIn(200);
-      });
-
-      $(".big_product_title").click(function(){
-        $('.big_product').fadeOut(200);
-      });
-
-    });
-  </script>
 </div>
 
+<% products_array.each do |product| %>
+  <div class="big_product" id="big_product_<%= product.id %>" >
+   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+  </div>
+<% end %>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.big_product').hide();
 
+    $(".small_product").click(function(){
+      $('.big_product').hide();
+      var current_id = $(this).attr('id');
+      $("#big_product_"+current_id).css({
+        "position":"absolute", 
+        "top": "200px",
+        "left": "350px",
+      });
+      $("#big_product_"+current_id).fadeIn(200);
+    });
 
+    $(".big_product_title").click(function(){
+      $('.big_product').fadeOut(200);
+    });
 
-
-
-
-
-
+  });
+</script>

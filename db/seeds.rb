@@ -56,6 +56,8 @@ Product.create( name: "Sleeping Bag", price: 3,
   description: "Regain staminer! Warm 'n' cozy.", category_ids: ["4"])
 Product.create( name: "Carpenter's Tools", price: 400,
   description: "Fer fixin' up der wagon in a jiff!", category_ids: ["4"])
+Product.create( name: "Divining Rod", price: 500,
+  description: "Water, water, anywhere? And lots and lots to drink!", category_ids: ["4"])
 
 #MEDICINE
 Product.create( name: "Miracle Cure", price: 3000,

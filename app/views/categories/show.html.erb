@@ -2,10 +2,14 @@
 
   <div class="span3">
     <div class="cat_col">
-      <h2 id="ribbon">Categories</h2>
+      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
-        <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
+        <% if category.id == @category.id %>
+          <li class="active marked"><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
+          <% else %>
+          <li><%= link_to "#{category.name} (#{category.products.count} items)", category_path(category.id) %></li>
+          <% end %>
       <% end %>
       </ul>
     </div>
