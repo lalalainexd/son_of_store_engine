@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(params[:product])
-    # authorize! :create, @product
+    authorize! :create, @product
     # Find out way to test authorization
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     @product = Product.find(params[:id])
-    # authorize! :destroy, @product
+    authorize! :destroy, @product
     @product.destroy
 
     respond_to do |format|

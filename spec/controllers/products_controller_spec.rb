@@ -35,6 +35,12 @@ describe ProductsController do
     {}
   end
 
+  before (:each) do
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    @controller.stub(:current_ability).and_return(@ability)
+  end
+
   describe "GET index" do
     it "assigns all products as @products" do
       product = Product.create! valid_attributes
@@ -68,6 +74,10 @@ describe ProductsController do
 
   describe "POST create" do
     describe "with valid params and admin access" do
+      before (:each) do
+        @ability.can :create, Product
+      end
+
       it "creates a new Product" do
         expect {
           post :create, {:product => valid_attributes}, valid_session
@@ -92,13 +102,6 @@ describe ProductsController do
         Product.any_instance.stub(:save).and_return(false)
         post :create, {:product => { "name" => "invalid value" }}, valid_session
         assigns(:product).should be_a_new(Product)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Product.any_instance.stub(:save).and_return(false)
-        post :create, {:product => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
       end
     end
   end
@@ -130,6 +133,10 @@ describe ProductsController do
   end
 
   describe "DELETE destroy" do
+    before (:each) do
+      @ability.can :destroy, Product
+    end
+
     it "destroys the requested product" do
       product = Product.create! valid_attributes
       expect {
