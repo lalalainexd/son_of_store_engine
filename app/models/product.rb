@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
 
   if Rails.env.production?
     has_attached_file :image, 
-      styles: {
+      :styles => {
         small: '100x100>',
         medium: '200x200>',
         large: '300x300>',
@@ -15,19 +15,21 @@ class Product < ActiveRecord::Base
         xxx_large: '600x600>'
       },
       :storage => :s3,
+      :bucket => "oregon-sale",
+      :path => ":attachment/:id/:style.:extension",
       :s3_credentials => {
-        :bucket => ENV['AWS_BUCKET'],
         :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
         :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'] 
       }
   else
-    has_attached_file :image, styles: {
-      small: '100x100>',
-      medium: '200x200>',
-      large: '300x300>',
-      x_large: '400x400>',
-      xx_large: '500x500>',
-      xxx_large: '600x600>'
+    has_attached_file :image, 
+      :styles => {
+        small: '100x100>',
+        medium: '200x200>',
+        large: '300x300>',
+        x_large: '400x400>',
+        xx_large: '500x500>',
+        xxx_large: '600x600>'
       },
       :storage => :s3,
       :s3_credentials => "#{Rails.root}/config/s3.yml",
