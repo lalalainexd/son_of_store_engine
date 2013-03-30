@@ -1,17 +1,16 @@
 require 'spec_helper'
 
 describe CategoriesController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Category. As you add validations to Category, be sure to
-  # update the return value of this method accordingly.
   def valid_attributes
     { "name" => "MyString" }
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # CategoriesController. Be sure to keep this updated too.
+  before (:each) do
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    @controller.stub(:current_ability).and_return(@ability)
+  end
+
   def valid_session
     {}
   end
@@ -48,7 +47,11 @@ describe CategoriesController do
   end
 
   describe "POST create" do
-    describe "with valid params" do
+    context "with valid params and admin access" do
+      before (:each) do
+        @ability.can :create, Category
+      end
+
       it "creates a new Category" do
         expect {
           post :create, {:category => valid_attributes}, valid_session
@@ -74,24 +77,17 @@ describe CategoriesController do
         post :create, {:category => { "name" => "invalid value" }}, valid_session
         assigns(:category).should be_a_new(Category)
       end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        post :create, {:category => { "name" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
     end
   end
 
   describe "PUT update" do
-    describe "with valid params" do
+    context "with valid params and admin access" do
+    before (:each) do
+      @ability.can :update, Category
+    end
+
       it "updates the requested category" do
         category = Category.create! valid_attributes
-        # Assuming there are no other categories in the database, this
-        # specifies that the Category created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         Category.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
         put :update, {:id => category.to_param, :category => { "name" => "MyString" }}, valid_session
       end
@@ -117,18 +113,14 @@ describe CategoriesController do
         put :update, {:id => category.to_param, :category => { "name" => "invalid value" }}, valid_session
         assigns(:category).should eq(category)
       end
-
-      it "re-renders the 'edit' template" do
-        category = Category.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        put :update, {:id => category.to_param, :category => { "name" => "invalid value" }}, valid_session
-        response.should render_template("edit")
-      end
     end
   end
 
   describe "DELETE destroy" do
+    before (:each) do
+      @ability.can :destroy, Category
+    end
+
     it "destroys the requested category" do
       category = Category.create! valid_attributes
       expect {

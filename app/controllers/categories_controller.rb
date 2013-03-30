@@ -1,47 +1,41 @@
 class CategoriesController < ApplicationController
-  # GET /categories
-  # GET /categories.json
   def index
     @categories = Category.all
+    authorize! :manage, @category
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @categories }
     end
   end
 
-  # GET /categories/1
-  # GET /categories/1.json
   def show
     @category = Category.find(params[:id])
     @categories = Category.all.sort
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @category }
     end
   end
 
-  # GET /categories/new
-  # GET /categories/new.json
   def new
     @category = Category.new
+    authorize! :create, @category
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @category }
     end
   end
 
-  # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
   end
 
-  # POST /categories
-  # POST /categories.json
   def create
     @category = Category.new(params[:category])
+    authorize! :create, @category
 
     respond_to do |format|
       if @category.save
@@ -54,10 +48,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # PUT /categories/1
-  # PUT /categories/1.json
   def update
     @category = Category.find(params[:id])
+    authorize! :update, @category
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
@@ -70,10 +63,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     @category = Category.find(params[:id])
+    authorize! :destroy, @category
     @category.destroy
 
     respond_to do |format|
