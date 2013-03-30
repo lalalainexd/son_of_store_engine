@@ -25,7 +25,10 @@
         <%= link_to "Sign up", signup_path %> or
         <%= link_to "log in", login_path %>.
       <% end %>
-      <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %><br />
+      <% if session[:cart_id] %>
+        <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
+        <%= link_to "View/Edit Cart", cart_path(session[:id]) %>
+      <% end %>
     </div>
   </div>
 
