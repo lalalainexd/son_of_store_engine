@@ -25,7 +25,7 @@
         <%= link_to "Sign up", signup_path %> or
         <%= link_to "log in", login_path %>.
       <% end %>
-      <%= image_tag("cart.png") %>
+      <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %><br />
     </div>
   </div>
 
@@ -36,7 +36,7 @@
   </div>
 
   <div class="breaker" class="container"></div>
-  
+
   <div class="container">
 
     <div class="row">
