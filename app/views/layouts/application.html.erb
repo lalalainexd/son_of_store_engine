@@ -15,9 +15,12 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 </head>
+
 <body>
-  <div class="tophead">
-    <div class="container cart_header">
+
+  <!-- Signup links -->
+  <div class="container">
+    <div class="main_nav">
       <% if current_user %>
         Logged in as <%= current_user.email %>.
         <%= link_to "Log out", logout_path %>
@@ -27,18 +30,15 @@
       <% end %>
       <%= image_tag("cart.png") %>
     </div>
-  </div>
 
-  <div class="oheader">
-    <div class="container">
-      <h1><%= link_to image_tag("logo.png"), root_url %></h1>
+    <!-- Brand and main nav -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
+      </div>
     </div>
-  </div>
-
-  <div class="breaker" class="container"></div>
-  
-  <div class="container">
-
+    
+    <!-- Flash -->
     <div class="row">
       <div class="span12">
         <%= bootstrap_flash %>
@@ -48,10 +48,6 @@
     <%= yield %>
   </div>
 
-  <!-- Javascripts
-  ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
   <%= javascript_include_tag "application" %>
-
 </body>
 </html>
