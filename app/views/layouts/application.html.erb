@@ -27,7 +27,7 @@
       <% end %>
       <% if session[:cart_id] %>
         <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
-        <%= link_to "View/Edit Cart", cart_path(session[:id]) %>
+        <%= link_to "View/Edit Cart", cart_path(session[:cart_id]) %>
       <% end %>
     </div>
   </div>
