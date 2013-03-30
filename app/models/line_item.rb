@@ -8,6 +8,10 @@ class LineItem < ActiveRecord::Base
   belongs_to :cart
 
   def increase_quantity
-    quantity += 1
+    quantity + 1
+  end
+
+  def decrease_quantity
+    quantity - 1
   end
 end

@@ -42,7 +42,7 @@ class LineItemsController < ApplicationController
   def increase
     @line_item = LineItem.find(params[:id])
     if @line_item
-      @line_item.update_attribute("quantity", @line_item.quantity + 1)
+      @line_item.update_attribute("quantity", @line_item.increase_quantity)
       redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
     end
   end
@@ -54,7 +54,7 @@ class LineItemsController < ApplicationController
         @line_item.delete
         redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
       else
-        @line_item.update_attribute("quantity", @line_item.quantity - 1)
+        @line_item.update_attribute("quantity", @line_item.decrease_quantity)
         redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
       end
     end
