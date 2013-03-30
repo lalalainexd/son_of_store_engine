@@ -28,10 +28,12 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <div class="field">
-    <%= f.label :role %>
-    <%= f.collection_select :role, User::ROLES, :to_s, :humanize %>
-  </div>
+  <% if can? :manage, User %>
+    <div class="field">
+      <%= f.label :role %>
+      <%= f.collection_select :role, User::ROLES, :to_s, :humanize %>
+    </div>
+  <% end %>
 
   <div class="actions"><%= f.submit "Sign Up!" %></div>
 

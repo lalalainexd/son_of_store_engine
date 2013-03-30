@@ -27,7 +27,6 @@ describe "Products", js: true do
         fill_in 'product_name', with: 'Toy'
         fill_in 'product_price', with: 5
         click_button 'Create Product'
-
         page.should have_content "Name: Toy"
       end
 

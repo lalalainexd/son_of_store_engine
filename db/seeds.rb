@@ -22,7 +22,7 @@ Product.create( name: "Sarsaparilla", price: 3,
   description: "Before Coke, there was sarsaparilla.", category_ids: ["1"])
 
 #CLOTHING
-Product.create( name: "Basic Clothing", price: 75,
+Product.create( name: "Basic Tunic", price: 75,
   description: "Plain ol' get-up for simple folk.", category_ids: ["2"])
 Product.create( name: "Leather Armor", price: 250,
   description: "Good fer fendin' off 'coons and der sharp claws.", category_ids: ["2"])
@@ -30,7 +30,7 @@ Product.create( name: "Ponchos", price: 25,
   description: "It gets rainy on the trail. Better bring a poncho.", category_ids: ["2"])
 Product.create( name: "Moccasins", price: 196,
   description: "Made with real Apache tears!", category_ids: ["2"])
-Product.create( name: "Camoflague", price: 50,
+Product.create( name: "Camouflage", price: 50,
   description: "Der buffalo won't be able to see yer.", category_ids: ["2"])
 
 #WEAPONS
