@@ -5,14 +5,21 @@ class Product < ActiveRecord::Base
   before_destroy :ensure_not_referenced_by_any_line_item
 
   if Rails.env.production?
-    has_attached_file :image, styles: {
-      small: '100x100>',
-      medium: '200x200>',
-      large: '300x300>',
-      x_large: '400x400>',
-      xx_large: '500x500>',
-      xxx_large: '600x600>'
-    }
+    has_attached_file :image, 
+      styles: {
+        small: '100x100>',
+        medium: '200x200>',
+        large: '300x300>',
+        x_large: '400x400>',
+        xx_large: '500x500>',
+        xxx_large: '600x600>'
+      },
+      :storage => :s3,
+      :s3_credentials => {
+        :bucket => ENV['AWS_BUCKET'],
+        :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+        :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'] 
+      }
   else
     has_attached_file :image, styles: {
       small: '100x100>',
