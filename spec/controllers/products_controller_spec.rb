@@ -18,6 +18,7 @@ describe ProductsController do
 
   describe "GET index" do
     it "assigns all products as @products" do
+      @ability.can :manage, Product
       product = Product.create! valid_attributes
       get :index, {}, valid_session
       assigns(:products).should eq([product])

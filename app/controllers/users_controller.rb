@@ -5,9 +5,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    #
     @user.role = :user unless @user.role
-    # to be used later
+
     if @user.save
       redirect_to root_url, :notice => "Signed up"
     else

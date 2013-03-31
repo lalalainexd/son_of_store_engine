@@ -10,12 +10,12 @@ describe "Sessions", js: true do
 
   context "when user logs in" do
     context "if user exists" do
-      it "logs in user" do
+      it "logs in user as admin" do
 
         User.create email: 'user@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
-          role: 'admin'
+          role: 'user'
 
         visit '/login'
         fill_in 'email', with: 'user@oregonsale.com'
@@ -23,6 +23,21 @@ describe "Sessions", js: true do
         click_button "Log in"
 
         expect(current_path).to eq root_path
+      end
+
+      it "logs in user as normal" do
+
+        User.create email: 'admin@oregonsale.com',
+          password: 'password',
+          password_confirmation: 'password',
+          role: 'admin'
+
+        visit '/login'
+        fill_in 'email', with: 'admin@oregonsale.com'
+        fill_in 'password', with: 'password'
+        click_button "Log in"
+
+        expect(current_path).to eq '/admin'
       end
     end
 
