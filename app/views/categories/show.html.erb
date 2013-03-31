@@ -38,3 +38,10 @@
     <% end %>
   </div>
 </div>
+
+<% @category.products.where(retired: false).each do |product| %>
+  <div class="big_product" id="big_product_<%= product.id %>" >
+   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+  </div>
+<% end %>
+

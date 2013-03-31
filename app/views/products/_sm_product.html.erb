@@ -1,9 +1,19 @@
-<li class="span3">
-  <div class="thumbnail adtl_col">
-    <img src="#" alt="">
-    <h3><%= link_to p.name, product_path(p) %></h3>
+<li class="span3 small_product" id="<%= p.id %>">
+  <div class="thumbnail adtl_col small_product" id="<%= p.id %>">
+    <h3 id="<%= p.id %>" class="small_product product_name">
+      <%= p.name %>
+    </h3>
+    <% if p.image.exists? %>
+      <span id="<%= p.id %>", class="small_product">
+        <%= image_tag p.image.url(:large), :class => "small_product" %>
+      </span>
+    <% end %>
+    <span id="<%= p.id %>" class="small_product">
+      <i>$<%= p.price %>.00</i>
+    </span>
     <%= button_to 'Add to Cart', line_items_path(:product_id => p) %>
-    <p><i>$<%= p.price %>.00</i></p>
-    <p><%= p.description %></p>
   </div>
 </li>
+
+
+
