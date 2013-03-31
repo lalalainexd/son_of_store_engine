@@ -37,11 +37,5 @@ describe UsersController do
     let(:invalid_attributes) do
       { user: {email: "", password: "password"}}
     end
-
-    it "renders new user template" do
-      # expect {
-      #   post :create, invalid_attributes
-      # }.to render_template :new
-    end
   end
 end

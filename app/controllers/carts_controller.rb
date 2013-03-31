@@ -8,28 +8,24 @@ class CartsController < ApplicationController
       @cart = Cart.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       logger.error "Attempt to access invalid cart #{params[:id]}"
-      redirect_to root_path, :notice => 'Invalid Cart'
+      flash[:error] = "Invalid cart."
+      redirect_to root_path
     end
   end
 
-  # GET /carts/new
-  # GET /carts/new.json
   def new
     @cart = Cart.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @cart }
     end
   end
 
-  # GET /carts/1/edit
   def edit
     @cart = Cart.find(params[:id])
   end
 
-  # POST /carts
-  # POST /carts.json
   def create
     @cart = Cart.new(params[:cart])
 
@@ -40,12 +36,11 @@ class CartsController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @cart.errors, status: :unprocessable_entity }
+        # We don't use this?
       end
     end
   end
 
-  # PUT /carts/1
-  # PUT /carts/1.json
   def update
     @cart = Cart.find(params[:id])
 
@@ -56,12 +51,11 @@ class CartsController < ApplicationController
       else
         format.html { render action: "edit" }
         format.json { render json: @cart.errors, status: :unprocessable_entity }
+        # We don't use this?
       end
     end
   end
 
-  # DELETE /carts/1
-  # DELETE /carts/1.json
   def destroy
     @cart = Cart.find(params[:id])
     @cart.destroy

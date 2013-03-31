@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe "Products", js: true do
+  let!(:c1) {Category.create! name: "Grub" }
   let!(:p1) {Product.create( name: "Rations", price: 24,
-  description: "Good for one 'splorer.")}
+  description: "Good for one 'splorer.", category_ids: ["1"])}
   let!(:p2) {Product.create( name: "Eggs", price: 5,
-  description: "Farm fresh and ready to consume.")}
+  description: "Farm fresh and ready to consume.", retired: true, category_ids: ["1"])}
   let!(:p3) {Product.create( name: "Apples", price: 19,
-  description: "Great for a snack!")}
-  let!(:u1) {User.create email: 'user@oregonsale.com',
+  description: "Great for a snack!", category_ids: ["1"])}
+  let!(:u1) {User.create email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
           role: 'admin'}
@@ -16,7 +17,7 @@ describe "Products", js: true do
     context "user is logged in" do
       before (:each) do
         visit '/login'
-        fill_in 'email', with: 'user@oregonsale.com'
+        fill_in 'email', with: 'admin@oregonsale.com'
         fill_in 'password', with: 'password'
         click_button "Log in"
       end
@@ -36,6 +37,23 @@ describe "Products", js: true do
         fill_in 'product_name', with: "Gun"
         click_button 'Update Product'
         expect(Product.all.first.name).to_not equal initial_name
+      end
+
+      it "can retire product 1" do
+        visit '/admin'
+        click_link "retire_#{p1.id}"
+
+        click_link "Retired"
+        page.should have_content "#{p1.name}"
+      end
+
+      it 'can unretire product 2' do
+        visit '/admin'
+
+        click_link "Retired"
+        click_link "unretire_#{p2.id}"
+
+        page.should have_content "#{p2.name}"
       end
     end
 

@@ -27,10 +27,10 @@
                       :class => 'btn btn-mini btn-danger' %>
           <% if product.retired == false %>
           <%= link_to "Retire", retire_product_path(product.id), 
-                      :class => 'btn btn-mini', method: :put %>
+                      :class => 'btn btn-mini', method: :put, id: "retire_#{product.id}" %>
           <% else %>
           <%= link_to "Unretire", unretire_product_path(product.id), 
-                      :class => 'btn btn-mini', method: :put %>
+                      :class => 'btn btn-mini', method: :put, id: "unretire_#{product.id}" %>
           <% end %>
         </td>
       </tr>
