@@ -10,17 +10,9 @@
     <tr>
       <td><%= item.product.name %></td>
       <td>
-        <%= link_to "",
-          line_item_path(:id => item.id, :line_item => {:quantity => item.quantity.to_i - 1}),
-            :method => :put, 
-            :class => 'icon-minus-sign icon-large'
-          %>
+        <%= link_to "", decrease_line_item_path(item), :method => :put, :class => 'icon-minus-sign icon-large' %>
         <span class="quantity"><%= item.quantity %></span>
-        <%= link_to "",
-            line_item_path(:id => item.id, :line_item => { :quantity => item.quantity.to_i + 1}),
-            :method => :put,
-            :class => 'icon-plus-sign icon-large'
-          %>
+        <%= link_to "", increase_line_item_path(item), :method => :put, :class => 'icon-plus-sign icon-large' %>
       </td>
       <td><%= item.product.price%></td>
       <td>

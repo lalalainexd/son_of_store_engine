@@ -28,7 +28,10 @@
         <%= link_to "Sign up", signup_path %> or
         <%= link_to "log in", login_path %>.
       <% end %>
-      <%= image_tag("cart.png") %>
+      <% if session[:cart_id] %>
+        <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
+        <%= link_to "View/Edit Cart", cart_path(session[:cart_id]) %>
+      <% end %>
     </div>
 
     <!-- Brand and main nav -->
@@ -37,7 +40,12 @@
         <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
       </div>
     </div>
-    
+  </div>
+
+  <div class="breaker" class="container"></div>
+
+  <div class="container">
+
     <!-- Flash -->
     <div class="row">
       <div class="span12">

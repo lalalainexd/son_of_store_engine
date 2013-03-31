@@ -9,6 +9,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def retire
+    product = Product.find(params[:id])
+    product.retired = true
+    product.save
+
+    redirect_to admin_path
+  end
+
   def show
     @product = Product.find(params[:id])
 
@@ -54,6 +62,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     authorize! :update, @product
 
+    params[:product][:retired] ||= []
     params[:product][:category_ids] ||= []
     @product = Product.find(params[:id])
     
