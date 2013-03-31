@@ -34,20 +34,7 @@
 
     <ul class="thumbnails">
       <% @products_array.each do |product| %>
-        <li class="span3">
-          <div class="thumbnail adtl_col">
-            <span id="<%= product.id %>" class="small_product">
-              <img src="#" alt="">
-            </span>
-            <h3 id="<%= product.id %>" class="small_product">
-              <%= product.name %>
-            </h3>
-            <%= button_to 'Add to Cart', 
-              line_items_path(:product_id => product) %>
-            <p><i>$<%= product.price %>.00</i></p>
-            <p><%= product.description %></p>
-          </div>
-        </li>
+        <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
       <% end %>
     </ul>
 
