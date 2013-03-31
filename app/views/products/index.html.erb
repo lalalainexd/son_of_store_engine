@@ -12,6 +12,23 @@
 
   <div class="span9">
     <div id="invoices">
+      <h3>Invoices:</h3>
+
+      <ul class="nav nav-tabs" id="invoicesTab">
+        <li><a href="#pending" data-toggle="tab">Pending</a></li>
+        <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
+        <li><a href="#paid" data-toggle="tab">Paid</a></li>
+        <li><a href="#shipped" data-toggle="tab">Shipped</a></li>
+        <li><a href="#returned" data-toggle="tab">Returned</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane" id="pending"></div>
+        <div class="tab-pane" id="cancelled"></div>
+        <div class="tab-pane" id="paid"></div>
+        <div class="tab-pane" id="shipped"></div>
+        <div class="tab-pane" id="returned"></div>
+      </div>
     </div>
 
     <div id="products">
@@ -57,5 +74,6 @@
 <script>
   $(function () {
     $('#productsTab a:first').tab('show');
+    $('#invoicesTab a:first').tab('show');
   })
 </script>
