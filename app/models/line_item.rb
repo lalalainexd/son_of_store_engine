@@ -14,4 +14,8 @@ class LineItem < ActiveRecord::Base
   def decrease_quantity
     quantity - 1
   end
+
+  def total
+    quantity * product.price
+  end
 end

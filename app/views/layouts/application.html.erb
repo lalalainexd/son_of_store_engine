@@ -29,8 +29,9 @@
         <%= link_to "log in", login_path %>.
       <% end %>
       <% if session[:cart_id] %>
+        <%= link_to "Edit Cart", cart_path(session[:cart_id]), :class => 'btn btn-primary'%>
+        <%= link_to "#{cart_cost(session[:cart_id])} Checkout", orders_path, :class => 'btn btn-success' %>
         <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
-        <%= link_to "View/Edit Cart", cart_path(session[:cart_id]) %>
       <% end %>
     </div>
 
