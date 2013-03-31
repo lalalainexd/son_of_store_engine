@@ -24,7 +24,7 @@
     </tr>
   <% end %>
 </table>
-
+<%= button_to "Checkout", orders_path, :class => 'icon-shopping-cart btn btn-success icon-large' %>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
 <%= link_to 'Back', carts_path %>
