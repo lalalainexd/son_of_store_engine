@@ -5,7 +5,7 @@ describe "Products", js: true do
   let!(:p1) {Product.create( name: "Rations", price: 24,
   description: "Good for one 'splorer.", category_ids: ["1"])}
   let!(:p2) {Product.create( name: "Eggs", price: 5,
-  description: "Farm fresh and ready to consume.", retired: true, category_ids: ["1"])}
+  description: "Farm fresh and ready to consume.", category_ids: ["1"])}
   let!(:p3) {Product.create( name: "Apples", price: 19,
   description: "Great for a snack!", category_ids: ["1"])}
   let!(:u1) {User.create email: 'admin@oregonsale.com',
@@ -49,8 +49,11 @@ describe "Products", js: true do
 
       it 'can unretire product 2' do
         visit '/admin'
+        click_link "retire_#{p2.id}"
 
         click_link "Retired"
+        page.should have_content "#{p2.name}"
+
         click_link "unretire_#{p2.id}"
 
         page.should have_content "#{p2.name}"
