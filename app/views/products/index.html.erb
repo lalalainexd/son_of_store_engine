@@ -19,17 +19,32 @@
         <!-- Tabs by category -->
         <ul class="nav nav-tabs" id="productsTab">
           <% @categories.each do |category| %>
-            <li><a href="#<%= category.name %>" data-toggle="tab"><%= category.name %></a></li>
+            <li>
+              <a href="#<%= category.name %>" data-toggle="tab">
+                <%= category.name %>
+              </a>
+            </li>
           <% end %>
+            <li>
+              <a href="#retired" data-toggle="tab">
+                Retired
+              </a>
+            </li>
         </ul>
 
         <!-- Table bodies by category -->
         <div class="tab-content">
           <% @categories.each do |category| %>
             <div class="tab-pane" id="<%= category.name %>">
-              <%= render :partial => 'product_table', :locals => { :products => category.products } %>
+              <%= render :partial => 'product_table', :locals => 
+                { :products => category.products.where(retired: false) } %>
             </div>
           <% end %>
+          <!-- Retired Products category -->
+            <div class="tab-pane" id="retired">
+              <%= render :partial => "product_table", :locals => 
+                { :products => @retired_products } %>
+            </div>
         </div>
 
         <%= link_to t('.new', :default => t("helpers.links.new")),

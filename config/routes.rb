@@ -19,7 +19,7 @@ StoreEngine::Application.routes.draw do
   get "signup" => "users#new", :as => "signup"
   get "home/show"
   put 'product/:id/retire' => 'products#retire', :as => 'retire_product'
-              
+  put 'product/:id/unretire' => 'products#unretire', :as => 'unretire_product'              
 
   root :to => 'home#show'
 end
