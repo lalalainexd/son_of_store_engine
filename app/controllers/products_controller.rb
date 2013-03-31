@@ -29,9 +29,13 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @product }
+    if @product.retired == true
+      redirect_to home_show_path
+    else
+      respond_to do |format|
+        format.html
+        format.json { render json: @product }
+      end
     end
   end
 
