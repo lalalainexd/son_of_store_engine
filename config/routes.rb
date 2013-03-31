@@ -13,6 +13,8 @@ StoreEngine::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
   get "home/show"
+  put 'product/:id/retire' => 'products#retire', :as => 'retire_product'
+              
 
   root :to => 'home#show'
 end

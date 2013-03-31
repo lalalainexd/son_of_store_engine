@@ -33,7 +33,8 @@
         <% @products.each do |product| %>
           <tr>
             <td><%= link_to product.id, product_path(product) %></td>
-            <td><%= link_to product.name, product_path(product), :id => "product_link" %></td>
+            <td><%= link_to product.name, product_path(product), 
+              :id => "product_link" %></td>
             <td><%= product.description %></td>
             <td><%= product.price %></td>
             <td><%=l product.created_at %></td>
@@ -45,6 +46,9 @@
                           :method => :delete,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                           :class => 'btn btn-mini btn-danger' %>
+              <%= link_to "Retire", retire_product_path(product.id), 
+                :class => 'btn btn-mini', method: :put %>
+              
             </td>
           </tr>
         <% end %>
