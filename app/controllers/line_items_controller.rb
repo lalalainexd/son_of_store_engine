@@ -26,17 +26,19 @@ class LineItemsController < ApplicationController
   end
 
   def update
-    @line_item = LineItem.find(params[:id])
+    # @line_item = LineItem.find(params[:id])
 
-    respond_to do |format|
-      if @line_item.update_attributes(params[:line_item])
-        format.html { redirect_to @line_item.cart, notice: 'Product quanity was updated.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to @line_item.cart, notice: 'Could not update.' }
-        #format.json { render json: @line_item.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @line_item.update_attributes(params[:line_item])
+    #     format.html { redirect_to @line_item.cart, notice: 'Product quanity was updated.' }
+    #     format.json { head :no_content }
+    #   else
+    #     format.html { redirect_to @line_item.cart, notice: 'Could not update.' }
+    #     #format.json { render json: @line_item.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
+    # it seems to me we don't use this. correct me if wrong.
   end
 
   def increase

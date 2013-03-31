@@ -1,11 +1,11 @@
 class LineItem < ActiveRecord::Base
   attr_accessible :cart_id, :product_id, :product, :quantity
 
-  validates :cart_id, presence: true
   validates :product_id, presence: true
 
   belongs_to :product
   belongs_to :cart
+  belongs_to :order
 
   def increase_quantity
     quantity + 1

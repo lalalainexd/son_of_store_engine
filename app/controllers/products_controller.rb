@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
 
   def retire
     product = Product.find(params[:id])
+    authorize! :update, product
     product.retired = true
     product.save
 
@@ -21,6 +22,7 @@ class ProductsController < ApplicationController
 
   def unretire
     product = Product.find(params[:id])
+    authorize! :update, product
     product.retired = false
     product.save
 
@@ -66,8 +68,9 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
       else
-        format.html { render action: "new" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+        # format.html { render action: "new" }
+        # format.json { render json: @product.errors, status: :unprocessable_entity }
+        # We don't use this?
       end
     end
   end
@@ -85,8 +88,9 @@ class ProductsController < ApplicationController
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+      #  format.html { render action: "edit" }
+      #  format.json { render json: @product.errors, status: :unprocessable_entity }
+      #  We don't use this?
       end
     end
   end
