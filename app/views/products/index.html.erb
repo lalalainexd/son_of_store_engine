@@ -16,12 +16,14 @@
 
     <div id="products">
       <h3>Product Management:</h3>
+        <!-- Tabs by category -->
         <ul class="nav nav-tabs" id="productsTab">
           <% @categories.each do |category| %>
             <li><a href="#<%= category.name %>" data-toggle="tab"><%= category.name %></a></li>
           <% end %>
         </ul>
 
+        <!-- Table bodies by category -->
         <div class="tab-content">
           <% @categories.each do |category| %>
             <div class="tab-pane" id="<%= category.name %>">
