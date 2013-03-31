@@ -26,9 +26,7 @@ class LineItemsController < ApplicationController
   end
 
   def update
-    # fail
     @line_item = LineItem.find(params[:id])
-    puts params[:quantity]
 
     respond_to do |format|
       if @line_item.update_attributes(params[:line_item])
@@ -42,6 +40,23 @@ class LineItemsController < ApplicationController
   end
 
   def increase
-    LineItem.increase_quantity
+    @line_item = LineItem.find(params[:id])
+    if @line_item
+      @line_item.update_attribute("quantity", @line_item.increase_quantity)
+      redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+    end
+  end
+
+  def decrease
+    @line_item = LineItem.find(params[:id])
+    if @line_item
+      if @line_item.quantity <= 1
+        @line_item.delete
+        redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+      else
+        @line_item.update_attribute("quantity", @line_item.decrease_quantity)
+        redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+      end
+    end
   end
 end

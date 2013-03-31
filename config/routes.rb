@@ -1,5 +1,10 @@
 StoreEngine::Application.routes.draw do
-  resources :line_items
+  resources :line_items do
+    member do
+      put :increase
+      put :decrease
+    end
+  end
 
   resources :carts
   resources :products
