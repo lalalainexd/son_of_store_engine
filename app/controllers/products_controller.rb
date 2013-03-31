@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @categories = Category.all.sort_by {|c| c.name}
+    @retired_products = Product.where(:retired => true)
     authorize! :manage, @product
 
     respond_to do |format|
@@ -12,6 +13,14 @@ class ProductsController < ApplicationController
   def retire
     product = Product.find(params[:id])
     product.retired = true
+    product.save
+
+    redirect_to admin_path
+  end
+
+  def unretire
+    product = Product.find(params[:id])
+    product.retired = false
     product.save
 
     redirect_to admin_path
