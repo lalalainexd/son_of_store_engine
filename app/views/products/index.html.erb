@@ -4,17 +4,17 @@
     <div class="main_col">
       <h2>Dashboard</h2>
       <ul class="nav nav-tabs nav-stacked">
-        <li><a href="#invoices">Invoices</a></li>
+        <li><a href="#orders">Orders</a></li>
         <li><a href="#products">Products Management</a></li>
       </ul>
     </div>
   </div>
 
   <div class="span9">
-    <div id="invoices">
-      <h3>Invoices:</h3>
+    <div id="orders">
+      <h3>Orders:</h3>
 
-      <ul class="nav nav-tabs" id="invoicesTab">
+      <ul class="nav nav-tabs" id="ordersTab">
         <li><a href="#pending" data-toggle="tab">Pending</a></li>
         <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
         <li><a href="#paid" data-toggle="tab">Paid</a></li>
@@ -74,6 +74,6 @@
 <script>
   $(function () {
     $('#productsTab a:first').tab('show');
-    $('#invoicesTab a:first').tab('show');
+    $('#ordersTab a:first').tab('show');
   })
 </script>

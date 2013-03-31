@@ -79,4 +79,76 @@ User.create(email: "demoXX+jeff@jumpstartlab.com",
 User.create(email: "demoXX+steve@jumpstartlab.com",
   password: "password", role: :superuser)
 
+#LINE ITEMS
+##1
+LineItem.create(product_id: 1, cart_id: nil,
+  order_id: 1, quantity: 3)
+LineItem.create(product_id: 2, cart_id: nil,
+  order_id: 1, quantity: 4)
+LineItem.create(product_id: 3, cart_id: nil,
+  order_id: 1, quantity: 5)
+##
+
+LineItem.create(product_id: 4, cart_id: nil,
+  order_id: 2, quantity: 1)
+LineItem.create(product_id: 5, cart_id: nil,
+  order_id: 2, quantity: 15)
+LineItem.create(product_id: 6, cart_id: nil,
+  order_id: 2, quantity: 4)
+##
+
+LineItem.create(product_id: 7, cart_id: nil,
+  order_id: 3, quantity: 7)
+LineItem.create(product_id: 10, cart_id: nil,
+  order_id: 3, quantity: 1)
+##4
+LineItem.create(product_id: 1, cart_id: nil,
+  order_id: 4, quantity: 1)
+LineItem.create(product_id: 15, cart_id: nil,
+  order_id: 4, quantity: 1)
+##5
+LineItem.create(product_id: 13, cart_id: nil,
+  order_id: 5, quantity: 1)
+#6
+
+LineItem.create(product_id: 12, cart_id: nil,
+  order_id: 6, quantity: 6)
+LineItem.create(product_id: 11, cart_id: nil,
+  order_id: 6, quantity: 2)
+LineItem.create(product_id: 17, cart_id: nil,
+  order_id: 6, quantity: 2)
+##7
+LineItem.create(product_id: 9, cart_id: nil,
+  order_id: 7, quantity: 2)
+#8
+
+LineItem.create(product_id: 8, cart_id: nil,
+  order_id: 8, quantity: 20)
+#9
+
+LineItem.create(product_id: 4, cart_id: nil,
+  order_id: 9, quantity: 1)
+LineItem.create(product_id: 5, cart_id: nil,
+  order_id: 9, quantity: 2)
+LineItem.create(product_id: 6, cart_id: nil,
+  order_id: 9, quantity: 3)
+LineItem.create(product_id: 10, cart_id: nil,
+  order_id: 9, quantity: 4)
+##10
+LineItem.create(product_id: 24, cart_id: nil,
+  order_id: 10, quantity: 5)
+LineItem.create(product_id: 23, cart_id: nil,
+  order_id: 10, quantity: 6)
+#
+
 #ORDERS
+Order.create(status: "pending", user_id: 1)
+Order.create(status: "pending", user_id: 1)
+Order.create(status: "cancelled", user_id: 1)
+Order.create(status: "cancelled", user_id: 1)
+Order.create(status: "paid", user_id: 1)
+Order.create(status: "paid", user_id: 1)
+Order.create(status: "shipped", user_id: 1)
+Order.create(status: "shipped", user_id: 1)
+Order.create(status: "returned", user_id: 1)
+Order.create(status: "returned", user_id: 1)

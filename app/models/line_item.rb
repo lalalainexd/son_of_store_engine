@@ -1,5 +1,5 @@
 class LineItem < ActiveRecord::Base
-  attr_accessible :cart_id, :product_id, :product, :quantity
+  attr_accessible :cart_id, :product_id, :product, :quantity, :order_id
 
   validates :product_id, presence: true
 
