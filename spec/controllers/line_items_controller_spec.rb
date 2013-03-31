@@ -55,12 +55,5 @@ describe LineItemsController do
         delete :destroy, {:id => line_item.to_param}, valid_session
       }.to change(LineItem, :count).by(-1)
     end
-
-    it "redirects to the line_items list" do
-      line_item = LineItem.create! valid_attributes
-      delete :destroy, {:id => line_item.to_param}, valid_session
-      response.should redirect_to(line_items_path)
-    end
   end
-
 end

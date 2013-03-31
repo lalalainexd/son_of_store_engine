@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   def index
+    @products = Product.all
     @categories = Category.all.sort_by {|c| c.name}
     authorize! :manage, @product
 
