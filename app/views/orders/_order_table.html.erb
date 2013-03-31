@@ -2,12 +2,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.user.human_attribute_name(:email) %></th>
+      <th>ID</th>
+      <th>Email</th>
     </tr>
   </thead>
   <tbody>
-    <% @orders.each do |order| %>
+    <% orders.each do |order| %>
       <tr>
         <td><%= order.id %></td>
         <td><%= link_to order.user.email, "#" %></td>

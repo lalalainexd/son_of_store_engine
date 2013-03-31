@@ -13,21 +13,22 @@
   <div class="span9">
     <div id="orders">
       <h3>Orders:</h3>
-
+      <!-- Tabs by status -->
       <ul class="nav nav-tabs" id="ordersTab">
-        <li><a href="#pending" data-toggle="tab">Pending</a></li>
-        <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
-        <li><a href="#paid" data-toggle="tab">Paid</a></li>
-        <li><a href="#shipped" data-toggle="tab">Shipped</a></li>
-        <li><a href="#returned" data-toggle="tab">Returned</a></li>
+        <% @statuses.each do |status| %>
+        <li><a href="#<%= status %>" data-toggle="tab"><%= status.humanize %></a></li>
+        <% end %>
       </ul>
 
+      <!-- Table bodies by status -->
       <div class="tab-content">
-        <div class="tab-pane" id="pending"></div>
-        <div class="tab-pane" id="cancelled"></div>
-        <div class="tab-pane" id="paid"></div>
-        <div class="tab-pane" id="shipped"></div>
-        <div class="tab-pane" id="returned"></div>
+        <% @statuses.each do |status| %>
+          <div class="tab-pane" id="<%= status %>">
+            <%= render :partial => 'orders/order_table', :locals => 
+                  { :orders => Order.find_all_by_status(status) } %>
+            <!-- This probably needs to be hidden in the controller. -->
+          </div>
+        <% end %>
       </div>
     </div>
 
