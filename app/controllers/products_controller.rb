@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   def index
     @products = Product.all
+    @orders = Order.all
+    @statuses = %w[pending cancelled paid shipped returned]
     @categories = Category.all.sort_by {|c| c.name}
     @retired_products = Product.where(:retired => true)
     authorize! :manage, @product

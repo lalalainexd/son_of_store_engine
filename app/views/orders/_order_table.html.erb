@@ -1,0 +1,17 @@
+<%- model_class = Order -%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= link_to order.user.email, "#" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

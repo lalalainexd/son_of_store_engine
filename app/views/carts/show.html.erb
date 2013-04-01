@@ -4,6 +4,7 @@
     <th>Product Name</th>
     <th>Quantity</th>
     <th>Price</th>
+    <th>Subtotal</th>
     <th></th>
   </tr>
   <% @cart.line_items.each do |item| %>
@@ -14,7 +15,8 @@
         <span class="quantity"><%= item.quantity %></span>
         <%= link_to "", increase_line_item_path(item), :method => :put, :class => 'icon-plus-sign icon-large', :id => "increase_quantity" %>
       </td>
-      <td><%= item.product.price%></td>
+      <td><%= amount_in_dollars(item.product.price) %></td>
+      <td><%= amount_in_dollars(item.total) %>
       <td>
         <%= link_to (''),
                     line_item_path(item),
@@ -23,6 +25,12 @@
       </td>
     </tr>
   <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><strong>Total:</strong></td>
+      <td><strong><%= cart_cost(@cart) %></strong></td>
+      <td></td>
 </table>
 <%= button_to "Checkout", orders_path, :class => 'icon-shopping-cart btn btn-success icon-large' %>
 

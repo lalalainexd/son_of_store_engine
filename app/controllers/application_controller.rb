@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-  protected
+  helper_method :current_cart
 
   def current_cart
     Cart.find(session[:cart_id])
@@ -16,5 +16,4 @@ class ApplicationController < ActionController::Base
     session[:cart_id] = cart.id
     cart
   end
-    
 end

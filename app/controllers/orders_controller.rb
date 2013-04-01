@@ -32,9 +32,10 @@ class OrdersController < ApplicationController
 
   def create
     if current_user == false
-      redirect_to login_path, notice: 'You must create an account in order to checkout.'
+      redirect_to login_path, notice: 'You must be logged in to checkout. Please, login or create an account.'
     else
-      @order = Order.new(status: "pending", user_id: current_user.id)
+      total_cost = current_cart.calculate_total_cost
+      @order = Order.new(status: "pending", user_id: current_user.id, total_cost: total_cost)
       @order.add_line_items(current_cart)
 
       respond_to do |format|
