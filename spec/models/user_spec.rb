@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe User do
   describe "field: password" do
-    let(:new_user){User.new(email: "user@oregonsale.com") }
+    let(:new_user){User.new(full_name: "user",
+      email: "user@oregonsale.com") }
 
     context "when the password matches the password confirmation" do
       it "is valid" do
@@ -28,7 +29,8 @@ describe User do
   end
 
   describe "field: email" do
-    let(:new_user){User.new(password: "password",
+    let(:new_user){User.new(full_name: "bob",
+      password: "password",
       password_confirmation: "password") }
 
     context "when email entered" do
@@ -55,7 +57,7 @@ describe User do
 
     context "when an email is already in database" do
       before (:each) do
-        User.create(email: "someone@oregonsale.com",
+        User.create(full_name: "bob", email: "someone@oregonsale.com",
           password: "pw", password_confirmation: "pw")
       end
         

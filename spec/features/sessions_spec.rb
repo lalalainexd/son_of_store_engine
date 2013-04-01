@@ -12,7 +12,8 @@ describe "Sessions", js: true do
     context "if user exists" do
       it "logs in user as admin" do
 
-        User.create email: 'user@oregonsale.com',
+        User.create full_name: "user",
+          email: 'user@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
           role: 'user'
@@ -27,7 +28,8 @@ describe "Sessions", js: true do
 
       it "logs in user as normal" do
 
-        User.create email: 'admin@oregonsale.com',
+        User.create full_name: "admin",
+          email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
           role: 'admin'
@@ -55,7 +57,8 @@ describe "Sessions", js: true do
 
   context "when user is logged in" do
     it "can log out" do
-      User.create email: 'user@oregonsale.com',
+      User.create full_name: "user",
+          email: 'user@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
           role: 'admin'

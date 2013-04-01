@@ -8,7 +8,8 @@ describe "Products", js: true do
   description: "Farm fresh and ready to consume.", category_ids: ["1"])}
   let!(:p3) {Product.create( name: "Apples", price: 19,
   description: "Great for a snack!", category_ids: ["1"])}
-  let!(:u1) {User.create email: 'admin@oregonsale.com',
+  let!(:u1) {User.create full_name: "admin",
+          email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
           role: 'admin'}
