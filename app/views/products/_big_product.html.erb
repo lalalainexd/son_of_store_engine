@@ -3,7 +3,8 @@
 </div>
 <div>
   <h2 class="big_product_title" ><%= product.name %></h2>
+  $<%= product.price.to_f/100 %>
   <%= button_to 'Add to Cart', line_items_path(:product_id => product) %>
   <%= product.description %>
-  <%= product.price %>
+  
 </div>
