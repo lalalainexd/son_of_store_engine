@@ -32,6 +32,9 @@
         <%= link_to "Edit Cart", cart_path(session[:cart_id]), :class => 'btn btn-primary'%>
         <%= link_to "#{cart_cost(session[:cart_id])} Checkout", orders_path, :method => :post, :class => 'btn btn-success' %>
         <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
+      <% else %>
+        Cart is empty. 
+        <%= link_to image_tag("cart.png") %>
       <% end %>
     </div>
 
