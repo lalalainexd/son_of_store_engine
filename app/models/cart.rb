@@ -12,4 +12,8 @@ class Cart < ActiveRecord::Base
     current_item
   end
 
+  def self.find_valid(cart)
+    Cart.find(cart)
+  end
+
 end
