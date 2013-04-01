@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :status, :user_id
+  attr_accessible :status, :user_id, :total_cost
 
   has_many :line_items, :dependent => :destroy
 
@@ -11,4 +11,5 @@ class Order < ActiveRecord::Base
       line_items << item
     end
   end
+
 end
