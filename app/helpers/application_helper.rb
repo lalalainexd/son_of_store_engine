@@ -1,14 +1,10 @@
 module ApplicationHelper
   def cart_cost(cart)
     cart = Cart.find(cart)
-    if cart != nil
-      subtotals = cart.line_items.map do |item|
-        item.total
-      end
-      amount_in_dollars(add_all(subtotals))
-    else
-
+    subtotals = cart.line_items.map do |item|
+      item.total
     end
+    amount_in_dollars(add_all(subtotals))
   end
 
   def amount_in_dollars(cents)
