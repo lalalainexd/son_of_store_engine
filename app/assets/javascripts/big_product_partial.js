@@ -1,6 +1,4 @@
 $(document).ready(function(){
-  $('.big_product').hide();
-
   $(".small_product").click(function(){
     $('.big_product').hide();
     var current_id = $(this).attr('id');
