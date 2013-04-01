@@ -31,8 +31,12 @@ body {padding-top:60px;}
 // Example:
 // @linkColor: #ff0000;
 
+@mainColor: #EEEDC8;
+@highlight: #08C;
+
 body {
-  padding-top: 0px
+  padding-top: 0px;
+  font-family:@monoFontFamily;
 }
 .main_nav {
   text-align: right;
@@ -43,7 +47,7 @@ body {
 
 .main_col {
   padding: 10px 0px 10px 0px;
-  background-color:#EEEDC8;
+  background-color:@mainColor;
   text-align: center;
   position: relative;
 }
@@ -55,8 +59,7 @@ body {
   padding: 55px 0px 25px 0px;
 }
 .adtl_col {
-  background-color:#EEEDC8;
-  height: 300px;
+  background-color:@mainColor;
 }
 .nav-tabs.nav-stacked > li > a:hover {
   background-color: white;
@@ -81,13 +84,17 @@ body {
   opacity: 0.75;
   margin-top: 0px;
 }
+.product_pic{
+  float: right;
+  margin-right: 10px;
+}
 .big_product{
-  width: 650px;
-  height: 350px;
-  border: 2px solid green;
+  width: 700px;
+  height: 400px;
+  border: 1px solid black;
   background-color: #EEEDC8;
   margin-top: 10px;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 10px;
   display:none;
 
@@ -100,10 +107,6 @@ body {
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 
-
-
-
-
-
-
-
+@navbarBackground: @mainColor;
+@navbarBackgroundHighlight: @mainColor;
+@linkColor: @highlight;
