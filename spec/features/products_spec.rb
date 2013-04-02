@@ -64,7 +64,7 @@ describe "Products", js: true do
     context "user not logged in" do
       it "cannot create new product" do
         visit '/products/new'
-        page.should have_content "Access denied."
+        page.should have_content "Access denied"
       end
     end
   end

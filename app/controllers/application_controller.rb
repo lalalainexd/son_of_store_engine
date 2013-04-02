@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = "Access denied."
+    flash[:error] = "You can't ford that river (Access denied)"
     redirect_to root_url
   end
 
