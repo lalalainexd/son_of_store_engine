@@ -14,7 +14,7 @@
       <tr>
         <td><%= link_to product.name, product_path(product), :id => "product_link" %></td>
         <td><%= product.description %></td>
-        <td><%= product.price %></td>
+        <td><%= amount_in_dollars(product.price) %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_product_path(product), :class => 'btn btn-mini' %>
