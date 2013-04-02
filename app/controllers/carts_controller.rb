@@ -6,6 +6,11 @@ class CartsController < ApplicationController
   def show
     begin
       @cart = Cart.find(params[:id])
+      if @cart != current_cart
+        redirect_to root_path
+        flash[:error] = "You are not permitted to view that cart."
+        return
+      end
     rescue ActiveRecord::RecordNotFound
       logger.error "Attempt to access invalid cart #{params[:id]}"
       flash[:error] = "Invalid cart."
