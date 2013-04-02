@@ -17,7 +17,7 @@ describe UsersController do
 
   describe "POST 'create' with valid params" do
     let(:valid_attributes) do
-      { user: { email: "user@oregonstore.com", 
+      { user: { full_name: "name", email: "user@oregonstore.com", 
         password: "password", password_confirmation: "password" } }
     end
 

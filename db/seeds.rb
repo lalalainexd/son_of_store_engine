@@ -4,6 +4,7 @@ Category.create(name: "Clothing")
 Category.create(name: "Weapons")
 Category.create(name: "Tools")
 Category.create(name: "Medicine")
+Category.create(name: "Essentials")
 
 #GRUB
 Product.create( name: "Rations", price: 24,
@@ -71,13 +72,29 @@ Product.create( name: "Medicine bag", price: 1000,
 Product.create( name: "Cod Liver Oil", price: 10,
   description: "Tastes like dung. But good fer yer body.", category_ids: ["5"])
 
+#ESSENTIALS
+Product.create( name: "Oxen", price: 4000,
+  description: "Strong, durable, and more MPG than yer SUV.", category_ids: ["6"])
+Product.create( name: "Guide", price: 15000,
+  description: "Well hey there, partner! I'm here to help.", category_ids: ["6"])
+Product.create( name: "Wagon", price: 15000,
+  description: "Made of wood, so you know it's good.", category_ids: ["6"])
+Product.create( name: "Tombstone", price: 1000,
+  description: "Cause one person always gets off'd on the Oregon Trail. Always.", category_ids: ["6"])
+
+#RETIRED
+Product.create( name: "Peacoat", price: 3000,
+  description: "Classy coat for the classy gent.", category_ids: ["1"], retired: true)
+
 #USERS
-User.create(email: "demoXX+franklin@jumpstartlab.com",
-  password: "password", role: :user)
-User.create(email: "demoXX+jeff@jumpstartlab.com",
-  password: "password", role: :admin)
-User.create(email: "demoXX+steve@jumpstartlab.com",
-  password: "password", role: :superuser)
+User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.com",
+  password: "password", role: :user, display_name: nil)
+User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
+  password: "password", role: :admin, display_name: "j3")
+User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
+  password: "password", role: :superuser, display_name: "SkrilleX")
+User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
+  password: "password", role: :user, display_name: "Ree-na")
 
 #LINE ITEMS
 ##1
@@ -87,16 +104,14 @@ LineItem.create(product_id: 2, cart_id: nil,
   order_id: 1, quantity: 4)
 LineItem.create(product_id: 3, cart_id: nil,
   order_id: 1, quantity: 5)
-##
-
-LineItem.create(product_id: 4, cart_id: nil,
+##2
+LineItem.create(product_id: 25, cart_id: nil,
   order_id: 2, quantity: 1)
-LineItem.create(product_id: 5, cart_id: nil,
+LineItem.create(product_id: 26, cart_id: nil,
   order_id: 2, quantity: 15)
 LineItem.create(product_id: 6, cart_id: nil,
   order_id: 2, quantity: 4)
-##
-
+##3
 LineItem.create(product_id: 7, cart_id: nil,
   order_id: 3, quantity: 7)
 LineItem.create(product_id: 10, cart_id: nil,
@@ -109,8 +124,7 @@ LineItem.create(product_id: 15, cart_id: nil,
 ##5
 LineItem.create(product_id: 13, cart_id: nil,
   order_id: 5, quantity: 1)
-#6
-
+##6
 LineItem.create(product_id: 12, cart_id: nil,
   order_id: 6, quantity: 6)
 LineItem.create(product_id: 11, cart_id: nil,
@@ -120,17 +134,15 @@ LineItem.create(product_id: 17, cart_id: nil,
 ##7
 LineItem.create(product_id: 9, cart_id: nil,
   order_id: 7, quantity: 2)
-#8
-
+##8
 LineItem.create(product_id: 8, cart_id: nil,
   order_id: 8, quantity: 20)
-#9
-
-LineItem.create(product_id: 4, cart_id: nil,
+##9
+LineItem.create(product_id: 31, cart_id: nil,
   order_id: 9, quantity: 1)
-LineItem.create(product_id: 5, cart_id: nil,
+LineItem.create(product_id: 32, cart_id: nil,
   order_id: 9, quantity: 2)
-LineItem.create(product_id: 6, cart_id: nil,
+LineItem.create(product_id: 33, cart_id: nil,
   order_id: 9, quantity: 3)
 LineItem.create(product_id: 10, cart_id: nil,
   order_id: 9, quantity: 4)
@@ -139,16 +151,15 @@ LineItem.create(product_id: 24, cart_id: nil,
   order_id: 10, quantity: 5)
 LineItem.create(product_id: 23, cart_id: nil,
   order_id: 10, quantity: 6)
-#
 
 #ORDERS
 Order.create(status: "pending", user_id: 1)
-Order.create(status: "pending", user_id: 1)
+Order.create(status: "pending", user_id: 4)
 Order.create(status: "cancelled", user_id: 1)
 Order.create(status: "cancelled", user_id: 1)
+Order.create(status: "paid", user_id: 4)
 Order.create(status: "paid", user_id: 1)
-Order.create(status: "paid", user_id: 1)
-Order.create(status: "shipped", user_id: 1)
-Order.create(status: "shipped", user_id: 1)
+Order.create(status: "shipped", user_id: 4)
+Order.create(status: "shipped", user_id: 4)
 Order.create(status: "returned", user_id: 1)
-Order.create(status: "returned", user_id: 1)
+Order.create(status: "returned", user_id: 4)
