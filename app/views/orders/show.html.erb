@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Status:</b>
-  <%= @order.status %>
-</p>
 
-<%= @order.user.email %><br/>
+<h5>Full Name: <%= @order.user.full_name %></h5>
+<h5>User Email: <%= @order.user.email %></h5>
+<h5>User Id: <%= @order.user_id %></h5>
+<h5>Order Status: <%= @order.status.capitalize %></h5>
+<h5>Order Date / Time: <%= @order.created_at %><br/></h5>
 <br/>
 
 <table class="table">
@@ -18,34 +18,36 @@
   </tr>
   <% @order.line_items.each do |line_item| %>
     <tr>
-      <td><%= Product.find_by_id(line_item.product_id).name %></td>
+      <td>
+        <% name = Product.find_by_id(line_item.product_id).name %>
+        <%= link_to name, product_path(line_item.product_id) %>
+        </td>
       <td><%= amount_in_dollars(line_item.price) %></td>
-      <td><%= line_item.quantity %></td>
+      <td>Change quantity?<br/><%= line_item.quantity %></td>
       <td><%= line_item.product_id %></td>
-      <td><%= line_item.quantity * line_item.price %></td>
+      <td>
+        <%= amount_in_dollars(line_item.quantity * (line_item.price || 0)) %>
+      </td>
     </tr>
   <% end %>
 </table> 
 
-<br/>
-Full Name<br/>
-Address<br/>
-
-Order Date / Time<br/>
-
-Products Info / Links to Products Page<br/>
-
-Can Update Order<br/>
-
-Can cancel / mark as shipped/returned<br/>
+<h3>Total: <%= amount_in_dollars(@order.total_cost) %></h3><br/>
 
 
 
-<p>
-  <b>User:</b>
-  <%= @order.user_id %>
-</p>
 
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+
+
+
+
+
+<h4>Change Order Status To:</h4>
+<%= link_to 'Pending | ', change_order_status_path(:id => @order.id, :status => 'pending'), :method => "put" if (@order.status != "pending") %>
+<%= link_to 'Cancelled | ', change_order_status_path(:id => @order.id, :status => 'cancelled'), :method => "put" if @order.status != "cancelled" %>
+<%= link_to 'Paid | ', change_order_status_path(:id => @order.id, :status => 'paid'), :method => "put" if @order.status != "paid" %>
+<%= link_to 'Shipped | ', change_order_status_path(:id => @order.id, :status => 'shipped'), :method => "put" if @order.status != "shipped" %>
+<%= link_to 'Returned | ', change_order_status_path(:id => @order.id, :status => 'returned'), :method => "put" if @order.status != "returned" %>
+<%= link_to 'Edit Order | ', edit_order_path(@order) %>
+<%= link_to 'Go Back', admin_path %>

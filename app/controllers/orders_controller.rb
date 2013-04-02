@@ -17,6 +17,13 @@ class OrdersController < ApplicationController
     end
   end
 
+  def change_status
+    order = Order.find(params[:id])
+    order.status = params[:status]
+    order.save
+    redirect_to "/admin"
+  end
+
   def new
     @order = Order.new
 

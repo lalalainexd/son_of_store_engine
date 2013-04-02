@@ -3,16 +3,29 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Name</th>
       <th>Email</th>
-      <th>Stuff</th>
+      <th>Total</th>
+      <th>Change Status</th>
     </tr>
   </thead>
   <tbody>
     <% orders.each do |order| %>
       <tr>
         <td><%= link_to order.id, order_path(order.id) %></td>
+        <td><%= link_to order.user.full_name, order_path(order.id) %></td>
         <td><%= link_to order.user.email, order_path(order.id) %></td>
-        <td><%= order.inspect %></td>
+        <td>
+          <%= link_to amount_in_dollars(order.total_cost), 
+                  order_path(order.id) %>
+        </td>
+        <td>
+          <%= link_to 'Pending', change_order_status_path(:id => order.id, :status => 'pending'), :class => 'btn btn-mini', :method => "put" if (order.status != "pending") %>
+          <%= link_to 'Cancelled', change_order_status_path(:id => order.id, :status => 'cancelled'), :class => 'btn btn-mini', :method => "put" if order.status != "cancelled" %>
+          <%= link_to 'Paid', change_order_status_path(:id => order.id, :status => 'paid'), :class => 'btn btn-mini', :method => "put" if order.status != "paid" %>
+          <%= link_to 'Shipped', change_order_status_path(:id => order.id, :status => 'shipped'), :class => 'btn btn-mini', :method => "put" if order.status != "shipped" %>
+          <%= link_to 'Returned', change_order_status_path(:id => order.id, :status => 'returned'), :class => 'btn btn-mini', :method => "put" if order.status != "returned" %>
+        </td>
       </tr>
     <% end %>
   </tbody>
