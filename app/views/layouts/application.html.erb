@@ -22,7 +22,7 @@
   <div class="container">
     <div class="main_nav">
       <% if current_user %>
-        Logged in 
+        Logged in
           <% if current_user && (current_user.role?(:admin) || current_user.role?(:superuser))%>
             <%= link_to "(admin mode)", admin_path %>
           <% end %>
@@ -32,20 +32,24 @@
         <%= link_to "Sign up", signup_path %> or
         <%= link_to "log in", login_path %>.
       <% end %>
-      <% if session[:cart_id] %>
-        <%= link_to "Edit Cart", cart_path(session[:cart_id]), :class => 'btn btn-primary'%>
-        <%= link_to "#{cart_cost(session[:cart_id])} Checkout", orders_path, :method => :post, :class => 'btn btn-success' %>
-        <%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %>
-      <% else %>
-        Cart is empty. 
-        <%= image_tag("cart.png") %>
-      <% end %>
     </div>
 
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
         <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
+        <div class="cart">
+          Cart
+          <ul>
+          <% if session[:cart_id] %>
+            <li><%=cart_cost(session[:cart_id])%><br /><%= link_to "View", cart_path(session[:cart_id]) %></li>
+            <li><%= link_to "Checkout", orders_path, :method => :post, :class => 'btn btn-success' %></li>
+            <li><%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %></li>
+          <% else %>
+            <li><%= image_tag("cart.png") %></li>
+          <% end %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

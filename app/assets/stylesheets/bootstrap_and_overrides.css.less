@@ -37,6 +37,7 @@ body {padding-top:60px;}
 body {
   padding-top: 0px;
   font-family:@monoFontFamily;
+  background:url('/assets/bg.png');
 }
 .main_nav {
   text-align: right;
@@ -50,6 +51,7 @@ body {
   background-color:@mainColor;
   text-align: center;
   position: relative;
+  border:solid 1px #bbb;
 }
 .main_col li {
   text-align: left;
@@ -70,11 +72,15 @@ body {
 }
 .ribbon {
   position: absolute;
-  left: -10px;
+  left: -11px;
   top: -5px;
 }
 
 // CART STYLES
+
+.cart {float:right;border-left:#BBB solid 1px;border-right:#BBB solid 1px;height:63px;background:@mainColor;text-align:center;}
+.cart ul {list-style-type:none;padding:0px 15px;margin:0px;}
+.cart li {text-align:center;padding:0px;margin:0px;display:inline;float:left;padding:5px;}
 
 .quantity{font-weight:bold;font-size:24px;padding:3px;}
 .product_name{
@@ -107,6 +113,6 @@ body {
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
 }
 
-@navbarBackground: @mainColor;
-@navbarBackgroundHighlight: @mainColor;
+@navbarBackground: #D5DBAD;
+@navbarBackgroundHighlight: #E6E6AD;
 @linkColor: @highlight;
