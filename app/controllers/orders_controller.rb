@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   def index
     @orders = Order.all
+    authorize! :manage, Order
 
     respond_to do |format|
       format.html
@@ -10,6 +11,7 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    authorize! :read, Order
 
     respond_to do |format|
       format.html
@@ -26,6 +28,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    authorize! :create, Order
 
     respond_to do |format|
       format.html
@@ -35,6 +38,7 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
+    authorize! :update, Order
   end
 
   def create

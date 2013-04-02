@@ -1,6 +1,7 @@
 StoreEngine::Application.routes.draw do
   resources :orders
 
+  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
 
   resources :line_items do
     member do
