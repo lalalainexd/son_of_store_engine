@@ -15,17 +15,17 @@
       <h3>Orders:</h3>
       <!-- Tabs by status -->
       <ul class="nav nav-tabs" id="ordersTab">
-        <% @statuses.each do |status| %>
+        <% @dashboard.statuses.each do |status| %>
         <li><a href="#<%= status %>" data-toggle="tab"><%= status.humanize %></a></li>
         <% end %>
       </ul>
 
       <!-- Table bodies by status -->
       <div class="tab-content">
-        <% @statuses.each do |status| %>
+        <% @dashboard.orders_by_status.each do |status, orders| %>
           <div class="tab-pane" id="<%= status %>">
             <%= render :partial => 'orders/order_table', :locals => 
-                  { :orders => Order.find_all_by_status(status) } %>
+                  { :orders => orders } %>
             <!-- This probably needs to be hidden in the controller. -->
           </div>
         <% end %>
@@ -36,7 +36,7 @@
       <h3>Product Management:</h3>
         <!-- Tabs by category -->
         <ul class="nav nav-tabs" id="productsTab">
-          <% @categories.each do |category| %>
+          <% @dashboard.categories.each do |category| %>
             <li>
               <a href="#<%= category.name %>" data-toggle="tab">
                 <%= category.name %>
@@ -52,16 +52,16 @@
 
         <!-- Table bodies by category -->
         <div class="tab-content">
-          <% @categories.each do |category| %>
+          <% @dashboard.categories.each do |category| %>
             <div class="tab-pane" id="<%= category.name %>">
               <%= render :partial => 'product_table', :locals => 
-                { :products => category.products.where(retired: false) } %>
+                { :products => category.products.active } %>
             </div>
           <% end %>
           <!-- Retired Products category -->
             <div class="tab-pane" id="retired">
               <%= render :partial => "product_table", :locals => 
-                { :products => @retired_products } %>
+                { :products => @dashboard.retired_products } %>
             </div>
         </div>
 

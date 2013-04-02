@@ -20,11 +20,11 @@
                   order_path(order.id) %>
         </td>
         <td>
-          <%= link_to 'Pending', change_order_status_path(:id => order.id, :status => 'pending'), :class => 'btn btn-mini', :method => "put" if (order.status != "pending") %>
-          <%= link_to 'Cancelled', change_order_status_path(:id => order.id, :status => 'cancelled'), :class => 'btn btn-mini', :method => "put" if order.status != "cancelled" %>
-          <%= link_to 'Paid', change_order_status_path(:id => order.id, :status => 'paid'), :class => 'btn btn-mini', :method => "put" if order.status != "paid" %>
-          <%= link_to 'Shipped', change_order_status_path(:id => order.id, :status => 'shipped'), :class => 'btn btn-mini', :method => "put" if order.status != "shipped" %>
-          <%= link_to 'Returned', change_order_status_path(:id => order.id, :status => 'returned'), :class => 'btn btn-mini', :method => "put" if order.status != "returned" %>
+          <%= link_to 'Pending', change_status_on_order_path(:id => order.id, :status => 'pending'), :class => 'btn btn-mini', :method => "put" if (order.status != "pending") %>
+          <%= link_to 'Cancelled', change_status_on_order_path(:id => order.id, :status => 'cancelled'), :class => 'btn btn-mini', :method => "put" if order.status != "cancelled" %>
+          <%= link_to 'Paid', change_status_on_order_path(:id => order.id, :status => 'paid'), :class => 'btn btn-mini', :method => "put" if order.status != "paid" %>
+          <%= link_to 'Shipped', change_status_on_order_path(:id => order.id, :status => 'shipped'), :class => 'btn btn-mini', :method => "put" if order.status != "shipped" %>
+          <%= link_to 'Returned', change_status_on_order_path(:id => order.id, :status => 'returned'), :class => 'btn btn-mini', :method => "put" if order.status != "returned" %>
         </td>
       </tr>
     <% end %>

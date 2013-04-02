@@ -1,5 +1,9 @@
 StoreEngine::Application.routes.draw do
-  resources :orders
+  resources :orders do 
+    member do 
+      put :change_status, :as => "change_status_on"
+    end
+  end
 
   match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
 
@@ -11,20 +15,23 @@ StoreEngine::Application.routes.draw do
   end
 
   resources :carts
-  resources :products
+  resources :products do
+    member do
+      put :retire
+      put :unretire
+    end
+  end
+
   resources :categories
 
   resources :users
-  resources :sessions
+  resource :session
 
   get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
-  get "home/show"
-  put 'product/:id/retire' => 'products#retire', :as => 'retire_product'
-  put 'product/:id/unretire' => 'products#unretire', :as => 'unretire_product'
-  put "order/:id/change_status" => "orders#change_status", :as => "change_order_status"              
+  
 
   root :to => 'home#show'
 end

@@ -1,6 +1,6 @@
 <h1>Login to OregonSale!</h1>
 <p>Not signed up? Register <%= link_to "here", signup_path %></p>
-<%= form_tag sessions_path do %>
+<%= form_tag session_path do %>
   <div class="field">
     <%= label_tag :email %>
     <%= text_field_tag :email, params[:email] %>

@@ -19,15 +19,6 @@ describe ProductsController do
     @controller.stub(:current_ability).and_return(@ability)
   end
 
-  describe "GET index" do
-    it "assigns all products as @products" do
-      @ability.can :manage, Product
-      product = Product.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:products).should eq([product])
-    end
-  end
-
   describe "GET show" do
     it "assigns the requested product as @product" do
       product = Product.create! valid_attributes
