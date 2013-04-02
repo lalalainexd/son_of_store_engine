@@ -4,13 +4,15 @@
     <tr>
       <th>ID</th>
       <th>Email</th>
+      <th>Stuff</th>
     </tr>
   </thead>
   <tbody>
     <% orders.each do |order| %>
       <tr>
-        <td><%= order.id %></td>
-        <td><%= link_to order.user.email, "#" %></td>
+        <td><%= link_to order.id, order_path(order.id) %></td>
+        <td><%= link_to order.user.email, order_path(order.id) %></td>
+        <td><%= order.inspect %></td>
       </tr>
     <% end %>
   </tbody>

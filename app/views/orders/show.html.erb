@@ -5,6 +5,42 @@
   <%= @order.status %>
 </p>
 
+<%= @order.user.email %><br/>
+<br/>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Product Id</th>
+    <th>Subtotal</th>
+  </tr>
+  <% @order.line_items.each do |line_item| %>
+    <tr>
+      <td><%= Product.find_by_id(line_item.product_id).name %></td>
+      <td><%= amount_in_dollars(line_item.price) %></td>
+      <td><%= line_item.quantity %></td>
+      <td><%= line_item.product_id %></td>
+      <td><%= line_item.quantity * line_item.price %></td>
+    </tr>
+  <% end %>
+</table> 
+
+<br/>
+Full Name<br/>
+Address<br/>
+
+Order Date / Time<br/>
+
+Products Info / Links to Products Page<br/>
+
+Can Update Order<br/>
+
+Can cancel / mark as shipped/returned<br/>
+
+
+
 <p>
   <b>User:</b>
   <%= @order.user_id %>
