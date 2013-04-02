@@ -12,12 +12,16 @@ class Cart < ActiveRecord::Base
     current_item
   end
 
-  def self.find_valid(cart)
-    Cart.find(cart)
-  end
-
   def calculate_total_cost
     line_items.map { |item| item.total }.inject(0, :+)
+  end
+
+  def cart_cost(cart)
+    cart = current_cart
+    subtotals = cart.line_items.map do |item|
+      item.total
+    end
+    amount_in_dollars(add_all(subtotals))
   end
 
 end

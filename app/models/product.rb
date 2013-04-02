@@ -3,6 +3,8 @@ class Product < ActiveRecord::Base
 
   has_many :line_items
   before_destroy :ensure_not_referenced_by_any_line_item
+  scope :active, where(:retired => false)
+  scope :retired, where(:retired => true)
 
   if Rails.env.production?
     has_attached_file :image, 

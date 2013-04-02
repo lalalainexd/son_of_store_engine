@@ -23,7 +23,7 @@
         <%= link_to name, product_path(line_item.product_id) %>
         </td>
       <td><%= amount_in_dollars(line_item.price) %></td>
-      <td>Change quantity?<br/><%= line_item.quantity %></td>
+      <td><%= line_item.quantity %></td>
       <td><%= line_item.product_id %></td>
       <td>
         <%= amount_in_dollars(line_item.quantity * (line_item.price || 0)) %>
@@ -44,10 +44,10 @@
 
 
 <h4>Change Order Status To:</h4>
-<%= link_to 'Pending | ', change_order_status_path(:id => @order.id, :status => 'pending'), :method => "put" if (@order.status != "pending") %>
-<%= link_to 'Cancelled | ', change_order_status_path(:id => @order.id, :status => 'cancelled'), :method => "put" if @order.status != "cancelled" %>
-<%= link_to 'Paid | ', change_order_status_path(:id => @order.id, :status => 'paid'), :method => "put" if @order.status != "paid" %>
-<%= link_to 'Shipped | ', change_order_status_path(:id => @order.id, :status => 'shipped'), :method => "put" if @order.status != "shipped" %>
-<%= link_to 'Returned | ', change_order_status_path(:id => @order.id, :status => 'returned'), :method => "put" if @order.status != "returned" %>
+<%= link_to 'Pending | ', change_status_on_order_path(:id => @order.id, :status => 'pending'), :method => "put" if (@order.status != "pending") %>
+<%= link_to 'Cancelled | ', change_status_on_order_path(:id => @order.id, :status => 'cancelled'), :method => "put" if @order.status != "cancelled" %>
+<%= link_to 'Paid | ', change_status_on_order_path(:id => @order.id, :status => 'paid'), :method => "put" if @order.status != "paid" %>
+<%= link_to 'Shipped | ', change_status_on_order_path(:id => @order.id, :status => 'shipped'), :method => "put" if @order.status != "shipped" %>
+<%= link_to 'Returned | ', change_status_on_order_path(:id => @order.id, :status => 'returned'), :method => "put" if @order.status != "returned" %>
 <%= link_to 'Edit Order | ', edit_order_path(@order) %>
 <%= link_to 'Go Back', admin_path %>

@@ -1,16 +1,10 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
-    @orders = Order.all
-    @statuses = %w[pending cancelled paid shipped returned]
-    @categories = Category.all.sort_by {|c| c.name}
-    @retired_products = Product.where(:retired => true)
-    authorize! :manage, @product
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @products }
-    end
+    @dashboard = Dashboard.new
+    authorize! :manage, Product
+
+    render :index
   end
 
   def retire
@@ -37,10 +31,7 @@ class ProductsController < ApplicationController
     if @product.retired == true
       redirect_to home_show_path
     else
-      respond_to do |format|
-        format.html
-        format.json { render json: @product }
-      end
+      render :show
     end
   end
 
@@ -65,15 +56,8 @@ class ProductsController < ApplicationController
     @product = Product.new(params[:product])
     authorize! :create, @product
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render json: @product, status: :created, location: @product }
-      else
-        # format.html { render action: "new" }
-        # format.json { render json: @product.errors, status: :unprocessable_entity }
-        # We don't use this?
-      end
+    if @product.save
+      redirect_to @product, notice: 'Product was successfully created.'
     end
   end
 
@@ -85,15 +69,8 @@ class ProductsController < ApplicationController
     params[:product][:category_ids] ||= []
     @product = Product.find(params[:id])
     
-    respond_to do |format|
-      if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-        format.json { head :no_content }
-      else
-      #  format.html { render action: "edit" }
-      #  format.json { render json: @product.errors, status: :unprocessable_entity }
-      #  We don't use this?
-      end
+    if @product.update_attributes(params[:product])
+      redirect_to @product, notice: 'Product was successfully updated.'
     end
   end
 
@@ -102,9 +79,6 @@ class ProductsController < ApplicationController
     authorize! :destroy, @product
     @product.destroy
 
-    respond_to do |format|
-      format.html { redirect_to products_url }
-      format.json { head :no_content }
-    end
+    redirect_to products_url
   end
 end

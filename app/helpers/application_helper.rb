@@ -1,6 +1,6 @@
 module ApplicationHelper
   def cart_cost(cart)
-    cart = current_cart
+    #cart = current_cart
     subtotals = cart.line_items.map do |item|
       item.total
     end
@@ -13,5 +13,9 @@ module ApplicationHelper
 
   def add_all(items=[])
     items.inject(0, :+)
+  end
+
+  def category_counts()
+    ########Implement this
   end
 end
