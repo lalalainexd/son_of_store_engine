@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def cart_cost(cart)
-    #cart = current_cart
+  def cart_cost
+    cart = current_cart
     subtotals = cart.line_items.map do |item|
       item.total
     end
