@@ -11,6 +11,8 @@ iconic_stroke.ttf: iconic_stroke-49b9e92e8e8821a7166e90e9845e4811.ttf
 iconic_stroke/index.ttf: iconic_stroke-49b9e92e8e8821a7166e90e9845e4811.ttf
 iconic_stroke.woff: iconic_stroke-9394aa97d3d4e011d6a4a2a3c07f078f.woff
 iconic_stroke/index.woff: iconic_stroke-9394aa97d3d4e011d6a4a2a3c07f078f.woff
+bg.png: bg-c0f66e66513422114efe95eb81c67cd8.png
+bg/index.png: bg-c0f66e66513422114efe95eb81c67cd8.png
 cart.png: cart-6f7d5a7b57bac70354e436ac2bc53dfd.png
 cart/index.png: cart-6f7d5a7b57bac70354e436ac2bc53dfd.png
 categories.png: categories-ce6109bc4e1eef053e928f5089355f0e.png
@@ -25,8 +27,8 @@ slider-03.png: slider-03-86228329c891306084f3543de7c5fa4e.png
 slider-03/index.png: slider-03-86228329c891306084f3543de7c5fa4e.png
 application.js: application-e2f95710593722f24e83bc828094b94a.js
 application/index.js: application-e2f95710593722f24e83bc828094b94a.js
-application.css: application-c4ece669be5d101e29ab2ec34699b65e.css
-application/index.css: application-c4ece669be5d101e29ab2ec34699b65e.css
+application.css: application-c0016b32af034df7f27da5e53010f377.css
+application/index.css: application-c0016b32af034df7f27da5e53010f377.css
 fontawesome-webfont.eot: fontawesome-webfont-635909f146e208b3509acdf3b154bf0d.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-635909f146e208b3509acdf3b154bf0d.eot
 fontawesome-webfont.ttf: fontawesome-webfont-6a4e273908b7e43d9e479d38b8ae5957.ttf
