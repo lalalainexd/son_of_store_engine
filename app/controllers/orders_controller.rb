@@ -50,7 +50,7 @@ class OrdersController < ApplicationController
       @order.add_line_items(current_cart)
 
       respond_to do |format|
-        if @order.save
+        if @order.save_with_payment
           Cart.destroy(session[:cart_id])
           session[:cart_id] = nil
           format.html { redirect_to root_path, notice: 'Thanks! Your order was successfully submitted.' }
