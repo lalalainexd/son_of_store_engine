@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe Order do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'add_line_items' do
+    it "adds order id to each line_item in a cart at checkout" do
+    end
+  end
 end
