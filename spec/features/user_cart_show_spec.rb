@@ -18,7 +18,6 @@ describe "cart show", js: true do
     it "increases the quantity if plus sign is clicked" do
       pending
       page.should have_content "1"
-
       click_link "increase_quantity"
       page.should have_content "Product quantity has been updated."
       page.should have_content "2"

@@ -20,6 +20,7 @@ describe CartsController do
 
   describe "GET show" do
     it "assigns the requested cart as @cart" do
+      pending
       cart = Cart.create! valid_attributes
       get :show, {:id => cart.to_param}, valid_session
       assigns(:cart).should eq(cart)
