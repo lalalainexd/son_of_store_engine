@@ -28,9 +28,9 @@ class Trip < ActiveRecord::Base
   end
 
   def self.pace_quantity_multipler
-    { "Steady" => 2.0,
+    { "Steady" => 1.2,
       "Strenuous" => 1.0,
-      "Grueling" => 0.5
+      "Grueling" => 0.8
       } 
   end
 
