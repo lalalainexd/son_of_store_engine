@@ -5,8 +5,8 @@ class CartsController < ApplicationController
 
   def show
     begin
-      @cart = Cart.find(params[:id])
-      if @cart != current_cart
+      @cart = current_cart
+      unless @cart
         redirect_to root_path
         flash[:error] = "You are not permitted to view that cart."
         return
