@@ -3,30 +3,21 @@ class CategoriesController < ApplicationController
     @categories = Category.all
     authorize! :manage, @category
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @categories }
-    end
+    render :index
   end
 
   def show
     @category = Category.find(params[:id])
     @categories = Category.all.sort
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @category }
-    end
+    render :show
   end
 
   def new
     @category = Category.new
     authorize! :create, @category
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @category }
-    end
+    render :new
   end
 
   def edit
@@ -37,15 +28,8 @@ class CategoriesController < ApplicationController
     @category = Category.new(params[:category])
     authorize! :create, @category
 
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
-        format.json { render json: @category, status: :created, location: @category }
-      else
-        # format.html { render action: "new" }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
-        # We don't use this! Let's?
-      end
+    if @category.save
+      redirect_to @category, notice: 'Category was successfully created.' 
     end
   end
 
@@ -53,15 +37,8 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     authorize! :update, @category
 
-    respond_to do |format|
-      if @category.update_attributes(params[:category])
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
-        format.json { head :no_content }
-      else
-        # format.html { render action: "edit" }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
-        # We don't use this?
-      end
+    if @category.update_attributes(params[:category])
+      redirect_to @category, notice: 'Category was successfully updated.'
     end
   end
 
@@ -70,9 +47,6 @@ class CategoriesController < ApplicationController
     authorize! :destroy, @category
     @category.destroy
 
-    respond_to do |format|
-      format.html { redirect_to categories_path }
-      format.json { head :no_content }
-    end
+    redirect_to categories_path
   end
 end
