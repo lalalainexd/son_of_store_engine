@@ -1,0 +1,48 @@
+<h2>Invoices for <%= @user.full_name %></h2>
+
+<div class="accordion" id="invoiceAccordion">
+  <% @user.orders.each_with_index do |order, i| %>
+    <div class="accordion-group">
+
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
+          <% if order.status == 'shipped' || order.status == 'cancelled' %>
+            <%= i+1 %>. Order was <%= order.status %> by OregonSale on <%= order.updated_at %>
+          <% else %>
+            <%= i+1 %>. Order is currently <%= order.status %> on <%= order.created_at %>
+          <% end %>
+        </a>
+      </div>
+
+      <div id="collapse_<%= i+1 %>" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <table class="table table-striped">
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          <% order.line_items.each do |item| %>
+            <tr>
+              <td><%= link_to item.product.name, product_path(item.product) %></td>
+              <td><%= item.quantity %></td>
+              <td><%= amount_in_dollars(item.price) %></td>
+              <td><%= amount_in_dollars(item.historical_total) %></td>
+              <td></td>
+            </tr>
+          <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><strong>Total:</strong></td>
+              <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
+              <td></td>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>

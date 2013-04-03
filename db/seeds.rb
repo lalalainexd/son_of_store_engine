@@ -99,67 +99,67 @@ User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
 #LINE ITEMS
 ##1
 LineItem.create(product_id: 1, cart_id: nil,
-  order_id: 1, quantity: 3)
+  order_id: 1, quantity: 3, price: 24)
 LineItem.create(product_id: 2, cart_id: nil,
-  order_id: 1, quantity: 4)
+  order_id: 1, quantity: 4, price: 200)
 LineItem.create(product_id: 3, cart_id: nil,
-  order_id: 1, quantity: 5)
+  order_id: 1, quantity: 5, price: 500)
 ##2
 LineItem.create(product_id: 25, cart_id: nil,
-  order_id: 2, quantity: 1)
+  order_id: 2, quantity: 1, price: 300)
 LineItem.create(product_id: 26, cart_id: nil,
-  order_id: 2, quantity: 15)
+  order_id: 2, quantity: 15, price: 205)
 LineItem.create(product_id: 6, cart_id: nil,
-  order_id: 2, quantity: 4)
+  order_id: 2, quantity: 4, price: 1000)
 ##3
 LineItem.create(product_id: 7, cart_id: nil,
-  order_id: 3, quantity: 7)
+  order_id: 3, quantity: 7, price: 600)
 LineItem.create(product_id: 10, cart_id: nil,
-  order_id: 3, quantity: 1)
+  order_id: 3, quantity: 1, price: 5)
 ##4
 LineItem.create(product_id: 1, cart_id: nil,
-  order_id: 4, quantity: 1)
+  order_id: 4, quantity: 1, price: 377)
 LineItem.create(product_id: 15, cart_id: nil,
-  order_id: 4, quantity: 1)
+  order_id: 4, quantity: 1, price: 111)
 ##5
 LineItem.create(product_id: 13, cart_id: nil,
-  order_id: 5, quantity: 1)
+  order_id: 5, quantity: 1, price: 800)
 ##6
 LineItem.create(product_id: 12, cart_id: nil,
-  order_id: 6, quantity: 6)
+  order_id: 6, quantity: 6, price: 123)
 LineItem.create(product_id: 11, cart_id: nil,
-  order_id: 6, quantity: 2)
+  order_id: 6, quantity: 2, price: 111)
 LineItem.create(product_id: 17, cart_id: nil,
-  order_id: 6, quantity: 2)
+  order_id: 6, quantity: 2, price: 89)
 ##7
 LineItem.create(product_id: 9, cart_id: nil,
-  order_id: 7, quantity: 2)
+  order_id: 7, quantity: 2, price: 4)
 ##8
 LineItem.create(product_id: 8, cart_id: nil,
-  order_id: 8, quantity: 20)
+  order_id: 8, quantity: 20, price: 800)
 ##9
 LineItem.create(product_id: 31, cart_id: nil,
-  order_id: 9, quantity: 1)
+  order_id: 9, quantity: 1, price: 444)
 LineItem.create(product_id: 32, cart_id: nil,
-  order_id: 9, quantity: 2)
+  order_id: 9, quantity: 2, price: 1230)
 LineItem.create(product_id: 33, cart_id: nil,
-  order_id: 9, quantity: 3)
+  order_id: 9, quantity: 3, price: 500)
 LineItem.create(product_id: 10, cart_id: nil,
-  order_id: 9, quantity: 4)
+  order_id: 9, quantity: 4, price: 110)
 ##10
 LineItem.create(product_id: 24, cart_id: nil,
-  order_id: 10, quantity: 5)
+  order_id: 10, quantity: 5, price: 80)
 LineItem.create(product_id: 23, cart_id: nil,
-  order_id: 10, quantity: 6)
+  order_id: 10, quantity: 6, price: 10)
 
 #ORDERS
-Order.create(status: "pending", user_id: 1)
-Order.create(status: "pending", user_id: 4)
-Order.create(status: "cancelled", user_id: 1)
-Order.create(status: "cancelled", user_id: 1)
-Order.create(status: "paid", user_id: 4)
-Order.create(status: "paid", user_id: 1)
-Order.create(status: "shipped", user_id: 4)
-Order.create(status: "shipped", user_id: 4)
-Order.create(status: "returned", user_id: 1)
-Order.create(status: "returned", user_id: 4)
+Order.create(status: "pending", user_id: 1, total_cost: 3372)
+Order.create(status: "pending", user_id: 4, total_cost: 7375)
+Order.create(status: "cancelled", user_id: 1, total_cost: 4205)
+Order.create(status: "cancelled", user_id: 1, total_cost: 488)
+Order.create(status: "paid", user_id: 4, total_cost: 800)
+Order.create(status: "paid", user_id: 1, total_cost: 1138)
+Order.create(status: "shipped", user_id: 4, total_cost: 8)
+Order.create(status: "shipped", user_id: 4, total_cost: 16000)
+Order.create(status: "returned", user_id: 1, total_cost: 4844)
+Order.create(status: "returned", user_id: 4, total_cost: 460)
