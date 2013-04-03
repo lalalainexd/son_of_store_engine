@@ -37,7 +37,10 @@
     <!-- Brand and main nav -->
     <div class="navbar">
       <div class="navbar-inner">
-        <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
+        <div class="left">
+          <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
+          <%= render :partial => 'search/search' %>
+        </div>
         <div class="cart">
           Cart
           <ul>

@@ -1,0 +1,57 @@
+<h3>Products matching your search:</h3>
+<ul class="thumbnails">
+  <% @products.each do |product| %>
+    <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+  <% end %>
+</ul>
+
+<% @products.each do |product| %>
+  <div class="big_product" id="big_product_<%= product.id %>" >
+   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+  </div>
+<% end %>
+
+<% if @user == false %>
+  
+<% elsif @user.orders.count == 0 %>
+  <h4>No Orders for User</h4>
+<% else %>
+  <h3>Orders for <%= @user.full_name %> matching search critera:</h2>
+
+  <% @orders.each_with_index do |order, i| %>
+ 
+    <% if order.status == 'shipped' || order.status == 'cancelled' %>
+      <%= i+1 %>. Order was <%= order.status %> by OregonSale <%= time_ago_in_words(order.updated_at) %> ago
+    <% else %>
+      <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at %>
+    <% end %> 
+      
+    <table class="table table-striped">
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    <% order.line_items.each do |item| %>
+      <tr>
+        <td><%= link_to item.product.name, product_path(item.product) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= amount_in_dollars(item.price) %></td>
+        <td><%= amount_in_dollars(item.historical_total) %></td>
+        <td></td>
+      </tr>
+    <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><strong>Total:</strong></td>
+        <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
+        <td></td>
+    </table>
+
+  <% end %>
+<% end %>
+
+<br><br><br><br><br><br><br><br>
