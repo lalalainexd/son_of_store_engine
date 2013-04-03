@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
-  attr_accessor :stripe_card_token
 
-  attr_accessible :full_name, :display_name, :email, :password, :password_confirmation, :role
+
+  attr_accessible :full_name, :display_name, :email, :password, :password_confirmation, :role, :stripe_customer_token
 
   validates_presence_of :full_name, on: :create
   validates_confirmation_of :password

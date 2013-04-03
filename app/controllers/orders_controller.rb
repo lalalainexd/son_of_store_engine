@@ -46,11 +46,12 @@ class OrdersController < ApplicationController
       redirect_to login_path, notice: 'You must be logged in to checkout. Please, login or create an account.'
     else
       total_cost = current_cart.calculate_total_cost
+      token = params[:order]["stripe_card_token"]
       @order = Order.new(status: "pending", user_id: current_user.id, total_cost: total_cost)
       @order.add_line_items(current_cart)
 
       respond_to do |format|
-        if @order.save_with_payment
+        if @order.save_with_payment(token)
           Cart.destroy(session[:cart_id])
           session[:cart_id] = nil
           format.html { redirect_to root_path, notice: 'Thanks! Your order was successfully submitted.' }

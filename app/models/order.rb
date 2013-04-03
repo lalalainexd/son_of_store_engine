@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   attr_accessible :status, :user_id, :total_cost
 
+  attr_accessor :stripe_card_token
   has_many :line_items, :dependent => :destroy
 
   belongs_to :user
@@ -12,14 +13,13 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def save_with_payment
+  def save_with_payment(stripe_card_token)
     if valid?
-      customer = Stripe::Customer.create(description: email, plan: plan_id, card: stripe_card_token)
-      current_user.stripe_customer_token = customer.id
+      Stripe::Charge.create(amount: total_cost, card: stripe_card_token, currency: "usd")
       save!
     end
   rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while creating customer: #{e.message}"
+    logger.error "Stripe error while creating charge: #{e.message}"
     errors.add :base, "There was a problem with your credit card."
     false
   end

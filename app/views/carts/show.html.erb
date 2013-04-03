@@ -32,7 +32,7 @@
       <td><strong><%= cart_cost(@cart) %></strong></td>
       <td></td>
 </table>
-<%= button_to "Checkout", orders_path, :class => 'icon-shopping-cart btn btn-success icon-large' %>
+<p><%= link_to " Checkout", new_order_path, :class => 'icon-shopping-cart btn btn-success' %></p>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
 <%= link_to 'Back', carts_path %>

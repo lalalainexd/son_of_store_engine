@@ -44,7 +44,7 @@
           <ul>
           <% if session[:cart_id] %>
             <li><%=cart_cost(session[:cart_id])%><br /><%= link_to "View", cart_path(session[:cart_id]) %></li>
-            <li><%= link_to "Checkout", orders_path, :method => :post, :class => 'btn btn-success' %></li>
+            <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
             <li><%= link_to image_tag("cart.png"), cart_path(session[:cart_id]) %></li>
           <% else %>
             <li><%= image_tag("cart.png") %></li>
