@@ -7,9 +7,9 @@
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
           <% if order.status == 'shipped' || order.status == 'cancelled' %>
-            <%= i+1 %>. Order was <%= order.status %> by OregonSale on <%= order.updated_at %>
+            <%= i+1 %>. Order was <%= order.status %> by OregonSale <%= time_ago_in_words(order.updated_at) %> ago
           <% else %>
-            <%= i+1 %>. Order is currently <%= order.status %> on <%= order.created_at %>
+            <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at %>
           <% end %>
         </a>
       </div>
