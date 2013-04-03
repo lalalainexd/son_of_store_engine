@@ -3,10 +3,7 @@ class OrdersController < ApplicationController
     @orders = Order.all
     authorize! :manage, Order
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @orders }
-    end
+    render :index
   end
 
   def show
@@ -27,10 +24,7 @@ class OrdersController < ApplicationController
     @order = Order.new
     authorize! :create, Order
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @order }
-    end
+    render :new
   end
 
   def edit
