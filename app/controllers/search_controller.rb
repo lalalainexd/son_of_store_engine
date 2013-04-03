@@ -7,6 +7,7 @@ class SearchController < ApplicationController
   end
 
   def admin_search
+    @orders = Order.all
     render :admin_search
   end
 
@@ -14,8 +15,10 @@ private
 
   def product_search(search)
     if search
-      x = Product.find(:all, :conditions => ['name LIKE ?', "%#{search}%"])
-      x += Product.find(:all, :conditions => ['description LIKE ?', "%#{search}%"])
+      products = Product.find(:all, 
+        :conditions => ['name LIKE ?', "%#{search}%"])
+      products += Product.find(:all, 
+        :conditions => ['description LIKE ?', "%#{search}%"])
     else
       Product.find(:all)
     end
