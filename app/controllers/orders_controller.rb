@@ -34,14 +34,14 @@ class OrdersController < ApplicationController
 
   def create
     unless current_user
-      flash[:error] = 'You must be logged in to checkout. Please, login or create an account.'
+      flash[:error] = 'You must log in to checkout. Please, login or signup.'
       redirect_to login_path and return
     end
 
     if Order.create_from_cart_for_user(current_cart, current_user)
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to root_path, notice: 'Thanks! Your order was successfully submitted.'
+      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
     end
@@ -49,12 +49,12 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-  
+
     if @order.update_attributes(params[:order])
       redirect_to @order, notice: 'Order was successfully updated.'
     else
-      render action: "edit" 
-    end  
+      render action: "edit"
+    end
   end
 
   def destroy

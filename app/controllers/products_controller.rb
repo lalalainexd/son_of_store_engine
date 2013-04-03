@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
     params[:product][:retired] ||= []
     params[:product][:category_ids] ||= []
     @product = Product.find(params[:id])
-    
+
     if @product.update_attributes(params[:product])
       redirect_to @product, notice: 'Product was successfully updated.'
     end

@@ -12,7 +12,8 @@ class Order < ActiveRecord::Base
 
   def self.create_from_cart_for_user(cart, user)
     total_cost = cart.calculate_total_cost
-    order = Order.new(status: "pending", user_id: user.id, total_cost: total_cost)
+    order = Order.new(status: "pending", user_id: user.id,
+          total_cost: total_cost)
     order.add_line_items(cart)
     order.save
   end

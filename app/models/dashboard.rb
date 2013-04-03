@@ -12,7 +12,7 @@ class Dashboard
   end
 
   def categories
-    @categories ||= Category.by_name   
+    @categories ||= Category.by_name
   end
 
   def retired_products
