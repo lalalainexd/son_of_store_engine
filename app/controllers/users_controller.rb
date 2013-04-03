@@ -18,8 +18,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    if @user != current_user
+    @user = current_user
+    unless @user # != User.find(params[:id])
       redirect_to root_path
       flash[:error] = "You are not permitted to view that user."
       return
