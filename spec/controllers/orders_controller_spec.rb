@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe OrdersController do
-  # before (:each) do
-  #   @ability = Object.new
-  #   @ability.extend(CanCan::Ability)
-  #   @controller.stub(:current_ability).and_return(@ability)
-  # end
   let(:user) {User.create(email: "josh@example.com", role: "user")}
 
   def valid_attributes

@@ -33,17 +33,36 @@ class OrdersController < ApplicationController
   end
 
   def create
+<<<<<<< HEAD
     unless current_user
       flash[:error] = 'You must log in to checkout. Please, login or signup.'
       redirect_to login_path and return
     end
 
-    if Order.create_from_cart_for_user(current_cart, current_user)
+    if Order.create_from_cart_for_user(current_cart, current_user, params[:order]["stripe_card_token"])
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
+    end
+=======
+      token = params[:order]["stripe_card_token"]
+      @order = Order.new(status: "pending", user_id: current_user.id, total_cost: total_cost)
+      @order.add_line_items(current_cart)
+
+      respond_to do |format|
+        if @order.save_with_payment(token)
+          Cart.destroy(session[:cart_id])
+          session[:cart_id] = nil
+          format.html { redirect_to root_path, notice: 'Thanks! Your order was successfully submitted.' }
+          format.json { render json: @order, status: :created, location: @order }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+        end
+      end
+>>>>>>> stripe
     end
   end
 
