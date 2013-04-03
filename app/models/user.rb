@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :orders
 
   attr_accessible :full_name, :display_name, :email, :password,
-                  :password_confirmation, :role
+                  :password_confirmation, :role, :stripe_customer_token
 
   validates_presence_of :full_name, on: :create
   validates_confirmation_of :password

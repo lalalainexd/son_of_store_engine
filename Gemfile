@@ -9,6 +9,7 @@ gem 'aws-sdk'
 gem 'rspec-rails'
 gem 'sorcery'
 gem 'cancan'
+gem 'stripe'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

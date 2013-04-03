@@ -37,5 +37,6 @@ StoreEngine::Application.routes.draw do
   get "search" => "search#user_search", :as => "search"
   get "admin_search" => "search#admin_search", :as => "admin_search"
 
+
   root :to => 'home#show'
 end

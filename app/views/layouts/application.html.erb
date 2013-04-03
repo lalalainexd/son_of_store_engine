@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= content_for?(:title) ? yield(:title) : "OregonSale" %></title>
   <%= csrf_meta_tags %>
+  <%= tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY %>
 
   <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
   <!--[if lt IE 9]>
@@ -46,7 +47,7 @@
           <ul>
           <% if session[:cart_id] %>
             <li><%=cart_cost%><br /><%= link_to "View", my_cart_path %></li>
-            <li><%= link_to "Checkout", orders_path, :method => :post, :class => 'btn btn-success' %></li>
+            <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
             <li><%= link_to image_tag("cart.png"), my_cart_path %></li>
           <% else %>
             <li><%= image_tag("cart.png") %></li>
@@ -71,6 +72,6 @@
     <%= yield %>
   </div>
 
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "https://js.stripe.com/v1/", "application" %>
 </body>
 </html>

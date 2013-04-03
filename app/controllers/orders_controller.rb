@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
       redirect_to login_path and return
     end
 
-    if Order.create_from_cart_for_user(current_cart, current_user)
+    if Order.create_from_cart_for_user(current_cart, current_user, params[:order]["stripe_card_token"])
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'
