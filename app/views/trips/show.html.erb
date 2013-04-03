@@ -2,17 +2,21 @@
 <div class="page-header">
   <h1>Cart Recommendations for Your Trip</h1>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong>Pioneers: </strong></dt>
-  <dd><%= @trip.children %> kiddos and <%= @trip.adults %> adults</dd>
-  <dt><strong>Initial post:</strong></dt>
-  <dd><%= @trip.city_of_origin %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:pace) %>:</strong></dt>
-  <dd><%= @trip.pace %></dd>
-  <dt><strong>Starting in:</strong></dt>
-  <dd><%= @trip.month_of_departure %></dd>
-</dl>
+<div class="span12">
+  <h4>Trip details:</h4>
+  <dl class="dl-horizontal">
+    <dt><strong>Pioneers: </strong></dt>
+    <dd><%= @trip.children %> kiddos and <%= @trip.adults %> adults</dd>
+    <dt><strong>Initial post:</strong></dt>
+    <dd><%= @trip.city_of_origin %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:pace) %>:</strong></dt>
+    <dd><%= @trip.pace %></dd>
+    <dt><strong>Starting in:</strong></dt>
+    <dd><%= @trip.month_of_departure %></dd>
+  </dl>
+  <%= link_to "Edit Trip Details",
+              edit_trip_path(@trip), :class => 'btn' %>
+</div>
 
 <div class="span12">
   <h4>Basics:</h4>
@@ -42,7 +46,5 @@
 </div>
 
 <div class="span12">
-<div class="form-actions">
-  <%= link_to "Edit Trip Details",
-              edit_trip_path(@trip), :class => 'btn' %>
-</div></div>
+  
+</div>

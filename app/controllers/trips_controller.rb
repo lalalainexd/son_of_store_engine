@@ -41,18 +41,8 @@ class TripsController < ApplicationController
       Product.find_by_name("Medicine bag") =>
         ((@trip.children+@trip.adults)/2).to_i,
       Product.find_by_name("Stone Hunting Knife") =>
-        (@trip.children+@trip.adults).to_i
+        (@trip.adults).to_i
     }
-    # @seasonals = {
-    #   Product.find_by_name("Antivenom") =>
-    #     (2 * (@trip.children+@trip.adults)).to_i,
-    #   Product.find_by_name("Basic Tunic") =>
-    #     (2 * (@trip.children+@trip.adults)).to_i,
-    #   Product.find_by_name("Basic Tunic") =>
-    #     (2 * (@trip.children+@trip.adults)).to_i,
-    #   Product.find_by_name("Basic Tunic") =>
-    #     (2 * (@trip.children+@trip.adults)).to_i
-    # }
 
     render :show
   end
