@@ -43,7 +43,7 @@
           Cart
           <ul>
           <% if session[:cart_id] %>
-            <li><%=cart_cost%><br /><%= link_to "View", my_cart_path %></li>
+            <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
             <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
             <li><%= link_to image_tag("cart.png"), my_cart_path %></li>
           <% else %>
