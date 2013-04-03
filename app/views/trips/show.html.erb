@@ -4,15 +4,13 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:children) %>:</strong></dt>
-  <dd><%= @trip.children %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:adults) %>:</strong></dt>
-  <dd><%= @trip.adults %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:city_of_origin) %>:</strong></dt>
+  <dt><strong>Pioneers: </strong></dt>
+  <dd><%= @trip.children %> kiddos and <%= @trip.adults %> adults</dd>
+  <dt><strong>Initial post:</strong></dt>
   <dd><%= @trip.city_of_origin %></dd>
   <dt><strong><%= model_class.human_attribute_name(:pace) %>:</strong></dt>
   <dd><%= @trip.pace %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:month_of_departure) %>:</strong></dt>
+  <dt><strong>Starting in:</strong></dt>
   <dd><%= @trip.month_of_departure %></dd>
 </dl>
 
