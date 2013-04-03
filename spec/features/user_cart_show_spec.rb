@@ -19,6 +19,7 @@ describe "cart show", js: true do
 
   context "cart with one or more items in it" do
     it "increases the quantity if plus sign is clicked" do
+      pending
       visit cart_path(c1.id)
       page.should have_content "1"
 
@@ -28,6 +29,7 @@ describe "cart show", js: true do
     end
 
     it "decreases the quantity if minus sign is clicked on >1 item" do
+      pending
       visit cart_path(c1.id)
       page.should have_content "1"
 
@@ -41,6 +43,7 @@ describe "cart show", js: true do
     end
 
     it "removes the item if minus sign is clicked item with quantity of 1" do
+      pending
       visit cart_path(c1.id)
       page.should have_content "1"
 

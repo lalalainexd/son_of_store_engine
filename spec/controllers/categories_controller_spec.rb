@@ -86,12 +86,6 @@ describe CategoriesController do
       @ability.can :update, Category
     end
 
-      it "updates the requested category" do
-        category = Category.create! valid_attributes
-        Category.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
-        put :update, {:id => category.to_param, :category => { "name" => "MyString" }}, valid_session
-      end
-
       it "assigns the requested category as @category" do
         category = Category.create! valid_attributes
         put :update, {:id => category.to_param, :category => valid_attributes}, valid_session

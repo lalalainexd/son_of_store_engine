@@ -39,10 +39,7 @@ class ProductsController < ApplicationController
     @product = Product.new
     authorize! :create, @product
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @product }
-    end
+    render :new
   end
 
   def edit
