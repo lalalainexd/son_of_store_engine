@@ -24,6 +24,7 @@ class Order < ActiveRecord::Base
   def save_with_payment(card_token)
     if valid?
       Stripe::Charge.create(amount: total_cost, card: card_token, currency: "usd")
+      self.status = "paid"
       save!
     end
   rescue Stripe::InvalidRequestError => e
