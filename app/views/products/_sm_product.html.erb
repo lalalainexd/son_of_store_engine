@@ -11,7 +11,7 @@
     <span id="<%= p.id %>" class="small_product">
       <i><%= amount_in_dollars(p.price) %></i>
     </span>
-    <%= button_to 'Add to Cart', line_items_path(:product_id => p), :class => "btn btn-success" %>
+    <%= button_to 'Add to Cart', line_items_path(:product_id => p), :class => "btn btn-success", :id => "prod_#{p.id}" %>
   </div>
 </li>
 
