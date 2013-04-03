@@ -22,7 +22,7 @@
   <div class="container">
     <div class="main_nav">
       <% if current_user %>
-        Logged in
+        Pioneering 
           <% if current_user && (current_user.role?(:admin) || current_user.role?(:superuser))%>
             <%= link_to "(admin mode)", admin_path %>
           <% end %>
