@@ -10,6 +10,43 @@ class TripsController < ApplicationController
 
   def show
     @trip = Trip.find(params[:id])
+    # All numbers are meant for a group of 4
+    @basics = {
+      Product.find_by_name("Oxen") =>
+        (4 * Trip.multiplier[@trip.city_of_origin]).to_i,
+      Product.find_by_name("Guide") =>
+        (1 * Trip.multiplier[@trip.city_of_origin]).to_i,
+      Product.find_by_name("Tombstone") =>
+        (1 * Trip.multiplier[@trip.city_of_origin]).to_i,
+      Product.find_by_name("Kentucky Rifle") =>
+        (1 * Trip.multiplier[@trip.city_of_origin]).to_i}
+    @foods = {
+      Product.find_by_name("Rations") =>
+        (20 * Trip.multiplier[@trip.city_of_origin] *
+          (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Bacon") =>
+        (5 * Trip.multiplier[@trip.city_of_origin] *
+          (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Sarsaparilla") =>
+        (5 * Trip.multiplier[@trip.city_of_origin] *
+          (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Apples") =>
+        (5 * Trip.multiplier[@trip.city_of_origin] *
+          (@trip.children+@trip.adults)).to_i}
+    @tools = {
+      Product.find_by_name("Basic Tunic") =>
+        (2 * (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Basic Tunic") =>
+        (2 * (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Basic Tunic") =>
+        (2 * (@trip.children+@trip.adults)).to_i,
+      Product.find_by_name("Basic Tunic") =>
+        (2 * (@trip.children+@trip.adults)).to_i,
+    }
+
+    # @city = Trip.city_quantity_multipler[@trip.city_of_origin]
+    # @pace = Trip.pace_quantity_multipler[@trip.pace]
+    # @city_mult = Trip.city_quantity_multipler[@trip.city_of_origin]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -31,7 +68,17 @@ class TripsController < ApplicationController
   end
 
   def create
+
     @trip = Trip.new(params[:trip])
+
+
+    #params passed in params[:trip]
+     # {"children"=>"2",
+     # "adults"=>"2",
+     # "city_of_origin"=>"Independence,
+     # Missouri",
+     # "pace"=>"Steady",
+     # "month_of_departure"=>"January"}
 
     respond_to do |format|
       if @trip.save
