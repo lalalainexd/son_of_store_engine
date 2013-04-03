@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   scope :retired, where(:retired => true)
 
   if Rails.env.production?
-    has_attached_file :image, 
+    has_attached_file :image,
       :styles => {
         small: '100x100>',
         medium: '200x200>',
@@ -21,10 +21,10 @@ class Product < ActiveRecord::Base
       :path => ":attachment/:id/:style.:extension",
       :s3_credentials => {
         :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-        :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'] 
+        :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
       }
   else
-    has_attached_file :image, 
+    has_attached_file :image,
       :styles => {
         small: '100x100>',
         medium: '200x200>',
@@ -38,7 +38,7 @@ class Product < ActiveRecord::Base
       :path => ":attachment/:id/:style.:extension",
       :bucket => 'oregon-sale'
   end
-  
+
   has_many :product_categories
   has_many :categories, :through => :product_categories
 

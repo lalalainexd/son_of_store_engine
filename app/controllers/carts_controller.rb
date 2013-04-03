@@ -40,7 +40,7 @@ class CartsController < ApplicationController
     @cart = Cart.find(params[:id])
 
     if @cart.update_attributes(params[:cart])
-      redirect_to @cart, notice: 'Cart was successfully updated.' 
+      redirect_to @cart, notice: 'Cart was successfully updated.'
     else
       render action: "edit"
     end
@@ -50,7 +50,7 @@ class CartsController < ApplicationController
     @cart = Cart.find(params[:id])
     @cart.destroy
 
-    redirect_to carts_path      
+    redirect_to carts_path
   end
 
 end

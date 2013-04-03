@@ -31,10 +31,12 @@ class LineItemsController < ApplicationController
     if @line_item
       if @line_item.quantity <= 1
         @line_item.delete
-        redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+        redirect_to @line_item.cart,
+                    notice: 'Product quantity has been updated.'
       else
         @line_item.update_attribute("quantity", @line_item.decrease_quantity)
-        redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+        redirect_to @line_item.cart,
+                    notice: 'Product quantity has been updated.'
       end
     end
   end

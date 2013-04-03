@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
     authorize! :create, @category
 
     if @category.save
-      redirect_to @category, notice: 'Category was successfully created.' 
+      redirect_to @category, notice: 'Category was successfully created.'
     end
   end
 
