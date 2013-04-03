@@ -18,4 +18,8 @@ class LineItem < ActiveRecord::Base
   def total
     quantity.to_i * product.price.to_i
   end
+
+  def historical_total
+    quantity.to_i * price.to_i
+  end
 end
