@@ -33,6 +33,11 @@ describe "Orders", js: true do
       click_link "Paid"
     end
 
+    it 'can visit new page' do
+      
+    end
+
+
   end
 
 
