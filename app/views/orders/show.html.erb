@@ -42,7 +42,7 @@
 
 
 
-
+<% if can? :manage, Order %>
 <h4>Change Order Status To:</h4>
 <%= link_to 'Pending | ', change_status_on_order_path(:id => @order.id, :status => 'pending'), :method => "put" if (@order.status != "pending") %>
 <%= link_to 'Cancelled | ', change_status_on_order_path(:id => @order.id, :status => 'cancelled'), :method => "put" if @order.status != "cancelled" %>
@@ -51,3 +51,4 @@
 <%= link_to 'Returned | ', change_status_on_order_path(:id => @order.id, :status => 'returned'), :method => "put" if @order.status != "returned" %>
 <%= link_to 'Edit Order | ', edit_order_path(@order) %>
 <%= link_to 'Go Back', admin_path %>
+<% end %>
