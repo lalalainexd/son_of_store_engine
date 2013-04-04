@@ -11,8 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130402143036) do
 
+ActiveRecord::Schema.define(:version => 20130403172848) do
+  
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -60,6 +61,16 @@ ActiveRecord::Schema.define(:version => 20130402143036) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.boolean  "retired",            :default => false
+  end
+
+  create_table "trips", :force => true do |t|
+    t.integer  "children"
+    t.integer  "adults"
+    t.string   "city_of_origin"
+    t.string   "pace"
+    t.string   "month_of_departure"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -1,0 +1,41 @@
+<%= form_for @trip, :html => { :class => 'form-horizontal' } do |f| %>
+
+  <div class="control-group">
+    <%= f.label :children, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :children, Trip::CHILDREN, :to_s, :humanize, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :adults, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :adults, Trip::ADULTS, :to_s, :humanize, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :city_of_origin, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :city_of_origin, Trip::CITIES, :to_s, :titleize, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :pace, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :pace, Trip::PACE, :to_s, :humanize, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :month_of_departure, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :month_of_departure, Trip::MONTHS, :to_s, :humanize, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  </div>
+<% end %>
