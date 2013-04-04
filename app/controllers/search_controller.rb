@@ -11,9 +11,9 @@ private
   def product_search(search)
     if search
       products = Product.find(:all,
-        :conditions => ['name ILIKE ?', "%#{search}%"])
+        :conditions => ['name LIKE ?', "%#{search}%"])
       products += Product.find(:all,
-        :conditions => ['description ILIKE ?', "%#{search}%"])
+        :conditions => ['description LIKE ?', "%#{search}%"])
     else
       Product.find(:all)
     end
