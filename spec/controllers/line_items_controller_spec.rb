@@ -55,4 +55,22 @@ describe LineItemsController do
       }.to change(LineItem, :count).by(-1)
     end
   end
+
+  describe "PUT commands" do
+    before (:each) do
+      @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
+      post :create, {product_id: product.id, cart_id: cart.id}
+    end
+
+    describe "quantity" do
+      it "increases quantity" do
+        put :increase, :id => 1
+      end
+
+      it "decreases quantity" do
+        put :increase, :id => 1
+        put :decrease, :id => 1
+      end
+    end
+  end
 end

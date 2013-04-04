@@ -10,9 +10,9 @@ private
 
   def product_search(search)
     if search
-      products = Product.find(:all, 
+      products = Product.find(:all,
         :conditions => ['name LIKE ?', "%#{search}%"])
-      products += Product.find(:all, 
+      products += Product.find(:all,
         :conditions => ['description LIKE ?', "%#{search}%"])
     else
       Product.find(:all)
@@ -22,14 +22,14 @@ private
   def user_orders_search(search, user)
     if user
       orders = Order.where(:user_id => user.id)
-    else 
+    else
       orders = Order.where(:user_id => "none")
     end
 
     returned_orders = Order.where(:user_id => "none")
 
     if search && user
-      returned_orders += orders.find(:all, :conditions => ['status LIKE ?', 
+      returned_orders += orders.find(:all, :conditions => ['status LIKE ?',
                                             "%#{search}%"])
       returned_orders = line_item_finder(returned_orders, orders, search)
     else

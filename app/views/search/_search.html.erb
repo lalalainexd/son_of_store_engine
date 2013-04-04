@@ -1,6 +1,6 @@
 <span class="search">
   <%= form_tag search_path, :method => 'get' do %>
     <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => "search_button" %>
+    <%= submit_tag "Search", :id => "click_search", :name => "search_button" %>
   <% end %>
 </span>

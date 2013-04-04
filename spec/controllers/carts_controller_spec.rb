@@ -16,6 +16,10 @@ describe CartsController do
       get :index, {}, valid_session
       assigns(:carts).should eq([cart])
     end
+
+    it "gets index" do
+      get :index
+    end
   end
 
   describe "GET show" do
