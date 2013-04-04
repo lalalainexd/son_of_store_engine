@@ -70,7 +70,7 @@ StoreEngine::Application.configure do
     user_name: "oregontrailsale@gmail.com",
     password: "dysent4ry"
   }
-config.action_mailer.default_url_options = {host: "oregonsale.herokuapp.com"}
+  config.action_mailer.default_url_options = {host: "oregonsale.herokuapp.com"}
   # Enable threaded mode
   # config.threadsafe!
 
