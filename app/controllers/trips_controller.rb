@@ -1,10 +1,4 @@
 class TripsController < ApplicationController
-  def index
-    @trips = Trip.all
-
-    render :index
-  end
-
   def show
     @trip = Trip.find(params[:id])
     @basics = {
@@ -75,10 +69,10 @@ class TripsController < ApplicationController
     end
   end
 
-  def destroy
-    @trip = Trip.find(params[:id])
-    @trip.destroy
+  # def destroy
+  #   @trip = Trip.find(params[:id])
+  #   @trip.destroy
 
-    redirect_to trips_path
-  end
+  #   redirect_to trips_path
+  # end
 end
