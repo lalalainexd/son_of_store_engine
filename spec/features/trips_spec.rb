@@ -19,4 +19,16 @@ describe "Trips", js: true do
     end
   end
 
+  describe 'edit' do
+    it "is able to be editted" do
+      visit '/trips/new'
+      click_button "Create Trip"
+
+      page.should have_content "Cart Recommendations"
+      click_link "Edit Trip Details"
+
+      page.should have_content "Edit"
+    end
+  end
+
 end
