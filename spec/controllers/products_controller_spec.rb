@@ -124,27 +124,6 @@ describe ProductsController do
     before (:each) do
       @ability.can :manage, Product
     end
-
-    context "user clicks the retire button" do
-      it "retires the product" do
-        pending
-        #experimenting in features spec
-        expect(p1.retired).to eq false
-        get :retire, {id: p1.id}, valid_session
-        expect(p1.retired).to eq true
-      end
-    end
-
-    context "user clicks the retire button" do
-      it "unretires the product" do
-        pending
-        expect(p1.retired).to eq false
-        put :retire, id: p1.id
-        expect(p1.retired).to eq true
-        put :unretire, id: p1.id
-        expect(p1.retired).to eq false
-      end
-    end
   end
 
 end
