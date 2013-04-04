@@ -2,15 +2,14 @@ require 'spec_helper'
 
 describe Cart do
   describe 'cart_cost' do
-  let!(:cart1){Cart.create}
-  let!(:p1) {Product.create(name: "Name", description: "Description")}
-  let!(:li1){LineItem.create(product_id: 1, cart_id: 1,
-  order_id: 1, quantity: 3, price: 24)}
+    let!(:cart){Cart.create}
+    let!(:product) {Product.create(name: "Name", description: "Description")}
+    let!(:line_item){LineItem.create(product_id: 1, cart_id: 1,
+    order_id: 1, quantity: 1, price: 24)}
 
-    it "checks the cart cost" do
-      pending
-      cart1.cart_cost(cart1)
-      expect(cart.cart_cost(cart)).to be_eq 200
+    it "increases the line_item quantity when adding a duplicate product" do
+      updated_line_item = cart.add_product(product)
+      expect(updated_line_item.quantity).to eq(2)
     end
   end
 end

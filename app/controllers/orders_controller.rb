@@ -8,9 +8,10 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    authorize! :read, Order
+    authorize! :manage, Order
 
     render :show
+
   end
 
   def change_status
@@ -43,8 +44,11 @@ class OrdersController < ApplicationController
       redirect_to login_path and return
     end
 
-    if Order.create_from_cart_for_user(current_cart, current_user,
-                                  params[:order]["stripe_card_token"])
+    if order = Order.create_from_cart_for_user(current_cart,
+                                               current_user,
+                                               params[:order]["stripe_card_token"])
+
+      UserMailer.order_confirmation(current_user, order).deliver
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'
