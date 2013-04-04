@@ -8,15 +8,10 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    authorize! :read, Order
+    authorize! :manage, Order
 
-    if @order.user != current_user
-      flash[:error] =
-        "Can't ford that river."
-      redirect_back_or_to root_path
-    else
-      render :show
-    end
+    render :show
+
   end
 
   def change_status
