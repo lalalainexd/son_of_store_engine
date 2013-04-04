@@ -42,7 +42,7 @@ class Trip < ActiveRecord::Base
       (1 * multiplier[trip.city_of_origin]).to_i,
     Product.find_by_name("Tombstone") =>
       (1 * multiplier[trip.city_of_origin] *
-        ((trip.children+trip.adults)/2))).to_i,
+        ((trip.children+trip.adults)/2)).to_i,
     Product.find_by_name("Wagon") =>
       (0.25 * multiplier[trip.city_of_origin] *
         (trip.children+trip.adults)).to_i}
