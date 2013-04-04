@@ -22,7 +22,8 @@ class OrdersController < ApplicationController
 
   def new
     if current_cart.calculate_total_cost <= 50
-      flash[:error] = "Sorry Partner. Your cart must contains at least $0.51 worth of goods."
+      flash[:error] =
+        "Sorry Partner. Your cart must contains at least $0.51 worth of goods."
       redirect_to :back and return
     end
     @order = Order.new
@@ -42,7 +43,8 @@ class OrdersController < ApplicationController
       redirect_to login_path and return
     end
 
-    if Order.create_from_cart_for_user(current_cart, current_user, params[:order]["stripe_card_token"])
+    if Order.create_from_cart_for_user(current_cart, current_user,
+                                  params[:order]["stripe_card_token"])
       current_cart.destroy
       session[:cart_id] = nil
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'

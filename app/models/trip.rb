@@ -1,5 +1,6 @@
 class Trip < ActiveRecord::Base
-  attr_accessible :adults, :children, :city_of_origin, :month_of_departure, :pace
+  attr_accessible :adults, :children, :city_of_origin,
+                  :month_of_departure, :pace
 
   private
   CITIES = ['St. Louis, Missouri',
@@ -11,9 +12,9 @@ class Trip < ActiveRecord::Base
 
   PACE = %w[Steady Strenuous Grueling]
 
-  MONTHS = %w[January February March 
-              April May June July 
-              August September October 
+  MONTHS = %w[January February March
+              April May June July
+              August September October
               November December]
 
   CHILDREN = %w[0 1 2 3 4 5 6]
