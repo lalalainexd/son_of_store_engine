@@ -34,27 +34,26 @@ describe "Products", js: true do
         expect(Product.all.first.name).to_not equal initial_name
       end
 
-      it "can retire product 1" do
-        pending
+      it "can retire product" do
         visit '/admin'
-        sleep 5
-        click_link "retire_#{p1.id}"
+        click_link "Grub"
+        click_link "retire_1"
 
         click_link "Retired"
         page.should have_content "#{p1.name}"
       end
 
       it 'can unretire product 2' do
-        pending
         visit '/admin'
-        click_link "retire_#{p2.id}"
+        click_link "Grub"
+        click_link "retire_2"
 
         click_link "Retired"
-        page.should have_content "#{p2.name}"
+        page.should have_content "Apples"
 
-        click_link "unretire_#{p2.id}"
-
-        page.should have_content "#{p2.name}"
+        click_link "unretire_2"
+        click_link "Grub"
+        page.should have_content "Apples"
       end
     end
 
