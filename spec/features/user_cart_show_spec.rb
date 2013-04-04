@@ -10,9 +10,6 @@ describe "cart show", js: true do
   context "cart with one or more items in it" do
     before(:each) do
       
-      # visit root_path
-      # click_button "prod_1"
-      # click_link "View"
     end
 
 
