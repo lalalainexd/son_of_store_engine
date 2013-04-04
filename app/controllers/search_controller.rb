@@ -1,7 +1,8 @@
 class SearchController < ApplicationController
   def user_search
-    @products = product_search(params[:search]) 
+    @products = product_search(params[:search])
     @user = current_user
+    @stuff = []
     @orders = user_order_search(params[:search], current_user)
     render :user_search
   end
@@ -27,15 +28,30 @@ private
   def user_order_search(search, user)
     if user
       orders = Order.where(:user_id => user.id)
+    else 
+      orders = Order.where(:user_id => "none")
     end
 
-    returned_orders = orders
-    
-    if search
-      returned_orders = orders.find(:all, :conditions => ['status LIKE ?', "%#{search}%"])
+    returned_orders = Order.where(:user_id => "none")
+
+    if search && user
+      returned_orders += orders.find(:all, :conditions => ['status LIKE ?', 
+                                            "%#{search}%"])
+      orders.each do |order|
+        order.line_items.each do |line_item|
+          if line_item.product.name.downcase.include? search.downcase
+            returned_orders << order
+          end
+          if line_item.product.description.downcase.include? search.downcase
+            returned_orders << order
+          end
+        end
+      end
+    else
+      returned_orders = orders
     end
 
-    returned_orders
+    returned_orders.uniq
   end
 end
 
