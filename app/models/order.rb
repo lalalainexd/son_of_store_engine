@@ -31,8 +31,7 @@ class Order < ActiveRecord::Base
         currency: "usd")
       self.status = "paid"
       self.confirmation = generate_confirmation_code
-      save!
-      self
+      save!; self
     end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating charge: #{e.message}"

@@ -31,6 +31,13 @@ describe OrdersController do
     end
   end
 
+  describe "GET new" do
+    it "new order without items redirects" do
+      get :new, {}, {}
+      response.should redirect_to(root_path)
+    end
+  end
+
   describe "POST create" do
     describe "with valid params and logged in" do
       before(:each) do
