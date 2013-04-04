@@ -1,12 +1,7 @@
 require 'spec_helper'
 
 describe "Users", js: true do
-  let!(:p1) {Product.create( name: "Rations", price: 24,
-  description: "Good for one 'splorer.")}
-  let!(:p2) {Product.create( name: "Eggs", price: 5,
-  description: "Farm fresh and ready to consume.")}
-  let!(:p3) {Product.create( name: "Apples", price: 19,
-  description: "Great for a snack!")}
+  include_context "standard test dataset"
 
   context "when user credentials are invalid" do
     it "returns user to form" do
