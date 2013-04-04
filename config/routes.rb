@@ -39,9 +39,6 @@ StoreEngine::Application.routes.draw do
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
   get "search" => "search#user_search", :as => "search"
-  get "admin_search" => "search#admin_search", :as => "admin_search"
-  get "admin_advanced_search" => "search#admin_advanced_search", 
-                                      :as => "admin_advanced_search"
 
 
   root :to => 'home#show'
