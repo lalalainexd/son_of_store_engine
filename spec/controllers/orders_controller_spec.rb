@@ -23,13 +23,6 @@ describe OrdersController do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new order as @order" do
-      get :new, {}
-      assigns(:order).should be_a_new(Order)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested order as @order" do
       order = Order.create! valid_attributes
@@ -43,22 +36,12 @@ describe OrdersController do
       before(:each) do
         login_user(user)
       end
-      it "creates a new Order" do
-        expect {
-          post :create, {:order => valid_attributes}
-        }.to change(Order, :count).by(1)
-      end
 
       it "assigns a newly created order as @order" do
         pending
         post :create, {:order => valid_attributes}
         assigns(:order).should be_a(Order)
         assigns(:order).should be_persisted
-      end
-
-      it "redirects to the created order" do
-        post :create, {:order => valid_attributes}
-        response.should redirect_to(root_path)
       end
     end
 

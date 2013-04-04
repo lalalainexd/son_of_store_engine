@@ -3,6 +3,7 @@ class LineItemsController < ApplicationController
     @cart = current_cart
     product = Product.find(params[:product_id])
     @line_item = @cart.add_product(product)
+    @line_item.quantity = params[:quantity] if params[:quantity]
 
     if @line_item.save
       redirect_to :back, notice: 'Product successfully added to your cart.'
