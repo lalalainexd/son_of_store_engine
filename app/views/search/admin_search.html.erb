@@ -1,4 +1,4 @@
-Administrator Search<br><br>
+<h2>Administrator Search</h2>
 
 Search orders using a builder-style interface (like Google’s "Advanced Search") allowing them to specify any of these:<br>
 Status (drop-down)<br>
@@ -6,60 +6,90 @@ Order total (drop-down for >, <, = and a text field for dollar-with-cents)<br>
 Order date (drop-down for >, <, = and a text field for a date)<br>
 Email address of purchaser<br>
 
+<%= @params.inspect %>
 
-<% if @user == false %>
-  
-<% elsif @user.orders.count == 0 %>
-  <h4>No Orders for User</h4>
-<% else %>
-  <h3>Orders for <%= @user.full_name %> matching search critera:</h2>
+<h4>Advanced Search:</h4>
 
-  <div class="accordion" id="invoiceAccordion">
-  <% @orders.each_with_index do |order, i| %>
-    <div class="accordion-group">
-
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
-          <% if order.status == 'shipped' || order.status == 'cancelled' %>
-            <%= i+1 %>. Order was <%= order.status %> by OregonSale <%= time_ago_in_words(order.updated_at) %> ago
-          <% else %>
-            <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at %>
-          <% end %>
-        </a>
-      </div>
-
-      <div id="collapse_<%= i+1 %>" class="accordion-body collapse">
-        <div class="accordion-inner">
-          <table class="table table-striped">
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Subtotal</th>
-              <th></th>
-            </tr>
-          <% order.line_items.each do |item| %>
-            <tr>
-              <td><%= link_to item.product.name, product_path(item.product) %></td>
-              <td><%= item.quantity %></td>
-              <td><%= amount_in_dollars(item.price) %></td>
-              <td><%= amount_in_dollars(item.historical_total) %></td>
-              <td></td>
-            </tr>
-          <% end %>
-            <tr>
-              <td></td>
-              <td></td>
-              <td><strong>Total:</strong></td>
-              <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
-              <td></td>
-          </table>
-        </div>
-      </div>
-
-      </div>
-    <% end %>
-  </div>
+<table>
+<%= form_tag admin_advanced_search_path, :method => 'get' do %>
+  <tr>
+    <td>Keywords: </td>
+    <td></td>
+    <td><%= text_field_tag :advanced_search, params[:advanced_search] %></td>
+  </tr>
+  <tr>
+    <td>Email: </td>
+    <td></td>
+    <td><%= email_field_tag :email, params[:email] %></td>
+  </tr>
+  <tr>
+    <td>Order Total: </td>
+    <td><%= text_field_tag :price, params[:price] %></td>
+    <td><%= select_tag 'price_drop', 
+          options_for_select(["More Than","Less Than","Equal"]) %></td>
+  </tr>
+  <tr>
+    <td>Shipped: </td>
+    <td><%= select_date Date.today, :prefix => :date %></td>
+    <td><%= select_tag 'date_drop', 
+          options_for_select(["","Before Date","After Date","On Date"]) %></td>
+  </tr>
+  <tr>
+    <td><%= submit_tag "Search", :name => "search_button" %></td>
+  </tr>
 <% end %>
+</table>
+
+<h3>Orders matching search critera:</h2>
+
+<div class="accordion" id="invoiceAccordion">
+<% @orders.each_with_index do |order, i| %>
+  <div class="accordion-group">
+
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
+        <% if order.status == 'shipped' || order.status == 'cancelled' %>
+          <%= i+1 %>. Order was <%= order.status %> by OregonSale <%= time_ago_in_words(order.updated_at) %> ago
+        <% else %>
+          <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at %>
+        <% end %>
+        for user <%= user_from_order_id(order.id).full_name %>
+        at <%= user_from_order_id(order.id).email %>
+      </a>
+    </div>
+
+    <div id="collapse_<%= i+1 %>" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <table class="table table-striped">
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        <% order.line_items.each do |item| %>
+          <tr>
+            <td><%= link_to item.product.name, product_path(item.product) %></td>
+            <td><%= item.quantity %></td>
+            <td><%= amount_in_dollars(item.price) %></td>
+            <td><%= amount_in_dollars(item.historical_total) %></td>
+            <td></td>
+          </tr>
+        <% end %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><strong>Total:</strong></td>
+            <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
+            <td></td>
+        </table>
+      </div>
+    </div>
+
+    </div>
+  <% end %>
+</div>
+
 
 <br><br><br><br><br><br><br><br>
