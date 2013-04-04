@@ -47,7 +47,7 @@
           <%= render :partial => 'search/search' %>
         </div>
         <div class="cart">
-          Cart
+          <% unless session[:cart_id] %>Empty<% end %> Cart
           <ul>
           <% if session[:cart_id] %>
             <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
