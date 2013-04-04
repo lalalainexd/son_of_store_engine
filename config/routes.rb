@@ -1,4 +1,6 @@
 StoreEngine::Application.routes.draw do
+  resources :trips
+
   resources :orders do 
     member do 
       put :change_status, :as => "change_status_on"
@@ -22,6 +24,7 @@ StoreEngine::Application.routes.draw do
     end
   end
 
+
   resources :categories
 
   resources :users
@@ -29,6 +32,7 @@ StoreEngine::Application.routes.draw do
 
   get "profile" => "users#show"
   get "my_cart" => "carts#show"
+  # get "my_trip" => "trips#show"
 
   get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"

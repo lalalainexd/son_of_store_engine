@@ -1,0 +1,21 @@
+<% q = 1 if q == 0 %>
+
+<li class="span3" id="<%= p.id %>">
+  <div class="thumbnail adtl_col" id="<%= p.id %>">
+    <h4 id="<%= p.id %>" class="product_name">
+      <%= p.name %> (<%= q %>)
+    </h4>
+    <% if p.image.exists? %>
+      <span id="<%= p.id %>", class="small_product">
+        <%= image_tag p.image.url(:large), :class => "small_product" %>
+      </span>
+    <% end %>
+    <span id="<%= p.id %>" class="small_product">
+      <%= amount_in_dollars(p.price) %> each
+    </span><br />
+    <span id="<%= p.id %>" class="small_product">
+      <i><%= amount_in_dollars(p.price * q) %> total</i>
+    </span>
+    <%= button_to 'Add All to Cart', line_items_path(:product_id => p, :quantity => q), :class => "btn btn-success", :id => "prod_#{p.id}" %>
+  </div>
+</li>
