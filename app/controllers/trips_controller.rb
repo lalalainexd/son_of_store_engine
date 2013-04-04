@@ -1,42 +1,9 @@
 class TripsController < ApplicationController
   def show
     @trip = Trip.find(params[:id])
-    @basics = {
-      Product.find_by_name("Oxen") =>
-        (4 * Trip.multiplier[@trip.city_of_origin]).to_i,
-      Product.find_by_name("Guide") =>
-        (1 * Trip.multiplier[@trip.city_of_origin]).to_i,
-      Product.find_by_name("Tombstone") =>
-        (1 * Trip.multiplier[@trip.city_of_origin]).to_i,
-      Product.find_by_name("Wagon") =>
-        (0.25 * (@trip.children+@trip.adults)).to_i}
-    @foods = {
-      Product.find_by_name("Rations") =>
-        (20 * Trip.multiplier[@trip.city_of_origin] *
-          Trip.multiplier[@trip.pace] *
-          (@trip.children+@trip.adults)).to_i,
-      Product.find_by_name("Bacon") =>
-        (5 * Trip.multiplier[@trip.city_of_origin] *
-          Trip.multiplier[@trip.pace] *
-          (@trip.children+@trip.adults)).to_i,
-      Product.find_by_name("Sarsaparilla") =>
-        (5 * Trip.multiplier[@trip.city_of_origin] *
-          Trip.multiplier[@trip.pace] *
-          (@trip.children+@trip.adults)).to_i,
-      Product.find_by_name("Apples") =>
-        (5 * Trip.multiplier[@trip.city_of_origin] *
-          Trip.multiplier[@trip.pace] *
-          (@trip.children+@trip.adults)).to_i}
-    @tools = {
-      Product.find_by_name("Sleeping Bag") =>
-        (@trip.children+@trip.adults).to_i,
-      Product.find_by_name("Carpenter's Tools") =>
-        ((@trip.children+@trip.adults)/2).to_i,
-      Product.find_by_name("Medicine bag") =>
-        ((@trip.children+@trip.adults)/2).to_i,
-      Product.find_by_name("Stone Hunting Knife") =>
-        (@trip.adults).to_i
-    }
+    @basics = Trip.basics(@trip)
+    @foods = Trip.foods(@trip)
+    @tools = Trip.tools(@trip)
 
     render :show
   end

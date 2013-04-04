@@ -1,6 +1,7 @@
 class Trip < ActiveRecord::Base
   attr_accessible :adults, :children, :city_of_origin, :month_of_departure, :pace
 
+  private
   CITIES = ['Independence, Missouri',
       'Kansas City, Kansas',
       'Pottawattamie County, Iowa',
@@ -29,5 +30,46 @@ class Trip < ActiveRecord::Base
       "Strenuous" => 1.0,
       "Grueling" => 0.5
     }
+  end
+
+  def self.basics(trip)
+    {Product.find_by_name("Oxen") =>
+      (4 * multiplier[trip.city_of_origin]).to_i,
+    Product.find_by_name("Guide") =>
+      (1 * multiplier[trip.city_of_origin]).to_i,
+    Product.find_by_name("Tombstone") =>
+      (1 * multiplier[trip.city_of_origin]).to_i,
+    Product.find_by_name("Wagon") =>
+      (0.25 * (trip.children+trip.adults)).to_i}
+  end
+
+  def self.foods(trip)
+    {Product.find_by_name("Rations") =>
+        (20 * multiplier[trip.city_of_origin] *
+          multiplier[trip.pace] *
+          (trip.children+trip.adults)).to_i,
+      Product.find_by_name("Bacon") =>
+        (5 * multiplier[trip.city_of_origin] *
+          multiplier[trip.pace] *
+          (trip.children+trip.adults)).to_i,
+      Product.find_by_name("Sarsaparilla") =>
+        (5 * multiplier[trip.city_of_origin] *
+          multiplier[trip.pace] *
+          (trip.children+trip.adults)).to_i,
+      Product.find_by_name("Apples") =>
+        (5 * multiplier[trip.city_of_origin] *
+          multiplier[trip.pace] *
+          (trip.children+trip.adults)).to_i}
+  end
+
+  def self.tools(trip)
+    {Product.find_by_name("Sleeping Bag") =>
+        (trip.children+trip.adults).to_i,
+      Product.find_by_name("Carpenter's Tools") =>
+        ((trip.children+trip.adults)/2).to_i,
+      Product.find_by_name("Medicine bag") =>
+        ((trip.children+trip.adults)/2).to_i,
+      Product.find_by_name("Stone Hunting Knife") =>
+        (trip.adults).to_i}
   end
 end
