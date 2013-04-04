@@ -8,9 +8,10 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    authorize! :read, Order
+    authorize! :manage, Order
 
     render :show
+
   end
 
   def change_status
