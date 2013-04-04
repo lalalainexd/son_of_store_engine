@@ -4,6 +4,6 @@ class UserMailer < ActionMailer::Base
   def order_confirmation(user)
     @user = user
 
-    mail to: "to@example.org"
+    mail to: user.email
   end
 end
