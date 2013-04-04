@@ -7,8 +7,7 @@ class Order < ActiveRecord::Base
 
   def add_line_items(cart)
     cart.line_items.each do |item|
-      item.cart_id = nil
-      line_items << item
+      item.cart_id = nil; line_items << item
     end
   end
 
@@ -30,9 +29,7 @@ class Order < ActiveRecord::Base
       Stripe::Charge.create(amount: total_cost, card: card_token,
         currency: "usd")
       self.status = "paid"
-      self.confirmation = generate_confirmation_code
-      save!
-      self
+      self.confirmation = generate_confirmation_code; save!; self
     end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating charge: #{e.message}"

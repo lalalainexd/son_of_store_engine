@@ -6,7 +6,7 @@ describe "Products", js: true do
           email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
-          role: 'admin'}
+          role: 'superuser'}
 
   describe "GET /products" do
     context "user is logged in" do

@@ -71,6 +71,10 @@ describe LineItemsController do
         put :increase, :id => 1
         put :decrease, :id => 1
       end
+
+      it "deletes quantity" do
+        put :decrease, :id => 1
+      end
     end
   end
 end

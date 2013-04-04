@@ -36,13 +36,16 @@ class Trip < ActiveRecord::Base
 
   def self.basics(trip)
     {Product.find_by_name("Oxen") =>
-      (4 * multiplier[trip.city_of_origin]).to_i,
+      (4 * multiplier[trip.city_of_origin] *
+        ((trip.children+trip.adults)/2)).to_i,
     Product.find_by_name("Guide") =>
       (1 * multiplier[trip.city_of_origin]).to_i,
     Product.find_by_name("Tombstone") =>
-      (1 * multiplier[trip.city_of_origin]).to_i,
+      (1 * multiplier[trip.city_of_origin] *
+        ((trip.children+trip.adults)/2)).to_i,
     Product.find_by_name("Wagon") =>
-      (0.25 * (trip.children+trip.adults)).to_i}
+      (0.25 * multiplier[trip.city_of_origin] *
+        (trip.children+trip.adults)).to_i}
   end
 
   def self.foods(trip)

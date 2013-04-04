@@ -14,7 +14,7 @@ class Ability
       can :create, Order
     else
       can :read, :all
-      cannot :read, Order
+      can :create, Order; cannot :read, Order
     end
   end
 end
