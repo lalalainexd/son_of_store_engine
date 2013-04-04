@@ -24,6 +24,8 @@ StoreEngine::Application.routes.draw do
     end
   end
 
+  match "all_products" => "products#list"
+
 
   resources :categories
 

@@ -126,4 +126,17 @@ describe ProductsController do
     end
   end
 
+  describe "GET list" do
+    it "assigns all categories as @categories" do
+      category = Category.create(name: "test")
+      get :list
+      assigns(:categories).should eq([category])
+    end
+
+    it "assigns active products as @products" do
+      product = Product.create(name: "test", retired: false)
+      get :list
+      assigns(:products).should eq([product])
+    end
+  end
 end

@@ -7,6 +7,11 @@ class ProductsController < ApplicationController
     render :index
   end
 
+  def list
+    @products = Product.order("name").active
+    @categories = Category.all
+  end
+
   def retire
     product = Product.find(params[:id])
     authorize! :update, product

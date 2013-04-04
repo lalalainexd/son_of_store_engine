@@ -1,6 +1,6 @@
 <span class="search">
   <%= form_tag search_path, :class => "top_search navbar-search", :method => 'get' do %>
-    <%= text_field_tag :search, params[:search], :class => "search_text", :value => "Search Products"%>
+    <%= text_field_tag :search, params[:search], :class => "search_text" %>
     <button class="search_button search-query btn btn-small btn-success" id="click_search" name="search_button" type="submit" value="Search">
       <i class="icon-search"></i>
     </button>
