@@ -1,13 +1,7 @@
 require 'spec_helper'
 
 describe "Products", js: true do
-  let!(:c1) {Category.create! name: "Grub" }
-  let!(:p1) {Product.create( name: "Rations", price: 24,
-  description: "Good for one 'splorer.", category_ids: ["1"])}
-  let!(:p2) {Product.create( name: "Eggs", price: 5,
-  description: "Farm fresh and ready to consume.", category_ids: ["1"])}
-  let!(:p3) {Product.create( name: "Apples", price: 19,
-  description: "Great for a snack!", category_ids: ["1"])}
+  include_context "standard test dataset"
   let!(:u1) {User.create full_name: "admin",
           email: 'admin@oregonsale.com',
           password: 'password',

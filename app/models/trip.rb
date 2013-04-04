@@ -2,10 +2,10 @@ class Trip < ActiveRecord::Base
   attr_accessible :adults, :children, :city_of_origin, :month_of_departure, :pace
 
   private
-  CITIES = ['Independence, Missouri',
-      'Kansas City, Kansas',
+  CITIES = ['St. Louis, Missouri',
+      'Independence, Missouri',
       'Pottawattamie County, Iowa',
-      'Fort Vancouver, Canada',
+      'York Factory, Canada',
       'Platte River Valley, Nebraska',
       'Julesburg, Colorado']
 
@@ -21,9 +21,10 @@ class Trip < ActiveRecord::Base
 
   def self.multiplier
     {
-     "Independence, Missouri" => 1.5,
-      "Kansas City, Kansas" => 1.0,
-      'Fort Vancouver, Canada' => 2.0,
+     "Independence, Missouri" => 1.0,
+      "St. Louis, Missouri" => 1.0,
+      'Pottawattamie County, Iowa' => 1.0,
+      'York Factory, Canada' => 2.0,
       'Platte River Valley, Nebraska' => 0.8,
       'Julesburg, Colorado' => 0.5,
       "Steady" => 2.0,
@@ -72,4 +73,15 @@ class Trip < ActiveRecord::Base
       Product.find_by_name("Stone Hunting Knife") =>
         (trip.adults).to_i}
   end
+
+  def self.image
+    {'St. Louis, Missouri' => 'stlou.png',
+      'Independence, Missouri' => 'inde.png',
+      'Pottawattamie County, Iowa' => 'iowa.png',
+      'York Factory, Canada' => 'cana.png',
+      'Platte River Valley, Nebraska' => 'nebr.png',
+      'Julesburg, Colorado' => 'colo.png'
+    }
+  end
+
 end

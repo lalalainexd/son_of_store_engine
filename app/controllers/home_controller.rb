@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def show
     @categories = Category.all.sort
-    @products = Product.active.shuffle[0..2]
+    @products = Category.find_by_name("Essentials").products.shuffle[0..2]
   end
 end
