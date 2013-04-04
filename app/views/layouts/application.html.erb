@@ -21,6 +21,9 @@
 
   <!-- Signup links -->
   <div class="container">
+    <div class="pull-left">
+      <%= link_to "Create Your Trip", new_trip_path, :class => "btn btn-info trip-button" %>
+    </div>
     <div class="main_nav">
       <% if current_user %>
         Pioneering 

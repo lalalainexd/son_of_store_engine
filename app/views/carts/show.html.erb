@@ -1,38 +1,37 @@
-<h2>Your Cart</h2>
-<table class="table">
-  <tr>
-    <th>Product Name</th>
-    <th>Quantity</th>
-    <th>Price</th>
-    <th>Subtotal</th>
-    <th></th>
-  </tr>
-  <% @cart.line_items.each do |item| %>
-    <tr>
-      <td><%= item.product.name %></td>
-      <td>
-        <%= link_to "", decrease_line_item_path(item), :method => :put, :class => 'icon-minus-sign icon-large', :id => "decrease_quantity" %>
-        <span class="quantity"><%= item.quantity %></span>
-        <%= link_to "", increase_line_item_path(item), :method => :put, :class => 'icon-plus-sign icon-large', :id => "increase_quantity" %>
-      </td>
-      <td><%= amount_in_dollars(item.product.price) %></td>
-      <td><%= amount_in_dollars(item.total) %>
-      <td>
-        <%= link_to (''),
-                    line_item_path(item),
-                    :method => :delete,
-                    :class => 'icon-trash btn btn-medium btn-danger' %>
-      </td>
-    </tr>
-  <% end %>
-    <tr>
-      <td></td>
-      <td></td>
-      <td><strong>Total:</strong></td>
-      <td><strong><%= cart_cost %></strong></td>
-      <td></td>
-</table>
-<p><%= link_to " Checkout", new_order_path, :class => 'icon-shopping-cart btn btn-success' %></p>
-
-<%= link_to 'Edit', edit_cart_path(@cart) %> |
-<%= link_to 'Back', carts_path %>
+<div class="well well-large">
+    <h2>Your Cart</h2>
+    <table class="table">
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+      <% @cart.line_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td>
+            <%= link_to "", decrease_line_item_path(item), :method => :put, :class => 'icon-minus-sign icon-large', :id => "decrease_quantity" %>
+            <span class="quantity"><%= item.quantity %></span>
+            <%= link_to "", increase_line_item_path(item), :method => :put, :class => 'icon-plus-sign icon-large', :id => "increase_quantity" %>
+          </td>
+          <td><%= amount_in_dollars(item.product.price) %></td>
+          <td><%= amount_in_dollars(item.total) %>
+          <td>
+            <%= link_to (''),
+                        line_item_path(item),
+                        :method => :delete,
+                        :class => 'icon-trash btn btn-medium btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Total:</strong></td>
+          <td><strong><%= cart_cost %></strong></td>
+          <td></td>
+    </table>
+    <p><%= link_to " Checkout", new_order_path, :class => 'icon-shopping-cart btn btn-success' %></p>
+</div>
