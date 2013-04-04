@@ -1,6 +1,6 @@
 require 'spec_helper'
 describe "cart show", js: true do
-  let!(:p1) {Product.create(name: "Wagon", description: "test test")}
+  include_context "standard test dataset"
 
   it "displays a cart" do
     visit my_cart_path
@@ -9,9 +9,10 @@ describe "cart show", js: true do
 
   context "cart with one or more items in it" do
     before(:each) do
-      visit root_path
-      click_button "prod_1"
-      click_link "View"
+      
+      # visit root_path
+      # click_button "prod_1"
+      # click_link "View"
     end
 
 
