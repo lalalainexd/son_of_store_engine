@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def user_search
-    @products = product_search(params[:search]) 
+    @products = product_search(params[:search])
     @user = current_user
     @stuff = []
     @orders = user_order_search(params[:search], current_user)
@@ -51,7 +51,7 @@ private
       returned_orders = orders
     end
 
-    returned_orders
+    returned_orders.uniq
   end
 end
 
