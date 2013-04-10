@@ -59,21 +59,27 @@ describe LineItemsController do
   describe "PUT commands" do
     before (:each) do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
-      post :create, {product_id: product.id, cart_id: cart.id}
     end
 
     describe "quantity" do
       it "increases quantity" do
-        put :increase, :id => 1
+        cart.add_product(product)
+        expect{
+          put :increase, :id => 1
+        }.to change{cart.line_items.first.quantity}.by(1)
       end
 
       it "decreases quantity" do
-        put :increase, :id => 1
-        put :decrease, :id => 1
+        cart.add_product(product, 3)
+        expect{
+          put :decrease, :id => 1
+        }.to change{cart.line_items.first.quantity}.by(-1)
       end
 
       it "deletes quantity" do
+        cart.add_product(product,1)
         put :decrease, :id => 1
+        expect(cart.line_items.count).to eq(0)
       end
     end
   end

@@ -8,11 +8,13 @@ class LineItem < ActiveRecord::Base
   belongs_to :order
 
   def increase_quantity
-    quantity + 1
+    self.quantity += 1
+    save
   end
 
   def decrease_quantity
-    quantity - 1
+    self.quantity -= 1
+    save
   end
 
   def total
