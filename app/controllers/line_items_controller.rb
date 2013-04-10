@@ -2,10 +2,11 @@ class LineItemsController < ApplicationController
   def create
     @cart = current_cart
     product = Product.find(params[:product_id])
-    @line_item = @cart.add_product(product)
-    @line_item.quantity = params[:quantity] if params[:quantity]
 
-    if @line_item.save
+    quantity = params[:quantity] || 1
+    @line_item = @cart.add_product(product, quantity)
+
+    if @line_item
       redirect_to :back, notice: 'Product successfully added to your cart.'
     else
       render action: "new"
