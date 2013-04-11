@@ -3,7 +3,7 @@ require 'spec_helper'
 describe StoresController do
 
   def valid_attributes
-    { "name" => "MyString" }
+    { "name" => "MyString", "slug" => "slug" }
   end
 
   def valid_session
@@ -75,7 +75,40 @@ describe StoresController do
         post :create, {:store => { "name" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
+
+      context "duplicate store name" do
+        it "includes a flash message that the name already exists" do
+          name = "name"
+          Store.create(name: name, slug: "sluasdfasd")
+          post :create, {:store => {name: name, slug: "sluggy"}}
+          expect(flash[:error]).to include("Name has already been taken")
+        end
+      end
+
+      context "duplicate slug" do
+        it "includes a flash message that the slug already exists" do
+          slug = "slug"
+          Store.create(slug: slug, name: "blah")
+          post :create, {:store => {slug: slug}}
+          expect(flash[:error]).to include("Slug has already been taken")
+        end
+      end
+
+      context "does not have a store name" do
+        it "includes a flash message that there is no store name" do
+          post :create, {:store => {slug: "slug"}}
+          expect(flash[:error]).to include("Name can't be blank")
+        end
+      end
+
+      context "does not have a store slug" do
+        it "includes a flash message that there is no store slug" do
+          post :create, {:store => {name: "name"}}
+          expect(flash[:error]).to include("Slug can't be blank")
+        end
+      end
     end
+
   end
 
   describe "PUT update" do

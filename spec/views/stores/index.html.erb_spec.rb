@@ -6,12 +6,14 @@ describe "stores/index" do
       stub_model(Store,
         :name => "Name",
         :slug => "Slug",
-        :description => "MyText"
+        :description => "MyText",
+        :created_at => DateTime.now
       ),
       stub_model(Store,
         :name => "Name",
         :slug => "Slug",
-        :description => "MyText"
+        :description => "MyText",
+        :created_at => DateTime.now
       )
     ])
   end

@@ -42,14 +42,11 @@ class StoresController < ApplicationController
   def create
     @store = Store.new(params[:store])
 
-    respond_to do |format|
-      if @store.save
-        format.html { redirect_to @store, notice: 'Store was successfully created.' }
-        format.json { render json: @store, status: :created, location: @store }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @store.errors, status: :unprocessable_entity }
-      end
+    if @store.save
+      redirect_to @store, notice: 'Store was successfully created.'
+    else
+      flash[:error] = @store.errors.full_messages
+      render action: "new"
     end
   end
 
