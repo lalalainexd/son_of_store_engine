@@ -36,6 +36,7 @@ class OrdersController < ApplicationController
     end
     @order = Order.new
 
+    session[:return_to] = request.fullpath
     render :new
   end
 
