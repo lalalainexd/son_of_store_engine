@@ -13,4 +13,10 @@ class UserMailer < ActionMailer::Base
     @store = store
     mail to: user.email
   end
+
+  def store_decline_notification(user, store)
+    @user = user
+    @store = store
+    mail to: user.email
+  end
 end
