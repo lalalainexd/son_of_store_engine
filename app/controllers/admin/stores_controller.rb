@@ -15,7 +15,7 @@ class Admin::StoresController < ApplicationController
     @store = Store.find(params[:store_id])
     if @store.approve_status
       redirect_to admin_stores_path, notice: "#{@store.name} has been approved."
-      #UserMailer.store_approval_confirmation(current_user, order).deliver
+      UserMailer.store_approval_confirmation(@store.user.first, @store).deliver
     else
       flash[:errors] = "We're sorry. There was a problem approving #{@store.name}."
       redirect_to admin_stores_path
