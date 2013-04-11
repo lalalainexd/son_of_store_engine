@@ -3,7 +3,7 @@ class Admin::StoresController < ApplicationController
   # GET /stores
   # GET /stores.json
   def index
-    @stores = Store.all
+    @stores = Store.where(Store.arel_table[:status].not_eq("declined"))
 
     respond_to do |format|
       format.html # index.html.erb
