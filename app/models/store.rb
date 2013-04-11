@@ -23,4 +23,14 @@ class Store < ActiveRecord::Base
   def pending?
     status == "pending"
   end
+
+  def approve_status
+    self.status = "approved"
+    save
+  end
+
+  def decline_status
+    self.status = "declined"
+    save
+  end
 end

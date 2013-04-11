@@ -28,7 +28,7 @@
     <div class="main_nav">
       <% if current_user %>
         Pioneering 
-          <% if current_user && (current_user.role?(:admin) || current_user.role?(:superuser))%>
+          <% if current_user.platform_administrator %>
             <%= link_to "(admin mode)", admin_path %>
           <% end %>
         as <%= link_to current_user.full_name, profile_path %>.

@@ -2,6 +2,15 @@ StoreEngine::Application.routes.draw do
 
   root :to => 'home#show'
 
+  namespace :admin do
+    resources :stores do
+      put :activate
+      put :decline
+    end
+  end
+
+  resources :stores, :except => :index
+
   resources :trips
 
   resources :orders do

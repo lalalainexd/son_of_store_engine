@@ -4,13 +4,14 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.role? :superuser
+    if user.platform_administrator
       can :manage, :all
     elsif user.role? :admin
       can :manage, :all
       cannot :manage, User
     elsif user.role? :user
       can :read, :all
+      cannot :read, Store
       can :create, Order
     else
       can :read, :all
