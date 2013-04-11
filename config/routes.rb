@@ -1,6 +1,14 @@
 StoreEngine::Application.routes.draw do
-  resources :stores
 
+  namespace :admin do
+    resources :stores do
+      put :activate
+      put :decline
+    end
+  end
+
+  resources :stores, :except => :index
+  resources :users
 
   resources :trips
 
@@ -32,7 +40,6 @@ StoreEngine::Application.routes.draw do
 
   resources :categories
 
-  resources :users
   resource :session
 
   get "profile" => "users#show"

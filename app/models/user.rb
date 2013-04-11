@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :user_stores
   has_many :stores, :through => :user_stores
 
-  attr_accessible :full_name, :display_name, :email, :password,
+  attr_accessible :full_name, :display_name, :email, :password, :platform_administrator,
                   :password_confirmation, :role, :stripe_customer_token
 
   validates_presence_of :full_name, on: :create
@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :email
 
-  ROLES = %w[superuser admin user]
+  ROLES = ["admin", "user"]
 
   def role?(role)
     self.role == role.to_s

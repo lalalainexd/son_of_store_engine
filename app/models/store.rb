@@ -6,4 +6,14 @@ class Store < ActiveRecord::Base
 
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
+
+  def approve_status
+    self.status = "approved"
+    save
+  end
+
+  def decline_status
+    self.status = "declined"
+    save
+  end
 end
