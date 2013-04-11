@@ -1,10 +1,12 @@
 class ProductsController < ApplicationController
   def index
 
-    @dashboard = Dashboard.new
-    authorize! :manage, Product
-
-    render :index
+   # @dashboard = Dashboard.new
+   # authorize! :manage, Product
+   # render :index
+    store = Store.find(params[:id])
+    @products = store.products.order("name").active
+    @categories = @products.collect(&:categories).flatten.to_set
   end
 
   def list

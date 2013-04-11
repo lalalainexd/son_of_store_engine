@@ -48,7 +48,7 @@ StoreEngine::Application.routes.draw do
 
   resources :stores
   scope "/:id" do
-    match "/" => "stores#show", as: "home"
+    match "/" => "products#index", as: "home"
   end
 
   match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
