@@ -6,12 +6,14 @@
     <tr>
       <th>Store Name</th>
       <th>URL Identifier</th>
+      <th>Role</th>
       <th>Status</th>
     </tr>
-    <% @user.stores.each do |store| %>
+    <% @user.user_stores.each do |store| %>
     <tr>
       <td><%= store.name %></td>
       <td><%= store.slug %></td>
+      <td><%= store.role.title %></td>
       <td><%= store.status %><td>
     </tr>
     <% end %>

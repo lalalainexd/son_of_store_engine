@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411001638) do
+ActiveRecord::Schema.define(:version => 20130411164121) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -63,6 +63,12 @@ ActiveRecord::Schema.define(:version => 20130411001638) do
     t.boolean  "retired",            :default => false
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "stores", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -87,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20130411001638) do
     t.integer  "store_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "role_id"
   end
 
   add_index "user_stores", ["store_id"], :name => "index_user_stores_on_store_id"

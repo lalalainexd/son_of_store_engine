@@ -11,6 +11,8 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'factory_girl'
+require "cancan/matchers"
+
 
 #Capybara.default_driver = :selenium
 

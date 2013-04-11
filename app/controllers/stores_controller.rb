@@ -28,7 +28,7 @@ class StoresController < ApplicationController
   def create
     #TODO add authorization
     @store = Store.new(params[:store])
-    @store.add_manager(current_user)
+    @store.add_admin(current_user)
 
     if @store.save
       redirect_to profile_path, notice: 'Store was successfully created.'

@@ -7,9 +7,14 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
 
-  def add_manager manager
-    users << manager
-    save
+  def add_admin admin
+    # users << admin
+    user_store = UserStore.new
+    user_store.store = self
+    user_store.role = Role.find_by_title("admin")
+    user_store.user = admin
+    user_store.save
+    # save
   end
 
   def to_param
