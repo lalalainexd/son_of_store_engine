@@ -21,24 +21,14 @@ class StoresController < ApplicationController
     end
   end
 
-  # GET /stores/new
-  # GET /stores/new.json
   def new
     @store = Store.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @store }
-    end
   end
 
-  # GET /stores/1/edit
   def edit
     @store = Store.find(params[:id])
   end
 
-  # POST /stores
-  # POST /stores.json
   def create
     @store = Store.new(params[:store])
 
@@ -50,8 +40,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # PUT /stores/1
-  # PUT /stores/1.json
   def update
     @store = Store.find(params[:id])
 

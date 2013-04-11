@@ -1,19 +1,23 @@
 <div class="well well-large">
-  <h2>Invoices for <%= @user.full_name %></h2>
-
+  <h2>Profile for <%= @user.full_name %></h2>
+  <h3>Manageable Stores</h3>
+  <p><%= link_to " Create New Store", new_store_path, :class => "btn btn-success icon-plus"%></p>
   <table class="table">
     <tr>
       <th>Store Name</th>
       <th>URL Identifier</th>
       <th>Status</th>
     </tr>
-    <%= @user.stores.each do |store| %>
-      <tr><%= store.name %></tr>
-      <tr><%= store.slug %></tr>
-      <tr><%= store.status %></tr>
+    <% @user.stores.each do |store| %>
+    <tr>
+      <td><%= store.name %></td>
+      <td><%= store.slug %></td>
+      <td><%= store.status %><td>
+    </tr>
     <% end %>
   </table>
 
+  <h3>Personal Invoices</h3>
   <div class="accordion" id="invoiceAccordion">
     <% @user.orders.each_with_index do |order, i| %>
       <div class="accordion-group">

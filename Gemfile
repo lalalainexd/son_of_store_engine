@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'jquery-rails'
-gem 'rake'
+gem 'rake', '10.0.4'
 gem 'pg'
 gem 'paperclip'
 gem 'aws-sdk'

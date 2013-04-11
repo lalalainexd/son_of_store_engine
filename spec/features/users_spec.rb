@@ -23,6 +23,7 @@ describe "Users", js: true do
 
   context "user logs in" do
     it "can see invoice history" do
+      pending
       visit '/signup'
       fill_in "user_full_name", with: "joe schmo"
       fill_in 'user_email', with: 'user@oregonsale.com'
@@ -34,7 +35,7 @@ describe "Users", js: true do
       fill_in 'email', with: 'user@oregonsale.com'
       fill_in 'password', with: 'password'
       click_button 'Log in'
-      
+
       visit profile_path
       page.should have_content "Invoices for joe schmo"
     end

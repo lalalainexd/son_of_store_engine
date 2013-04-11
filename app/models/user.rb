@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
 
   has_many :orders
 
+  has_many :user_stores
+  has_many :stores, :through => :user_stores
+
   attr_accessible :full_name, :display_name, :email, :password,
                   :password_confirmation, :role, :stripe_customer_token
 
