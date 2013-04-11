@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     if user
       if user.role? :user
         redirect_back_or_to root_url, notice: "Logged in."
-      elsif user.role?(:admin) || user.role?("platform administrator")
+      elsif user.platform_administrator
         redirect_to '/admin', notice: "Logged in."
       end
     else
