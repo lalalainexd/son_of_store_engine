@@ -60,7 +60,7 @@ describe User do
         User.create(full_name: "bob", email: "someone@oregonsale.com",
           password: "pw", password_confirmation: "pw")
       end
-        
+
       it "is invalid" do
         new_user.email = "someone@oregonsale.com"
         expect(new_user).to be_invalid
