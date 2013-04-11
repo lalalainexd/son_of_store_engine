@@ -30,6 +30,14 @@ describe StoresController do
       get :show, {:id => store.to_param}, valid_session
       assigns(:store).should eq(store)
     end
+
+    it "sends a not found error for a pending store" do
+      store = Store.create! valid_attributes
+      get :show, {:id => store.to_param}, valid_session
+
+      expect(response).to be_not_found
+
+    end
   end
 
   describe "GET new" do

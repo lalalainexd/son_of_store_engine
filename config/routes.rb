@@ -1,6 +1,6 @@
 StoreEngine::Application.routes.draw do
-  resources :stores
 
+  root :to => 'home#show'
 
   resources :trips
 
@@ -9,8 +9,6 @@ StoreEngine::Application.routes.draw do
       put :change_status, :as => "change_status_on"
     end
   end
-
-  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
 
   resources :line_items do
     member do
@@ -32,7 +30,10 @@ StoreEngine::Application.routes.draw do
 
   resources :categories
 
-  resources :users
+  resources :users do
+    match "/" => "stores#index"
+  end
+
   resource :session
 
   get "profile" => "users#show"
@@ -45,6 +46,10 @@ StoreEngine::Application.routes.draw do
   get "signup" => "users#new", :as => "signup"
   get "search" => "search#user_search", :as => "search"
 
+  resources :stores
+  scope "/:id" do
+    match "/" => "stores#show", as: "home"
+  end
 
-  root :to => 'home#show'
+  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
 end

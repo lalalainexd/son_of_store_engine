@@ -10,14 +10,10 @@ class StoresController < ApplicationController
     end
   end
 
-  # GET /stores/1
-  # GET /stores/1.json
   def show
     @store = Store.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @store }
+    if @store.pending?
+      render status: 404
     end
   end
 
