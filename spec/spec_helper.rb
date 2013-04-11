@@ -10,6 +10,8 @@ require 'rspec/autorun'
 
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'factory_girl'
+
 #Capybara.default_driver = :selenium
 
 
@@ -17,7 +19,7 @@ require 'capybara/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-RSpec.configure do |config|  
+RSpec.configure do |config|
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

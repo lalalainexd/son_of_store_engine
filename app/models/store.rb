@@ -6,4 +6,9 @@ class Store < ActiveRecord::Base
 
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
+
+  def add_manager manager
+    users << manager
+    save
+  end
 end
