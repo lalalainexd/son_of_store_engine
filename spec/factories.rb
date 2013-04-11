@@ -11,7 +11,7 @@ FactoryGirl.define do
     role "user"
   end
 
-  factory :platform_admin do
+  factory :platform_admin, class: User do
     full_name "Jane Doe"
     email
     password "password"
