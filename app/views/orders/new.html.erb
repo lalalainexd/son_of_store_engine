@@ -1,4 +1,8 @@
 <div class="well well-large">
+  <% unless current_user %>
+    <h1>Create an account!</h1>
+    <%= link_to "Sign up", signup_path%> or <%= link_to "Login", login_path %>
+  <% end %>
   <h1>New order</h1>
   <%= render 'form' %>
 </div>

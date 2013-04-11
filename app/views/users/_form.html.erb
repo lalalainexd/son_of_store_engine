@@ -1,11 +1,11 @@
-<%= form_for @user do |f| %>
+<%= form_for user do |f| %>
 
-  <% if @user.errors.any? %>
+  <% if user.errors.any? %>
     <div class="error_messages">
       <h2>Form is invalid</h2>
       <ul>
-        <% for message in @user.errors.full_messages %>
-          <li><%= message.html_safe %></li>
+        <% for message in user.errors.full_messages %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -34,18 +34,16 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
   </div>
-  <% if current_user && current_user.platform_administrator %>
-    <h3>Site Permissions:</h3>
-    <div class="field">
-      Platform Administrator?
-      <%= f.check_box :platform_administrator %>
-    </div>
+  <div class="field">
+    Platform Administrator?
+    <%= f.check_box :platform_administrator %>
+  </div>
 
-    <h3>Store Permissions</h3>
-    <div class="field">
-      <%= f.collection_select :role, User::ROLES, :to_s, :titleize %>
-    </div>
-  <% end %>
+  <h3>Store Permissions</h3>
+  <div class="field">
+    <%= f.collection_select :role, User::ROLES, :to_s, :titleize %>
+  </div>
+<% end %>
 
-  <%= f.submit nil, :class => 'btn btn-primary' %>
+<%= f.submit nil, :class => 'btn btn-primary' %>
 <% end %>
