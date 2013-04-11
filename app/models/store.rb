@@ -28,4 +28,8 @@ class Store < ActiveRecord::Base
   def pending?
     status == "pending"
   end
+
+  def approved?
+    status == "approved"
+  end
 end

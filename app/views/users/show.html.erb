@@ -9,12 +9,12 @@
       <th>Role</th>
       <th>Status</th>
     </tr>
-    <% @user.user_stores.each do |store| %>
+    <% @user.user_stores.each do |user_store| %>
     <tr>
-      <td><%= store.name %></td>
-      <td><%= store.slug %></td>
-      <td><%= store.role.title %></td>
-      <td><%= store.status %><td>
+      <td><%= user_store.name %></td>
+      <td><%= link_to_if user_store.store.approved?, user_store.slug, home_path(user_store.slug) %></td>
+      <td><%= user_store.role.title %></td>
+      <td><%= user_store.status %><td>
     </tr>
     <% end %>
   </table>
