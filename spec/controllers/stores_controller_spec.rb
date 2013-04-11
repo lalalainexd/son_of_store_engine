@@ -10,6 +10,16 @@ describe StoresController do
     {}
   end
 
+  let(:user) {User.create(email: "josh@example.com", 
+                          full_name: "blah",
+                          password: "blah",
+                          password_confirmation: "blah",
+                          role: "user")}
+
+  before do
+    login_user(user)
+  end
+
   describe "GET index" do
     it "assigns all stores as @stores" do
       store = Store.create! valid_attributes
@@ -105,6 +115,13 @@ describe StoresController do
         it "includes a flash message that there is no store slug" do
           post :create, {:store => {name: "name"}}
           expect(flash[:error]).to include("Slug can't be blank")
+        end
+      end
+
+      context "setting an admin for a store" do
+        it "sets the current user as the admin for the new store" do
+          post :create, {:store => {name: "name"}}
+          expect(user.stores.first.name).to eq "name"
         end
       end
     end

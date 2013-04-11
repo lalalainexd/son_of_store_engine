@@ -34,13 +34,12 @@ class StoresController < ApplicationController
     @store = Store.new(params[:store])
     @store.users << current_user
 
-    @store.user_stores.build
-    @store.user_stores.first.user = current_user
-    @store.user_stores.first.save
-
+    raise @store.users.inspect
     if @store.save
+      raise "YAAYY"
       redirect_to @store, notice: 'Store was successfully created.'
     else
+      raise "booo #{@store.errors.inspect}"
       flash[:error] = @store.errors.full_messages
       render action: "new"
     end
