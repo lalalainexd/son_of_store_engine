@@ -71,7 +71,7 @@ describe StoresController do
 
       it "redirects to the created store" do
         post :create, {:store => valid_attributes}, valid_session
-        response.should redirect_to(Store.last)
+        response.should redirect_to(profile_path)
       end
     end
 
