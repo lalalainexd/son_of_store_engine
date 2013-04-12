@@ -39,22 +39,28 @@ class OrdersController < ApplicationController
   end
 
   def create
-    unless current_user
-      flash[:error] = 'You must log in to checkout. Please, login or signup.'
-      redirect_to login_path and return
-    end
+    if current_user
+      # normal happy path
+      #if order = Order.create_from_cart_for_user(current_cart,
+      #current_user,
+      #params[:order]["stripe_card_token"])
 
-    if order = Order.create_from_cart_for_user(current_cart,
-                                          current_user,
-                                          params[:order]["stripe_card_token"])
-
-      UserMailer.order_confirmation(current_user, order).deliver
-      current_cart.destroy
-      session[:cart_id] = nil
-      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      #UserMailer.order_confirmation(current_user, order).deliver
+      #current_cart.destroy
+      #session[:cart_id] = nil
+      #redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      #else
+      #render action: "new"
+      #end
     else
-      render action: "new"
+      Order.create_visitor_order(current_cart, params[:email], params[:order]["stripe_card_token"])
+      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
     end
+    #unless current_user
+    #flash[:error] = 'You must log in to checkout. Please, login or signup.'
+    #redirect_to login_path and return
+    #end
+
   end
 
   def update
