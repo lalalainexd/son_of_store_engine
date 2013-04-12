@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
       #render action: "new"
       #end
     else
-      Order.create_visitor_order(current_cart, params[:email], params[:order]["stripe_card_token"])
+      Order.create_visitor_order(current_cart, params[:order][:visitor][:email], params[:order]["stripe_card_token"])
       redirect_to root_path, notice: 'Thanks! Your order was submitted.'
     end
     #unless current_user

@@ -7,6 +7,6 @@ describe OrdersController do
     email = "foo@bar.com"
     billing_info = "blah"
     Order.should_receive(:create_visitor_order).with(cart, email, billing_info)
-    post :create, { email: "foo@bar.com", order:{stripe_card_token: billing_info} }
+    post :create, {order:{ visitor: {email: "foo@bar.com"}, stripe_card_token: billing_info} }
   end
 end

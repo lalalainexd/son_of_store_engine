@@ -26,9 +26,12 @@ class Order < ActiveRecord::Base
     order.save_with_payment(card)
   end
 
-  def self.create_visitor_order cart, email, billing_info
+  def self.create_visitor_order cart, email, card
     Order.new.tap do |order|
+      order.total_cost = cart.calculate_total_cost
       order.visitor = Visitor.create(email: email)
+      order.add_line_items(cart)
+      order.save_with_payment(card)
       order.save
     end
   end

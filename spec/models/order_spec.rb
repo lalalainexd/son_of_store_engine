@@ -24,16 +24,24 @@ describe Order do
   end
 
   describe "create_visitor_order" do
-    it "creates a order with a visitor" do
-      visitor = Visitor.new(email: "foo@bar.com")
-      Visitor.should_receive(:create).and_return(visitor)
-      Order.any_instance.should_receive(:save)
-      cart = stub(:cart)
+    let(:cart) { stub(:cart, calculate_total_cost: 42) }
+    let(:visitor) { Visitor.new(email: "foo@bar.com") }
 
-      order = Order.create_visitor_order(cart, "foo@bar.com", "")
+    before do
+      Order.any_instance.should_receive(:save)
+      Order.any_instance.should_receive(:add_line_items).with(cart)
+      Order.any_instance.should_receive(:save_with_payment).with("4242")
+      Visitor.should_receive(:create).with(email: "foo@bar.com").and_return(visitor)
+    end
+
+    it "creates a order with a visitor" do
+      order = Order.create_visitor_order(cart, "foo@bar.com", "4242")
       expect(order.visitor.email).to eq "foo@bar.com"
     end
 
+    it "creates an order with total cost" do
+      order = Order.create_visitor_order(cart, "foo@bar.com", "4242")
+      expect(order.total_cost).to eq 42
+    end
   end
-
 end
