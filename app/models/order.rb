@@ -4,6 +4,8 @@ class Order < ActiveRecord::Base
 
   has_many :line_items, :dependent => :destroy
   belongs_to :user
+  has_one :visitor_order
+  has_one :visitor, through: :visitor_order
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -22,6 +24,13 @@ class Order < ActiveRecord::Base
                        total_cost: total_cost)
     order.add_line_items(cart)
     order.save_with_payment(card)
+  end
+
+  def self.create_visitor_order cart, email, billing_info
+    Order.new.tap do |order|
+      order.visitor = Visitor.create(email: email)
+      order.save
+    end
   end
 
   def save_with_payment(card_token)

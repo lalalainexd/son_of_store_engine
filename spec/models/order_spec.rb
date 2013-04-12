@@ -23,4 +23,17 @@ describe Order do
     end
   end
 
+  describe "create_visitor_order" do
+    it "creates a order with a visitor" do
+      visitor = Visitor.new(email: "foo@bar.com")
+      Visitor.should_receive(:create).and_return(visitor)
+      Order.any_instance.should_receive(:save)
+      cart = stub(:cart)
+
+      order = Order.create_visitor_order(cart, "foo@bar.com", "")
+      expect(order.visitor.email).to eq "foo@bar.com"
+    end
+
+  end
+
 end
