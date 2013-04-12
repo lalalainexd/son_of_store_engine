@@ -44,4 +44,8 @@ describe Order do
       expect(order.total_cost).to eq 42
     end
   end
+
+   it "generates a unique url" do
+     fail
+   end
 end
