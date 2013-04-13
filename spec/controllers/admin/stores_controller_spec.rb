@@ -8,7 +8,7 @@ describe Admin::StoresController do
 
   let(:platform_admin) { User.create( { full_name: "Jane Doe",
                                         email: "test@example.com",
-                                        platform_administrator: false} )}
+                                        platform_administrator: true} )}
 
   before do
     login_user(platform_admin)
