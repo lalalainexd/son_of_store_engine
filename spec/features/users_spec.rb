@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Users", js: true do
+describe "Users" do
   include_context "standard test dataset"
 
   context "when user credentials are invalid" do
@@ -9,7 +9,7 @@ describe "Users", js: true do
       fill_in 'user_email', with: 'user@oregonsale.com'
       fill_in 'user_password', with: 'password'
       fill_in 'user_password_confirmation', with: 'not_password'
-      click_button "Sign Up!"
+      click_button "Create User"
 
       page.should have_content "Password doesn't match confirmation"
     end
@@ -17,19 +17,18 @@ describe "Users", js: true do
     it "when user renders show without logging in" do
       visit '/users/1'
 
-      page.should have_content "You are not permitted to view that user"
+      page.should have_content "Access denied"
     end
   end
 
   context "user logs in" do
     it "can see invoice history" do
-      pending
       visit '/signup'
       fill_in "user_full_name", with: "joe schmo"
       fill_in 'user_email', with: 'user@oregonsale.com'
       fill_in 'user_password', with: 'password'
       fill_in 'user_password_confirmation', with: 'password'
-      click_button "Sign Up!"
+      click_button "Create User"
 
       visit '/login'
       fill_in 'email', with: 'user@oregonsale.com'
@@ -37,7 +36,7 @@ describe "Users", js: true do
       click_button 'Log in'
 
       visit profile_path
-      page.should have_content "Invoices for joe schmo"
+      page.should have_content "Personal Invoices"
     end
   end
 end

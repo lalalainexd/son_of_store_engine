@@ -1,14 +1,5 @@
 class StoresController < ApplicationController
-  # GET /stores
-  # GET /stores.json
-  def index
-    @stores = Store.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @stores }
-    end
-  end
+  load_and_authorize_resource :except => :show
 
   def show
     @store = Store.find(params[:id])

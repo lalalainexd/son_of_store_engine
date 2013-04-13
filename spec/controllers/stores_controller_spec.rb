@@ -16,14 +16,6 @@ describe StoresController do
     login_user(user)
   end
 
-  describe "GET index" do
-    it "assigns all stores as @stores" do
-      store = Store.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:stores).should eq([store])
-    end
-  end
-
   describe "GET show" do
     it "assigns the requested store as @store" do
       store = Store.create! valid_attributes

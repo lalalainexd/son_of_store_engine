@@ -1,33 +1,32 @@
 require 'spec_helper'
 
-describe "Sessions", js: true do
+describe "Sessions" do
   include_context "standard test dataset"
 
   context "when user logs in" do
     context "if user exists" do
-      it "logs in user as admin" do
+      it "logs in user as normal" do
 
-        User.create full_name: "user",
+        User.create(full_name: "user",
           email: 'user@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
-          role: 'user'
+          platform_administrator: false)
 
         visit '/login'
         fill_in 'email', with: 'user@oregonsale.com'
         fill_in 'password', with: 'password'
         click_button "Log in"
-
         expect(current_path).to eq root_path
       end
 
-      it "logs in user as normal" do
+      it "logs in user as admin" do
 
         User.create full_name: "admin",
           email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
-          role: 'admin'
+          platform_administrator: true
 
         visit '/login'
         fill_in 'email', with: 'admin@oregonsale.com'

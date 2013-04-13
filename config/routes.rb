@@ -39,13 +39,13 @@ StoreEngine::Application.routes.draw do
 
   resources :categories
 
+  get "profile" => "users#show"
   resources :users do
     match "/" => "stores#index"
   end
 
   resource :session
 
-  get "profile" => "users#show"
   get "my_cart" => "carts#show"
   # get "my_trip" => "trips#show"
 
