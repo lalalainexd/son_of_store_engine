@@ -61,6 +61,13 @@ ActiveRecord::Schema.define(:version => 20130412022241) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.boolean  "retired",            :default => false
+    t.integer  "store_id"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "stores", :force => true do |t|
@@ -87,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20130412022241) do
     t.integer  "store_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "role_id"
   end
 
   add_index "user_stores", ["store_id"], :name => "index_user_stores_on_store_id"

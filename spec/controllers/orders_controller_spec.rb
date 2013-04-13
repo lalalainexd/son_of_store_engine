@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:user) {User.create(email: "josh@example.com", role: "user")}
+  let(:user) {User.create(full_name: "josh", email: "josh@example.com", role: "user")}
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
@@ -39,10 +39,27 @@ describe OrdersController do
   end
 
   describe "POST create" do
+
+    describe "with anonymous user" do
+      it "redirects to the user's account" do
+        logout_user
+        Order.any_instance.stub(:valid?).and_return(true)
+        post :create, {order: {visitor: {email: "foo@bar.com"}, "stripe_card_token" => "42"}}
+        expect(response).to redirect_to root_path
+      end
+    end
+
     describe "with valid params and logged in" do
       before(:each) do
         login_user(user)
       end
+
+      it "redirects to the user's account" do
+        Order.any_instance.stub(:valid?).and_return(true)
+        post :create, {:order => valid_attributes}
+        expect(response).to redirect_to root_path
+      end
+
     end
 
     describe "with invalid params" do
@@ -52,11 +69,12 @@ describe OrdersController do
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Order.any_instance.stub(:save).and_return(false)
+        Order.any_instance.stub(:valid?).and_return(false)
         post :create, {:order => { "status" => "invalid value" }}
         response.should render_template("new")
       end
     end
+
   end
 
   describe "PUT update" do

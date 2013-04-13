@@ -40,26 +40,31 @@ class OrdersController < ApplicationController
 
   def create
     if current_user
-      # normal happy path
-      #if order = Order.create_from_cart_for_user(current_cart,
-      #current_user,
-      #params[:order]["stripe_card_token"])
+      order = Order.create_from_cart_for_user(current_cart,
+                                                 current_user,
+                                                 params[:order]["stripe_card_token"])
 
-      #UserMailer.order_confirmation(current_user, order).deliver
-      #current_cart.destroy
-      #session[:cart_id] = nil
-      #redirect_to root_path, notice: 'Thanks! Your order was submitted.'
-      #else
-      #render action: "new"
-      #end
+      if order.valid?
+        deliver_confirmation(current_user, order)
+        current_cart.destroy
+        session[:cart_id] = nil
+        redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      else
+        render action: "new"
+      end
     else
-      Order.create_visitor_order(current_cart, params[:order][:visitor][:email], params[:order]["stripe_card_token"])
-      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      order = Order.create_visitor_order(current_cart,
+                                         params[:order][:visitor][:email],
+                                         params[:order]["stripe_card_token"])
+      if order.valid?
+        deliver_confirmation(order.visitor, order)
+        clear_cart
+        redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      else
+        render action: "new"
+      end
+
     end
-    #unless current_user
-    #flash[:error] = 'You must log in to checkout. Please, login or signup.'
-    #redirect_to login_path and return
-    #end
 
   end
 
@@ -78,5 +83,14 @@ class OrdersController < ApplicationController
     @order.destroy
 
     redirect_to orders_url
+  end
+
+  def deliver_confirmation user, order
+    UserMailer.order_confirmation(user, order).deliver
+  end
+
+  def clear_cart
+    current_cart.destroy
+    session[:cart_id] = nil
   end
 end

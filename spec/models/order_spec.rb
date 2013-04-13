@@ -8,14 +8,6 @@ describe Order do
   let!(:li){LineItem.create(product_id: 1, cart_id: nil,
   order_id: 1, quantity: 3, price: 24)}
 
-  describe 'add_line_items' do
-    it "adds order id to each line_item in a cart at checkout" do
-      cart = Cart.create
-      order.add_line_items(cart)
-      order.line_items
-    end
-  end
-
   describe "generate random" do
     it "generates random thing" do
       a = order.generate_confirmation_code
@@ -45,7 +37,4 @@ describe Order do
     end
   end
 
-   it "generates a unique url" do
-     fail
-   end
 end
