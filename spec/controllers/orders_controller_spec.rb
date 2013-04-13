@@ -33,8 +33,7 @@ describe OrdersController do
 
   describe "POST create" do
     let(:checkout_attributes) do
-      {
-        visitor: {email: "foo@bar.com"},
+      { email: "foo@bar.com",
         "stripe_card_token" => "42"
       }
     end
@@ -49,8 +48,8 @@ describe OrdersController do
       context "with anonymous user" do
 
         it "redirects to the order summary" do
-          Order.should_receive(:create_visitor_order).with(Cart.any_instance, "foo@bar.com", "42").and_return(order)
-          post :create, {order: checkout_attributes}
+          Order.should_receive(:create_visitor_order).with(kind_of(Cart), "foo@bar.com", "42").and_return(order)
+          post :create, checkout_attributes
           expect(response).to redirect_to order_path(order)
         end
       end

@@ -95,8 +95,8 @@ class OrdersController < ApplicationController
 
     else
       Order.create_visitor_order(current_cart,
-                                 params[:order][:visitor][:email],
-                                 params[:order]["stripe_card_token"])
+                                 params[:email],
+                                 params["stripe_card_token"])
     end
 
   end
