@@ -1,0 +1,73 @@
+<div class="well well-large">
+
+  <div class="row">
+
+    <div class="span11">
+      <div id="orders">
+        <h3>Orders:</h3>
+        <!-- Tabs by status -->
+        <ul class="nav nav-tabs" id="ordersTab">
+          <% @dashboard.statuses.each do |status| %>
+          <li><a href="#<%= status %>" data-toggle="tab"><%= status.humanize %></a></li>
+          <% end %>
+        </ul>
+
+        <!-- Table bodies by status -->
+        <div class="tab-content">
+          <% @dashboard.orders_by_status.each do |status, orders| %>
+            <div class="tab-pane" id="<%= status %>">
+              <%= render :partial => 'orders/order_table', :locals => 
+                    { :orders => orders } %>
+              <!-- This probably needs to be hidden in the controller. -->
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div id="products">
+        <h3>Product Management:</h3>
+          <!-- Tabs by category -->
+          <ul class="nav nav-tabs" id="productsTab">
+            <% @dashboard.categories.each do |category| %>
+              <li>
+                <a href="#<%= category.name %>" data-toggle="tab">
+                  <%= category.name %>
+                </a>
+              </li>
+            <% end %>
+              <li>
+                <a href="#retired" data-toggle="tab">
+                  Retired
+                </a>
+              </li>
+          </ul>
+
+          <!-- Table bodies by category -->
+          <div class="tab-content">
+            <% @dashboard.categories.each do |category| %>
+              <div class="tab-pane" id="<%= category.name %>">
+                <%= render :partial => 'product_table', :locals => 
+                  { :products => category.products.active } %>
+              </div>
+            <% end %>
+            <!-- Retired Products category -->
+              <div class="tab-pane" id="retired">
+                <%= render :partial => "product_table", :locals => 
+                  { :products => @dashboard.retired_products } %>
+              </div>
+          </div>
+
+          <%= link_to t('.new', :default => t("helpers.links.new")),
+                  new_product_path,
+                  :class => 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  $(function () {
+    $('#productsTab a:first').tab('show');
+    $('#ordersTab a:first').tab('show');
+  })
+</script>
