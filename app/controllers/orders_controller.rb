@@ -8,7 +8,13 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    authorize! :manage, Order
+
+    if @order.user
+      @user = @order.user
+    else
+      @user = @order.visitor
+    end
+    #authorize! :manage, Order
 
     render :show
 
@@ -39,22 +45,33 @@ class OrdersController < ApplicationController
   end
 
   def create
-    unless current_user
-      flash[:error] = 'You must log in to checkout. Please, login or signup.'
-      redirect_to login_path and return
-    end
+    if current_user
+      order = Order.create_from_cart_for_user(current_cart,
+                                                 current_user,
+                                                 params[:order]["stripe_card_token"])
 
-    if order = Order.create_from_cart_for_user(current_cart,
-                                          current_user,
-                                          params[:order]["stripe_card_token"])
-
-      UserMailer.order_confirmation(current_user, order).deliver
-      current_cart.destroy
-      session[:cart_id] = nil
-      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      if order.valid?
+        deliver_confirmation(current_user, order)
+        current_cart.destroy
+        session[:cart_id] = nil
+        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
+      else
+        render action: "new"
+      end
     else
-      render action: "new"
+      order = Order.create_visitor_order(current_cart,
+                                         params[:order][:visitor][:email],
+                                         params[:order]["stripe_card_token"])
+      if order.valid?
+        deliver_confirmation(order.visitor, order)
+        clear_cart
+        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
+      else
+        render action: "new"
+      end
+
     end
+
   end
 
   def update
@@ -72,5 +89,14 @@ class OrdersController < ApplicationController
     @order.destroy
 
     redirect_to orders_url
+  end
+
+  def deliver_confirmation user, order
+    UserMailer.order_confirmation(user, order).deliver
+  end
+
+  def clear_cart
+    current_cart.destroy
+    session[:cart_id] = nil
   end
 end

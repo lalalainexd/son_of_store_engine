@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
 
   ROLES = ["admin", "user"]
 
+  def to_s
+    full_name
+  end
+
   def role?(role)
     self.role == role.to_s
   end

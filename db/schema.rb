@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411183111) do
+ActiveRecord::Schema.define(:version => 20130412022241) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(:version => 20130411183111) do
   end
 
   create_table "orders", :force => true do |t|
-    t.string   "status"
+    t.string   "status",       :default => "pending"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "total_cost"
     t.string   "confirmation"
   end
@@ -116,5 +116,16 @@ ActiveRecord::Schema.define(:version => 20130411183111) do
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
+
+  create_table "visitor_orders", :force => true do |t|
+    t.integer "order_id",   :null => false
+    t.integer "visitor_id", :null => false
+  end
+
+  create_table "visitors", :force => true do |t|
+    t.string   "email",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

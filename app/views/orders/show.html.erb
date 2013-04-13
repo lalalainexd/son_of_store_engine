@@ -2,9 +2,10 @@
 <p id="notice"><%= notice %></p>
 
 
-<h5>Full Name: <%= @order.user.full_name %></h5>
-<h5>User Email: <%= @order.user.email %></h5>
-<h5>User Id: <%= @order.user_id %></h5>
+
+<h5>Full Name: <%= @user %></h5>
+<h5>User Email: <%= @user.email %></h5>
+<h5>User Id: <%= @user.id %></h5>
 <h5>Order Status: <%= @order.status.capitalize %></h5>
 <h5>Order Date / Time: <%= @order.created_at %><br/></h5>
 <br/>
@@ -31,7 +32,7 @@
       </td>
     </tr>
   <% end %>
-</table> 
+</table>
 
 <h3>Total: <%= amount_in_dollars(@order.total_cost) %></h3><br/>
 
