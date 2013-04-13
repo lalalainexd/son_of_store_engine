@@ -3,5 +3,6 @@ Hello <%= @user %>,
 Thank you -- Your order has been processed. Success!
 
 Your confirmation code is <%= @confirmation_code %>.
+You can see the status of your order at <%= link_to order_path(@confirmation_code)
 
 You can redeem your items at select General Stores along the trail.

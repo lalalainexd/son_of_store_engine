@@ -7,6 +7,14 @@ class Order < ActiveRecord::Base
   has_one :visitor_order
   has_one :visitor, through: :visitor_order
 
+  def self.find(confirmation)
+    find_by_confirmation(confirmation)
+  end
+
+  def to_param
+    confirmation
+  end
+
   def add_line_items(cart)
     cart.line_items.each do |item|
       item.cart_id = nil; line_items << item

@@ -13,10 +13,15 @@
     <% orders.each do |order| %>
       <tr>
         <td><%= link_to order.id, order_path(order.id) %></td>
-        <td><%= link_to order.user.full_name, order_path(order.id) %></td>
+        <% if order.user %>
+        <td><%= link_to order.user, order_path(order.id) %></td>
         <td><%= link_to order.user.email, order_path(order.id) %></td>
+      <% else %>
+        <td><%= link_to order.visitor, order_path(order.id) %></td>
+        <td><%= link_to order.visitor.email, order_path(order.id) %></td>
+      <% end %>
         <td>
-          <%= link_to amount_in_dollars(order.total_cost), 
+          <%= link_to amount_in_dollars(order.total_cost),
                   order_path(order.id) %>
         </td>
         <td>

@@ -8,7 +8,13 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    authorize! :manage, Order
+
+    if @order.user
+      @user = @order.user
+    else
+      @user = @order.visitor
+    end
+    #authorize! :manage, Order
 
     render :show
 
