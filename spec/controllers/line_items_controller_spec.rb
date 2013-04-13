@@ -15,7 +15,7 @@ describe LineItemsController do
 
     before (:each) do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
-      Product.should_receive(:find)
+      Product.stub(:find).and_return(product)
     end
 
     describe "with valid params" do
