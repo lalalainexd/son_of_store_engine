@@ -44,13 +44,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    order = create_order(params)
+    @order = create_order(params)
 
-    if order.valid?
-      deliver_confirmation(current_user, order)
+    if @order.valid?
+      deliver_confirmation(current_user, @order)
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
+      redirect_to order_path(@order), notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
     end
