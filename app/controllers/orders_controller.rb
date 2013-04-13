@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
         deliver_confirmation(current_user, order)
         current_cart.destroy
         session[:cart_id] = nil
-        redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
       else
         render action: "new"
       end
@@ -65,7 +65,7 @@ class OrdersController < ApplicationController
       if order.valid?
         deliver_confirmation(order.visitor, order)
         clear_cart
-        redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
       else
         render action: "new"
       end
