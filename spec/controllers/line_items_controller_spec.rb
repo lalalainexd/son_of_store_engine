@@ -11,24 +11,21 @@ describe LineItemsController do
 
   describe "POST create" do
     let(:product) {stub(:product, id: 1)}
-    let(:line_item) {stub(:line_item, save: true)}
+    let(:line_item) {LineItem.new}
 
-    before (:each) do
+    before do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
       Product.stub(:find).and_return(product)
+      Cart.any_instance.should_receive(:add_product).and_return(line_item)  
     end
 
     describe "with valid params" do
-      it "creates a new LineItem" do
-        Cart.any_instance.should_receive(:add_product).and_return(line_item)  
-        post :create, {product_id: product.id, cart_id: cart.id}
-        #expect(response).to redirect_to(@request.env['HTTP_REFERER'])
+      before do
+        line_item.stub(:save).and_return(true)
       end
-
       it "assigns a newly created line_item as @line_item" do
         post :create, {product_id: product.id}
         assigns(:line_item).should be_a(LineItem)
-        assigns(:line_item).should be_persisted
       end
 
       it "redirects to the created line_item" do
@@ -38,14 +35,15 @@ describe LineItemsController do
     end
 
     describe "with invalid params" do
+      before do
+        line_item.stub(:save).and_return(false)
+      end
       it "assigns a newly created but unsaved line_item as @line_item" do
-        LineItem.any_instance.stub(:save).and_return(false)
         post :create, { "product_id" => product.id }
         assigns(:line_item).should be_a_new(LineItem)
       end
 
       it "re-renders the 'new' template" do
-        LineItem.any_instance.stub(:save).and_return(false)
         post :create, { "product_id" => product.id }
         response.should render_template("new")
       end
