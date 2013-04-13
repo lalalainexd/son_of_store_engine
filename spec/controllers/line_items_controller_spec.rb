@@ -10,14 +10,19 @@ describe LineItemsController do
   end
 
   describe "POST create" do
+    let(:product) {stub(:product, id: 1)}
+    let(:line_item) {stub(:line_item, save: true)}
+
     before (:each) do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
+      Product.should_receive(:find)
     end
+
     describe "with valid params" do
       it "creates a new LineItem" do
-        expect {
-          post :create, {product_id: product.id, cart_id: cart.id}
-        }.to change(LineItem, :count).by(1)
+        Cart.any_instance.should_receive(:add_product).and_return(line_item)  
+        post :create, {product_id: product.id, cart_id: cart.id}
+        #expect(response).to redirect_to(@request.env['HTTP_REFERER'])
       end
 
       it "assigns a newly created line_item as @line_item" do
