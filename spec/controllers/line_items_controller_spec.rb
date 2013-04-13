@@ -52,10 +52,10 @@ describe LineItemsController do
 
   describe "DELETE destroy" do
     it "destroys the requested line_item" do
-      line_item = LineItem.create!(product_id: product.id, cart_id: cart.id)
-      expect {
-        delete :destroy, {:id => line_item.to_param}
-      }.to change(LineItem, :count).by(-1)
+      line_item = LineItem.new
+      Cart.any_instance.stub_chain(:line_items, :find).and_return(line_item)
+      line_item.should_receive(:destroy)
+      delete :destroy, {:id => 3}
     end
   end
 
