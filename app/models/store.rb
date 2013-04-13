@@ -37,5 +37,8 @@ class Store < ActiveRecord::Base
   def decline_status
     self.status = "declined"
     save
+
+  def approved?
+    status == "approved"
   end
 end
