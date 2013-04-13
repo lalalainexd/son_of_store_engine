@@ -15,17 +15,10 @@ describe OrdersController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
-      get :show, {:id => order.to_param}
-      assigns(:order).should eq(order)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
+      order = Order.new(confirmation: "confirmation")
+      Order.stub(:find).with("confirmation").and_return(order)
       get :edit, {:id => order.to_param}
       assigns(:order).should eq(order)
     end

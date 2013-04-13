@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
+  load_and_authorize_resource
+  skip_authorize_resource :except => [ :new, :create, :show ]
+
   def index
     @orders = Order.all
-    authorize! :manage, Order
 
     render :index
   end
@@ -9,12 +11,11 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
 
-    if @order.user
+    if @order.user && @order.user == current_user
       @user = @order.user
     else
       @user = @order.visitor
     end
-    #authorize! :manage, Order
 
     render :show
 
@@ -34,44 +35,24 @@ class OrdersController < ApplicationController
       redirect_to root_path and return
     end
     @order = Order.new
-    authorize! :create, Order
 
     render :new
   end
 
   def edit
     @order = Order.find(params[:id])
-    authorize! :update, Order
   end
 
   def create
-    if current_user
-      order = Order.create_from_cart_for_user(current_cart,
-                                                 current_user,
-                                                 params[:order]["stripe_card_token"])
-
-      if order.valid?
-        deliver_confirmation(current_user, order)
-        current_cart.destroy
-        session[:cart_id] = nil
-        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
-      else
-        render action: "new"
-      end
+    order = create_order(params)
+    if order.valid?
+      deliver_confirmation(current_user, order)
+      current_cart.destroy
+      session[:cart_id] = nil
+      redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
     else
-      order = Order.create_visitor_order(current_cart,
-                                         params[:order][:visitor][:email],
-                                         params[:order]["stripe_card_token"])
-      if order.valid?
-        deliver_confirmation(order.visitor, order)
-        clear_cart
-        redirect_to order_path(order), notice: 'Thanks! Your order was submitted.'
-      else
-        render action: "new"
-      end
-
+      render action: "new"
     end
-
   end
 
   def update
@@ -99,4 +80,23 @@ class OrdersController < ApplicationController
     current_cart.destroy
     session[:cart_id] = nil
   end
+
+  private
+
+  def authorize_user
+    authorize! :manage, Order
+  end
+
+  def create_order(params)
+    if current_user Order.create_from_cart_for_user(current_cart, current_user,
+                                      params[:order]["stripe_card_token"])
+
+    else
+      Order.create_visitor_order(current_cart,
+                                 params[:order][:visitor][:email],
+                                 params[:order]["stripe_card_token"])
+    end
+
+  end
+
 end
