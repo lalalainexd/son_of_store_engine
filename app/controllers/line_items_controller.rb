@@ -17,28 +17,29 @@ class LineItemsController < ApplicationController
     @line_item = current_cart.line_items.find(params[:id])
     @line_item.destroy
 
-    redirect_to current_cart 
+    redirect_to current_cart
   end
 
   def increase
-    @line_item = LineItem.find(params[:id])
+    @line_item = current_cart.line_items.find(params[:id])
     if @line_item.increase_quantity
-      redirect_to @line_item.cart, notice: 'Product quantity has been updated.'
+      redirect_to current_cart, notice: 'Product quantity has been updated.'
     else
-      raise "AH!"
+      flash[:error] = 'An error occurred while increasing the quantity'
+      redirect_to current_cart
     end
 
   end
 
   def decrease
-    @line_item = LineItem.find(params[:id])
+    @line_item = current_cart.line_items.find(params[:id])
     if @line_item && @line_item.quantity <= 1
       @line_item.delete
     else
       @line_item.decrease_quantity
     end
 
-    redirect_to @line_item.cart,
+    redirect_to current_cart,
       notice: 'Product quantity has been updated.'
   end
 end

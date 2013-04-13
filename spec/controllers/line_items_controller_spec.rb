@@ -3,7 +3,7 @@ require 'spec_helper'
 describe LineItemsController do
 
   let(:product) { Product.create(:name => "Test") }
-  let(:cart) { Cart.create }
+    let(:line_item) {LineItem.new}
 
   def valid_attributes
     { product_id: product.id, cart_id: cart.id }
@@ -11,12 +11,11 @@ describe LineItemsController do
 
   describe "POST create" do
     let(:product) {stub(:product, id: 1)}
-    let(:line_item) {LineItem.new}
 
     before do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
       Product.stub(:find).and_return(product)
-      Cart.any_instance.should_receive(:add_product).and_return(line_item)  
+      Cart.any_instance.should_receive(:add_product).and_return(line_item)
     end
 
     describe "with valid params" do
@@ -52,7 +51,6 @@ describe LineItemsController do
 
   describe "DELETE destroy" do
     it "destroys the requested line_item" do
-      line_item = LineItem.new
       Cart.any_instance.stub_chain(:line_items, :find).and_return(line_item)
       line_item.should_receive(:destroy)
       delete :destroy, {:id => 3}
@@ -60,30 +58,34 @@ describe LineItemsController do
   end
 
   describe "PUT commands" do
+
     before (:each) do
-      @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
+      Cart.any_instance.stub_chain(:line_items, :find).and_return(line_item)
     end
 
-    describe "quantity" do
-      it "increases quantity" do
-        cart.add_product(product)
-        expect{
-          put :increase, :id => 1
-        }.to change{cart.line_items.first.quantity}.by(1)
+    context "increase_quantity" do
+
+      it "increases quantity of the line item" do
+        line_item.should_receive(:increase_quantity).and_return(true)
+        put :increase, :id => 1
       end
 
-      it "decreases quantity" do
-        cart.add_product(product, 3)
-        expect{
-          put :decrease, :id => 1
-        }.to change{cart.line_items.first.quantity}.by(-1)
-      end
+    end
 
-      it "deletes quantity" do
-        cart.add_product(product,1)
+    context "decrease_quantity" do
+
+      it "decreases quantity of the line item" do
+        line_item.stub(:quantity).and_return(3)
+        line_item.should_receive(:decrease_quantity).and_return(false)
         put :decrease, :id => 1
-        expect(cart.line_items.count).to eq(0)
+      end
+
+      it "deletes the item" do
+        line_item.stub(:quantity).and_return(1)
+        line_item.should_receive(:delete)
+        put :decrease, :id => 1
       end
     end
+
   end
 end
