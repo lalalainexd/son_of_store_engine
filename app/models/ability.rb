@@ -11,10 +11,9 @@ class Ability
       cannot :manage, User
     elsif user.role? :user
       can :read, :all
-      cannot :read, Store
       can :create, Order
     else
-      can :read, :all
+      cannot :read, User
       can :create, Order; cannot :read, Order
     end
   end

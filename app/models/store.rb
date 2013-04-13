@@ -1,5 +1,5 @@
 class Store < ActiveRecord::Base
-  attr_accessible :description, :name, :slug
+  attr_accessible :description, :name, :slug, :status
 
   has_many :user_stores, dependent: :destroy
   has_many :users, through: :user_stores
