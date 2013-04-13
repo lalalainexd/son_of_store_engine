@@ -45,6 +45,7 @@ class OrdersController < ApplicationController
 
   def create
     order = create_order(params)
+
     if order.valid?
       deliver_confirmation(current_user, order)
       current_cart.destroy
@@ -69,7 +70,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.destroy
 
-    redirect_to orders_url
+    redirect_to orders_path
   end
 
   def deliver_confirmation user, order
@@ -88,7 +89,8 @@ class OrdersController < ApplicationController
   end
 
   def create_order(params)
-    if current_user Order.create_from_cart_for_user(current_cart, current_user,
+    if current_user
+      Order.create_from_cart_for_user(current_cart, current_user,
                                       params[:order]["stripe_card_token"])
 
     else
