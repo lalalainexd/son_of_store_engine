@@ -4,8 +4,8 @@ class Ability
   def initialize(user)
     # Guest
     unless user
-      can :read, [Store, Category, Product]
-      can :create, User
+      can :read, [Store, Category, Product, Order]
+      can :create, [User, Order]
     else
       # Standard User
       can :create, Store
