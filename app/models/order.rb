@@ -22,7 +22,11 @@ class Order < ActiveRecord::Base
   end
 
   def generate_confirmation_code
+    if user
+    self.confirmation ||= Digest::SHA1.hexdigest("#{user.email}#{created_at}")[0..8]
+    elsif visitor
     self.confirmation ||= Digest::SHA1.hexdigest("#{visitor.email}#{created_at}")[0..8]
+    end
   end
 
   def self.create_from_cart_for_user(cart, user, card)
@@ -60,5 +64,6 @@ class Order < ActiveRecord::Base
     errors.add :base, "There was a problem with your credit card."
     false
   end
+
 
 end

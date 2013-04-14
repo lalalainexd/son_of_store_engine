@@ -2,16 +2,24 @@ require 'spec_helper'
 
 describe Order do
   include_context "standard test dataset"
-  let!(:new_user){User.new(full_name: "user",
-      email: "user@oregonsale.com") }
-  let!(:order){Order.create(status: "pending", user_id: 1, total_cost: 3372)}
-  let!(:li){LineItem.create(product_id: 1, cart_id: nil,
+  let!(:new_user){User.create!(full_name: "user",
+      email: "user@oregonsale.com", password: "omg42", password_confirmation: "omg42") }
+  let!(:order){Order.create!(status: "pending", user_id: 1, total_cost: 3372)}
+  let!(:li){LineItem.create!(product_id: 1, cart_id: nil,
   order_id: 1, quantity: 3, price: 24)}
 
   describe "generate random" do
-    it "generates random thing" do
+    it "generates random thing for different orders" do
       a = order.generate_confirmation_code
-      (order.generate_confirmation_code).should_not eq a
+
+      new_user = User.new(full_name: "user",
+                          email: "user1@oregonsale.com",
+                          password: "omg42",
+                          password_confirmation: "omg42")
+      order2 = Order.new
+      order.created_at = DateTime.now
+
+      expect(order2.generate_confirmation_code).to_not eq a
     end
   end
 
