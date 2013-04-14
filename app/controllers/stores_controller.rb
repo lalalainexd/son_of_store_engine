@@ -9,6 +9,7 @@ class StoresController < ApplicationController
   end
 
   def new
+    #raise "NEWWWW"
     @store = Store.new
   end
 

@@ -56,8 +56,7 @@ describe Admin::StoresController do
     end
 
     it "returns error if not successful" do
-      pending "not sure how to stub to enter else statement"
-      Store.any_instance.stub(:valid?) {false}
+      Store.any_instance.stub(:decline_status) {false}
       put :decline, {store_id: store}
       expect(flash[:errors]).to include("We're sorry")
     end
