@@ -36,10 +36,19 @@ class Store < ActiveRecord::Base
   end
 
   def decline_status
-    self.status = "declined"
+    UserStore.find_by_store_id(self.id).delete
+    self.delete
+  end
+
+  def disable_status
+    self.status = "disabled"
     save
   end
 
+  def enable_status
+    self.status = "enabled"
+    save
+  end
   def approved?
     status == "approved"
   end

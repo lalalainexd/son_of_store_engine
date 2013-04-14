@@ -2,10 +2,11 @@ class Admin::StoresController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @stores = Store.where(Store.arel_table[:status].not_eq("declined"))
+    @stores = Store.order("name")
   end
 
   def activate
+    authorize! :manage, Store
     @store = Store.find(params[:store_id])
     if @store.approve_status
       UserMailer.store_approval_confirmation(@store.users.first, @store).deliver
@@ -17,12 +18,35 @@ class Admin::StoresController < ApplicationController
   end
 
   def decline
+    authorize! :manage, Store
     @store = Store.find(params[:store_id])
+    UserMailer.store_decline_notification(@store.users.first, @store).deliver
     if @store.decline_status
       redirect_to admin_stores_path, notice: "The status for #{@store.name} has been set to 'declined'."
-      UserMailer.store_decline_notification(@store.users.first, @store).deliver
     else
       flash[:errors] = "We're sorry. There was a problem declining #{@store.name}."
+      redirect_to admin_stores_path
+    end
+  end
+
+  def disable
+    authorize! :manage, Store
+    @store = Store.find(params[:store_id])
+    if @store.disable_status
+      redirect_to admin_stores_path, notice: "#{@store.name} has been disabled."
+    else
+      flash[:errors] = "We're sorry. There was a problem disabling #{@store.name}."
+      redirect_to admin_stores_path
+    end
+  end
+
+  def enable
+    authorize! :manage, Store
+    @store = Store.find(params[:store_id])
+    if @store.enable_status
+      redirect_to admin_stores_path, notice: "#{@store.name} has been enabled."
+    else
+      flash[:errors] = "We're sorry. There was a problem disabling #{@store.name}."
       redirect_to admin_stores_path
     end
   end

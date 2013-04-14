@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_many :user_stores, dependent: :destroy
   has_many :stores, :through => :user_stores
+  has_many :roles, :through => :user_stores
 
   attr_accessible :full_name, :display_name, :email, :password, :platform_administrator,
                   :password_confirmation, :role, :stripe_customer_token

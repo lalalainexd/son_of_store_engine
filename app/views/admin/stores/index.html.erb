@@ -7,8 +7,8 @@
     <thead>
       <tr>
         <th><%= model_class.human_attribute_name(:name) %></th>
-        <th><%= model_class.human_attribute_name(:slug) %></th>
-        <th><%= model_class.human_attribute_name(:status) %></th>
+        <th>URL ID</th>
+        <th>Description</th>
         <th><%=t '.actions', :default => t("helpers.actions") %></th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
         <tr>
           <td><%= link_to store.name, store_path(store) %></td>
           <td><%= store.slug %></td>
-          <td><%= store.status %></td>
+          <td><%= truncate(store.description, :length => 32) %></td>
           <td>
             <% if store.status == "pending" %>
               <%= link_to "Approve",
@@ -28,9 +28,20 @@
                           admin_store_decline_path(store),
                           :method => :put,
                           :class => "btn btn-mini btn-danger"%>
+            <% else %>
+              <%= link_to 'Administer', edit_store_path(store), :class => 'btn btn-mini' %>
+              <% if store.status != "disabled" %>
+                <%= link_to "Disable",
+                            admin_store_disable_path(store),
+                            :method => :put,
+                            :class => "btn btn-mini btn-warning"%>
+              <% else %>
+                <%= link_to "Enable",
+                            admin_store_enable_path(store),
+                            :method => :put,
+                            :class => "btn btn-mini btn-success"%>
+              <% end %>
             <% end %>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_store_path(store), :class => 'btn btn-mini' %>
           </td>
         </tr>
       <% end %>
