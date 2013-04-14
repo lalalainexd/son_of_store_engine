@@ -1,21 +1,17 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: sose_development
-  pool: 5
+  database: epicsale_development
   password:
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: sose_test
-  pool: 5
+  database: epicsale_test
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: sose_production
-  pool: 5
+  database: epicsale_production
   password:
-
