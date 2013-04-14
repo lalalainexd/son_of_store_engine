@@ -1,22 +1,19 @@
 require 'spec_helper'
 
 describe Cart do
-  describe 'cart_cost' do
-    let!(:cart){Cart.create}
-    let!(:product) {Product.create(name: "Name", description: "Description")}
-    let!(:line_item){LineItem.create(product_id: 1, cart_id: 1,
-    order_id: 1, quantity: 1, price: 24)}
-
-    it "increases the line_item quantity when adding a duplicate product" do
-      updated_line_item = cart.add_product(product)
-      expect(updated_line_item.quantity).to eq(2)
+  let(:cart){Cart.create}
+  let(:product) {
+    Product.new.tap do |product|
+    product.name = "Name"
+    product.description = "Description"
+    product.store = Store.create(name: "store", slug:"slug")
+    product.save
     end
-  end
+  }
+  let!(:line_item){LineItem.create(product_id: 1, cart_id: 1,
+                                   order_id: 1, quantity: 1, price: 24)}
 
   describe 'add_product' do
-
-    let(:cart){Cart.create}
-    let(:product) {Product.create(name: "Name", description: "Description")}
 
     context 'add item that is not in the cart' do
 
@@ -36,7 +33,13 @@ describe Cart do
         }.to change{cart.line_items.first.quantity}.by(1)
       end
 
-      it 'does not add a new line item'
+      it 'does not add a new line item' do
+        cart.add_product(product)
+
+        expect{
+          cart.add_product(product)
+        }.to change{cart.line_items.count}.by(0)
+      end
     end
 
   end
