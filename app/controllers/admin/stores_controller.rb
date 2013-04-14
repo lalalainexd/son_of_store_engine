@@ -20,8 +20,9 @@ class Admin::StoresController < ApplicationController
   def decline
     authorize! :manage, Store
     @store = Store.find(params[:store_id])
-    UserMailer.store_decline_notification(@store.users.first, @store).deliver
+    user = @store.users.first
     if @store.decline_status
+      UserMailer.store_decline_notification(user, @store).deliver
       redirect_to admin_stores_path, notice: "The status for #{@store.name} has been set to 'declined'."
     else
       flash[:errors] = "We're sorry. There was a problem declining #{@store.name}."
