@@ -272,6 +272,7 @@ DEPENDENCIES
   less-rails
   paperclip
   pg
+  pry
   rails (= 3.2.13)
   rake (= 10.0.4)
   rb-fsevent (~> 0.9)
