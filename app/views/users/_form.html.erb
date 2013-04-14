@@ -1,0 +1,53 @@
+<%= form_for @user do |f| %>
+
+
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="required field">
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+
+  <div class="required field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :display_name %>
+    <%= f.text_field :display_name %>
+  </div>
+
+  <div class="required field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="required field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <% if can? :manage, User %>
+    <h3>Site Permissions:</h3>
+    <div class="field">
+      Platform Administrator?
+      <%= f.check_box :platform_administrator %>
+    </div>
+
+    <h3>Store Permissions</h3>
+    <div class="field">
+      <%= f.collection_select :role, User::ROLES, :to_s, :titleize %>
+    </div>
+  <% end %>
+
+  <div class="actions"><%= f.submit %></div>
+
+<% end %>

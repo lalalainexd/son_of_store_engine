@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404012616) do
+ActiveRecord::Schema.define(:version => 20130412022241) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(:version => 20130404012616) do
   end
 
   create_table "orders", :force => true do |t|
-    t.string   "status"
+    t.string   "status",       :default => "pending"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.integer  "total_cost"
     t.string   "confirmation"
   end
@@ -61,6 +61,22 @@ ActiveRecord::Schema.define(:version => 20130404012616) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.boolean  "retired",            :default => false
+    t.integer  "store_id"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "stores", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "status",      :default => "pending"
   end
 
   create_table "trips", :force => true do |t|
@@ -73,20 +89,43 @@ ActiveRecord::Schema.define(:version => 20130404012616) do
     t.datetime "updated_at",         :null => false
   end
 
+  create_table "user_stores", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "store_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "role_id"
+  end
+
+  add_index "user_stores", ["store_id"], :name => "index_user_stores_on_store_id"
+  add_index "user_stores", ["user_id"], :name => "index_user_stores_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "crypted_password"
     t.string   "salt"
     t.string   "role"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.string   "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string   "full_name"
     t.string   "display_name"
     t.string   "stripe_customer_token"
+    t.boolean  "platform_administrator",       :default => false
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
+
+  create_table "visitor_orders", :force => true do |t|
+    t.integer "order_id",   :null => false
+    t.integer "visitor_id", :null => false
+  end
+
+  create_table "visitors", :force => true do |t|
+    t.string   "email",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

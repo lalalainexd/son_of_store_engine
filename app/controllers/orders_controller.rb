@@ -1,14 +1,21 @@
 class OrdersController < ApplicationController
+  load_and_authorize_resource
+  skip_authorize_resource :except => [ :new, :create, :show ]
+
   def index
     @orders = Order.all
-    authorize! :manage, Order
 
     render :index
   end
 
   def show
     @order = Order.find(params[:id])
-    authorize! :manage, Order
+
+    if @order.user && @order.user == current_user
+      @user = @order.user
+    else
+      @user = @order.visitor
+    end
 
     render :show
 
@@ -28,30 +35,22 @@ class OrdersController < ApplicationController
       redirect_to root_path and return
     end
     @order = Order.new
-    authorize! :create, Order
 
     render :new
   end
 
   def edit
     @order = Order.find(params[:id])
-    authorize! :update, Order
   end
 
   def create
-    unless current_user
-      flash[:error] = 'You must log in to checkout. Please, login or signup.'
-      redirect_to login_path and return
-    end
+    @order = create_order(params)
 
-    if order = Order.create_from_cart_for_user(current_cart,
-                                          current_user,
-                                          params[:order]["stripe_card_token"])
-
-      UserMailer.order_confirmation(current_user, order).deliver
+    if @order.valid?
+      deliver_confirmation(current_user, @order)
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to root_path, notice: 'Thanks! Your order was submitted.'
+      redirect_to order_path(@order), notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
     end
@@ -71,6 +70,35 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.destroy
 
-    redirect_to orders_url
+    redirect_to orders_path
   end
+
+  def deliver_confirmation user, order
+    UserMailer.order_confirmation(user, order).deliver
+  end
+
+  def clear_cart
+    current_cart.destroy
+    session[:cart_id] = nil
+  end
+
+  private
+
+  def authorize_user
+    authorize! :manage, Order
+  end
+
+  def create_order(params)
+    if current_user
+      Order.create_from_cart_for_user(current_cart, current_user,
+                                      params[:order]["stripe_card_token"])
+
+    else
+      Order.create_visitor_order(current_cart,
+                                 params[:email],
+                                 params["stripe_card_token"])
+    end
+
+  end
+
 end

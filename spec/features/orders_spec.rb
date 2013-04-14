@@ -4,10 +4,11 @@ describe "Orders", js: true do
   include_context "standard test dataset"
 
   let!(:u1) {User.create full_name: "admin",
-          email: 'admin@oregonsale.com',
-          password: 'password',
-          password_confirmation: 'password',
-          role: 'admin'}
+                         email: 'admin@oregonsale.com',
+                         password: 'password',
+                         password_confirmation: 'password',
+                         platform_administrator: true}
+
   let!(:li1){LineItem.create(product_id: 1, cart_id: nil,
   order_id: 1, quantity: 3, price: 24)}
   let!(:o1){Order.create(status: "pending", user_id: 1, total_cost: 3372)}
@@ -22,7 +23,7 @@ describe "Orders", js: true do
 
     it "can go to index" do
       visit "/orders"
-    end 
+    end
 
     it "can go to show" do
       visit "/orders/1"
@@ -34,7 +35,6 @@ describe "Orders", js: true do
     end
 
     it 'can visit new page' do
-      
     end
 
 

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'jquery-rails'
-gem 'rake'
+gem 'rake', '10.0.4'
 gem 'pg'
 gem 'paperclip'
 gem 'aws-sdk'
@@ -35,4 +35,6 @@ group :development, :test do
   gem 'reek'
   gem 'database_cleaner'
   gem 'selenium-webdriver', '2.31.0'
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'pry'
 end

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
+  skip_authorize_resource :only => [ :new, :create ]
+
   def new
     @user = User.new
   end
@@ -24,6 +27,18 @@ class UsersController < ApplicationController
       redirect_to root_path
       flash[:error] = "You are not permitted to view that user."
       return
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update_attributes(params[:user])
+      redirect_to @user, notice: 'Product was successfully updated.'
     end
   end
 end

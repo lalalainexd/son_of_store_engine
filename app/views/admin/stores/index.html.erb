@@ -1,0 +1,59 @@
+<%- model_class = Store -%>
+<div class="well well-large">
+  <div class="page-header">
+    <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th>URL ID</th>
+        <th>Description</th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stores.each do |store| %>
+        <tr>
+          <td><%= link_to store.name, store_path(store) %></td>
+          <td><%= store.slug %></td>
+          <td><%= truncate(store.description, :length => 32) %></td>
+          <td>
+            <% if store.status == "pending" %>
+              <%= link_to "Approve",
+                          admin_store_activate_path(store),
+                          :method => :put,
+                          :class => "btn btn-mini btn-success"%>
+              <%= link_to "Decline",
+                          admin_store_decline_path(store),
+                          :method => :put,
+                          :class => "btn btn-mini btn-danger"%>
+            <% else %>
+              <%= link_to 'Edit', edit_store_path(store), :class => 'btn btn-mini' %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          store_path(store),
+                          :method => 'delete',
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                          :class => 'btn btn-mini btn-danger' %>
+              <% if store.status != "disabled" %>
+                <%= link_to "Disable",
+                            admin_store_disable_path(store),
+                            :method => :put,
+                            :class => "btn btn-mini btn-warning"%>
+              <% else %>
+                <%= link_to "Enable",
+                            admin_store_enable_path(store),
+                            :method => :put,
+                            :class => "btn btn-mini btn-success"%>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_store_path,
+              :class => 'btn btn-primary' %>
+</div>

@@ -92,7 +92,7 @@ User.create(full_name: "Franklin Webber", email: "demoXX+franklin@jumpstartlab.c
 User.create(full_name: "Jeff", email: "demoXX+jeff@jumpstartlab.com",
   password: "password", role: :admin, display_name: "j3")
 User.create(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
-  password: "password", role: :superuser, display_name: "SkrilleX")
+  password: "password", role: :superuser, display_name: "SkrilleX", platform_administrator: "true")
 User.create(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
   password: "password", role: :user, display_name: "Ree-na")
 
@@ -163,3 +163,7 @@ Order.create(status: "shipped", user_id: 4, total_cost: 8)
 Order.create(status: "shipped", user_id: 4, total_cost: 16000)
 Order.create(status: "returned", user_id: 1, total_cost: 4844)
 Order.create(status: "returned", user_id: 4, total_cost: 460)
+
+#ROLES
+Role.create(title: "admin")
+Role.create(title: "stocker")

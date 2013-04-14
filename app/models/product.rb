@@ -42,6 +42,10 @@ class Product < ActiveRecord::Base
   has_many :product_categories
   has_many :categories, :through => :product_categories
 
+  belongs_to :store
+
+  validates_presence_of :store
+
   def ensure_not_referenced_by_any_line_item
     if line_items.count.zero?
       return true

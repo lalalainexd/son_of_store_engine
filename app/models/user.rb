@@ -3,7 +3,11 @@ class User < ActiveRecord::Base
 
   has_many :orders
 
-  attr_accessible :full_name, :display_name, :email, :password,
+  has_many :user_stores, dependent: :destroy
+  has_many :stores, :through => :user_stores
+  has_many :roles, :through => :user_stores
+
+  attr_accessible :full_name, :display_name, :email, :password, :platform_administrator,
                   :password_confirmation, :role, :stripe_customer_token
 
   validates_presence_of :full_name, on: :create
@@ -12,7 +16,11 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :email
 
-  ROLES = %w[superuser admin user]
+  ROLES = ["admin", "user"]
+
+  def to_s
+    full_name
+  end
 
   def role?(role)
     self.role == role.to_s

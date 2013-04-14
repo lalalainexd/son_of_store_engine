@@ -2,10 +2,10 @@ class SessionsController < ApplicationController
   def create
     user = login(params[:email], params[:password], params[:remember_me])
     if user
-      if user.role? :user
-        redirect_back_or_to root_url, notice: "Logged in."
-      elsif user.role?(:admin) || user.role?(:superuser)
+      if user.platform_administrator
         redirect_to '/admin', notice: "Logged in."
+      else
+        redirect_back_or_to root_url, notice: "Logged in."
       end
     else
       flash.now.alert = "Email or password was invalid."

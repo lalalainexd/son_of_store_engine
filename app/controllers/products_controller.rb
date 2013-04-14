@@ -1,10 +1,14 @@
 class ProductsController < ApplicationController
+  load_and_authorize_resource
+  skip_authorize_resource :except => [ :new, :create, :show ]
+
   def index
 
-    @dashboard = Dashboard.new
-    authorize! :manage, Product
-
-    render :index
+   # @dashboard = Dashboard.new
+   # render :index
+    store = Store.find(params[:id])
+    @products = store.products.order("name").active
+    @categories = @products.collect(&:categories).flatten.to_set
   end
 
   def list
@@ -14,7 +18,6 @@ class ProductsController < ApplicationController
 
   def retire
     product = Product.find(params[:id])
-    authorize! :update, product
     product.retired = true
     product.save
 
@@ -23,7 +26,6 @@ class ProductsController < ApplicationController
 
   def unretire
     product = Product.find(params[:id])
-    authorize! :update, product
     product.retired = false
     product.save
 
@@ -42,43 +44,41 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    authorize! :create, @product
-
-    render :new
   end
 
   def edit
     @product = Product.find(params[:id])
-    authorize! :update, @product
 
     @categories = Category.all
   end
 
   def create
     @product = Product.new(params[:product])
-    authorize! :create, @product
 
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
     @product = Product.find(params[:id])
-    authorize! :update, @product
 
     params[:product][:retired] ||= []
     params[:product][:category_ids] ||= []
     @product = Product.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to product_path(@product), notice: 'Product was successfully updated.'
+    else
+      flash[:error] = 'Product was not updated'
+      redirect_to product_path(@product)
     end
   end
 
   def destroy
     @product = Product.find(params[:id])
-    authorize! :destroy, @product
     @product.destroy
 
     redirect_to products_url

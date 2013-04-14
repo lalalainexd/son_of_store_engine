@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe Product do
-  let!(:c1) {Cart.create}
-  let!(:p1) {Product.create(name: "Name", description: "Description")}
-  
+  let!(:c1) {Cart.create!}
+  let(:p1) do
+    Product.new.tap do | product |
+      product.name = "name"
+      product.description = "description"
+      product.store = Store.create!(name:"something", slug:"harhar")
+      product.save!
+    end
+  end
+
   describe "ensure_not_referenced_by_any_line_item" do
     context "item has no line items" do
       it "returns true" do

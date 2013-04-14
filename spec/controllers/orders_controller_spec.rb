@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let(:user) {User.create(email: "josh@example.com", role: "user")}
+  let(:user) {User.create(full_name: "josh", email: "josh@example.com", role: "user")}
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
@@ -15,17 +15,10 @@ describe OrdersController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
-      get :show, {:id => order.to_param}
-      assigns(:order).should eq(order)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested order as @order" do
-      order = Order.create! valid_attributes
+      order = Order.new(confirmation: "confirmation")
+      Order.stub(:find).with("confirmation").and_return(order)
       get :edit, {:id => order.to_param}
       assigns(:order).should eq(order)
     end
@@ -39,64 +32,88 @@ describe OrdersController do
   end
 
   describe "POST create" do
-    describe "with valid params and logged in" do
-      before(:each) do
-        login_user(user)
+    let(:checkout_attributes) do
+      { email: "foo@bar.com",
+        "stripe_card_token" => "42"
+      }
+    end
+
+    context "with valid params" do
+
+      let(:order) {stub(:order, valid?: true, to_param:"order")}
+      before do
+        subject.should_receive(:deliver_confirmation)
+      end
+
+      context "with anonymous user" do
+
+        it "redirects to the order summary" do
+          Order.should_receive(:create_visitor_order).with(kind_of(Cart), "foo@bar.com", "42").and_return(order)
+          post :create, checkout_attributes
+          expect(response).to redirect_to order_path(order)
+        end
+      end
+
+      context "with a user" do
+
+        it "redirects to the user's account" do
+          login_user(user)
+          Order.should_receive(:create_from_cart_for_user).and_return(order)
+          post :create, {:order => valid_attributes}
+          expect(response).to redirect_to order_path(order)
+        end
+
       end
     end
 
-    describe "with invalid params" do
-      before(:each) do
-        login_user(user)
-      end
-
+    context "with invalid params" do
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Order.any_instance.stub(:save).and_return(false)
-        post :create, {:order => { "status" => "invalid value" }}
+        order = stub(:order, valid?: false)
+        subject.stub(:create_order).and_return(order)
+        post :create, {:order => { "status" => "paid" }}
         response.should render_template("new")
       end
     end
+
   end
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested order" do
-        order = Order.create! valid_attributes
-        # Assuming there are no other orders in the database, this
-        # specifies that the Order created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Order.any_instance.should_receive(:update_attributes).with({ "status" => "MyString" })
-        put :update, {:id => order.to_param, :order => { "status" => "MyString" }}
+
+      let(:order) { Order.new(confirmation: "blah") }
+
+      let(:expected_attributes) {
+        { "status" => "pending", "user_id" => user.id, "total_cost" => "300" }
+      }
+      before do
+        Order.stub(:find).with("blah").and_return(order)
+        order.should_receive(:update_attributes).with(expected_attributes).and_return(true)
       end
 
       it "assigns the requested order as @order" do
-        order = Order.create! valid_attributes
         put :update, {:id => order.to_param, :order => valid_attributes}
         assigns(:order).should eq(order)
       end
 
       it "redirects to the order" do
-        order = Order.create! valid_attributes
         put :update, {:id => order.to_param, :order => valid_attributes}
         response.should redirect_to(order)
       end
     end
 
     describe "with invalid params" do
+      let(:order) { stub(:order, to_param: "blah", update_attributes: false) }
+
+      before do
+        Order.stub(:find).with("blah").and_return(order)
+      end
+
       it "assigns the order as @order" do
-        order = Order.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Order.any_instance.stub(:save).and_return(false)
         put :update, {:id => order.to_param, :order => { "status" => "invalid value" }}
         assigns(:order).should eq(order)
       end
 
       it "re-renders the 'edit' template" do
-        order = Order.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Order.any_instance.stub(:save).and_return(false)
         put :update, {:id => order.to_param, :order => { "status" => "invalid value" }}
         response.should render_template("edit")
       end
@@ -104,15 +121,15 @@ describe OrdersController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested order" do
-      order = Order.create! valid_attributes
-      expect {
-        delete :destroy, {:id => order.to_param}
-      }.to change(Order, :count).by(-1)
+
+    let(:order) { stub(:order, to_param: "blah", update_attributes: false) }
+
+    before do
+      Order.stub(:find).with("blah").and_return(order)
+      order.should_receive(:destroy)
     end
 
     it "redirects to the orders list" do
-      order = Order.create! valid_attributes
       delete :destroy, {:id => order.to_param}
       response.should redirect_to(orders_path)
     end

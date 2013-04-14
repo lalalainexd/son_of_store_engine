@@ -6,7 +6,7 @@ describe "Products", js: true do
           email: 'admin@oregonsale.com',
           password: 'password',
           password_confirmation: 'password',
-          role: 'superuser'}
+          platform_administrator: true}
 
   describe "GET /products" do
     context "user is logged in" do
@@ -20,8 +20,8 @@ describe "Products", js: true do
 
       it "can create new product" do
         visit '/products/new'
-        fill_in 'product_name', with: 'Toy'
-        fill_in 'product_price', with: 5
+        fill_in 'product[name]', with: 'Toy'
+        fill_in 'product[price]', with: 5
         click_button 'Create Product'
         page.should have_content "Name: Toy"
       end

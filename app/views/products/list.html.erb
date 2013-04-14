@@ -13,11 +13,13 @@
 
 
   <div class="span9">
-    <ul class="thumbnails">
-      <% @products.each do |product| %>
-        <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
-      <% end %>
-    </ul>
+    <% if @products %>
+      <ul class="thumbnails">
+        <% @products.each do |product| %>
+          <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+        <% end %>
+      </ul>
+    <% end %>
 
     <% if can? :manage, Category %>
       <div class="form-actions">
@@ -35,8 +37,10 @@
   </div>
 </div>
 
-<% @products.each do |product| %>
-  <div class="big_product" id="big_product_<%= product.id %>" >
-   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-  </div>
-<% end %>
+<% if @products %>
+  <% @products.each do |product| %>
+    <div class="big_product" id="big_product_<%= product.id %>" >
+     <%= render :partial => 'products/big_product', :locals => { :product => product } %>
+    </div>
+  <% end %>
+<% end %

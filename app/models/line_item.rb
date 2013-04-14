@@ -1,5 +1,6 @@
 class LineItem < ActiveRecord::Base
   attr_accessible :cart_id, :product_id, :product, :quantity, :order_id, :price
+  attr_reader :total
 
   validates :product_id, presence: true
 
@@ -8,15 +9,19 @@ class LineItem < ActiveRecord::Base
   belongs_to :order
 
   def increase_quantity
-    quantity + 1
+    self.quantity += 1
+    self.total = nil
+    save
   end
 
   def decrease_quantity
-    quantity - 1
+    self.quantity -= 1
+    self.total = nil
+    save
   end
 
   def total
-    quantity.to_i * product.price.to_i
+    @total ||= quantity * price
   end
 
   def historical_total

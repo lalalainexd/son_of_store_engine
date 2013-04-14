@@ -1,50 +1,69 @@
 <div class="well well-large">
-<h2>Invoices for <%= @user.full_name %></h2>
+  <h2>Profile for <%= @user.full_name %></h2>
+  <h3>Manageable Stores</h3>
+  <p><%= link_to " Create New Store", new_store_path, :class => "btn btn-success icon-plus"%></p>
+  <table class="table">
+    <tr>
+      <th>Store Name</th>
+      <th>URL Identifier</th>
+      <th>Role</th>
+      <th>Status</th>
+    </tr>
+    <% @user.user_stores.each do |user_store| %>
+    <tr>
+      <td><%= user_store.name %></td>
+      <td><%= link_to_if user_store.store.approved?, user_store.slug, home_path(user_store.slug) %></td>
+      <td><%= user_store.role.title %></td>
+      <td><%= user_store.status %><td>
+    </tr>
+    <% end %>
+  </table>
 
-<div class="accordion" id="invoiceAccordion">
-  <% @user.orders.each_with_index do |order, i| %>
-    <div class="accordion-group">
+  <h3>Personal Invoices</h3>
+  <div class="accordion" id="invoiceAccordion">
+    <% @user.orders.each_with_index do |order, i| %>
+      <div class="accordion-group">
 
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
-          <% if order.status == 'shipped' || order.status == 'cancelled' %>
-            <%= i+1 %>. Order was <%= order.status %> by OregonSale on <%= order.updated_at.localtime.to_date.to_formatted_s(:long_ordinal) %>
-          <% else %>
-            <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at.localtime.to_date.to_formatted_s(:long_ordinal) %>
-          <% end %>
-        </a>
-      </div>
-
-      <div id="collapse_<%= i+1 %>" class="accordion-body collapse">
-        <div class="accordion-inner">
-          <table class="table table-striped">
-            <tr>
-              <th>Product Name</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Subtotal</th>
-              <th></th>
-            </tr>
-          <% order.line_items.each do |item| %>
-            <tr>
-              <td><%= link_to item.product.name, product_path(item.product) %></td>
-              <td><%= item.quantity %></td>
-              <td><%= amount_in_dollars(item.price) %></td>
-              <td><%= amount_in_dollars(item.historical_total) %></td>
-              <td></td>
-            </tr>
-          <% end %>
-            <tr>
-              <td></td>
-              <td></td>
-              <td><strong>Total:</strong></td>
-              <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
-              <td></td>
-          </table>
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#invoiceAccordion" href="#collapse_<%= i+1 %>">
+            <% if order.status == 'shipped' || order.status == 'cancelled' %>
+              <%= i+1 %>. Order was <%= order.status %> by OregonSale on <%= order.updated_at.localtime.to_date.to_formatted_s(:long_ordinal) %>
+            <% else %>
+              <%= i+1 %>. Order has been <%= order.status %> since <%= order.created_at.localtime.to_date.to_formatted_s(:long_ordinal) %>
+            <% end %>
+          </a>
         </div>
-      </div>
 
-    </div>
-  <% end %>
-</div>
+        <div id="collapse_<%= i+1 %>" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <table class="table table-striped">
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+                <th></th>
+              </tr>
+            <% order.line_items.each do |item| %>
+              <tr>
+                <td><%= link_to item.product.name, product_path(item.product) %></td>
+                <td><%= item.quantity %></td>
+                <td><%= amount_in_dollars(item.price) %></td>
+                <td><%= amount_in_dollars(item.historical_total) %></td>
+                <td></td>
+              </tr>
+            <% end %>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><strong>Total:</strong></td>
+                <td><strong><%= amount_in_dollars(order.total_cost) %></strong></td>
+                <td></td>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
 </div>
