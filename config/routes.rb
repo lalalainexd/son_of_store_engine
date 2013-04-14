@@ -6,6 +6,8 @@ StoreEngine::Application.routes.draw do
     resources :stores do
       put :activate
       put :decline
+      put :disable
+      put :enable
     end
   end
 
