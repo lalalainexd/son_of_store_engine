@@ -6,8 +6,8 @@ describe Product do
     Product.new.tap do | product |
       product.name = "name"
       product.description = "description"
-      store = Store.new
-      product.save
+      product.store = Store.create!(name:"something", slug:"harhar")
+      product.save!
     end
   end
 
