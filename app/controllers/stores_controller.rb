@@ -18,11 +18,10 @@ class StoresController < ApplicationController
   end
 
   def create
-    #TODO add authorization
     @store = Store.new(params[:store])
+    @store.add_admin(current_user)
 
     if @store.save
-      @store.add_admin(current_user)
       redirect_to profile_path, notice: 'Store was successfully created.'
     else
       flash[:error] = @store.errors.full_messages

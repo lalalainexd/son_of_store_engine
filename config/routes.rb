@@ -29,19 +29,21 @@ StoreEngine::Application.routes.draw do
   end
 
   resources :carts
-  resources :products do
-    member do
-      put :retire
-      put :unretire
-    end
-  end
 
-  get "all_products" => "products#list"
+#  resources :products do
+#    member do
+#      put :retire
+#      put :unretire
+#    end
+#  end
+
+  #get "all_products" => "products#list"
 
 
   resources :categories
 
   get "profile" => "users#show"
+
   resources :users do
     match "/" => "stores#index"
   end
@@ -51,16 +53,23 @@ StoreEngine::Application.routes.draw do
   get "my_cart" => "carts#show"
   # get "my_trip" => "trips#show"
 
-  get "admin" => "products#index", :as => "admin"
+ # get "admin" => "products#index", :as => "admin"
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
   get "signup" => "users#new", :as => "signup"
   get "search" => "search#user_search", :as => "search"
 
-  resources :stores
+ # resources :stores
+
   scope "/:id" do
     match "/" => "products#index", as: "home"
+    resources :products, :except => :index do
+      member do
+        put :retire
+        put :unretire
+      end
+    end
   end
 
-  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
+#  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code
 end
