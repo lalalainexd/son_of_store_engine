@@ -31,10 +31,12 @@ class Admin::ProductsController < ApplicationController
     @product = current_store.products.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to product_path(@product), notice: 'Product was successfully updated.'
+      redirect_to admin_product_path(store_id: current_store.to_param, id:@product.id),
+        notice: 'Product was successfully updated.'
     else
       flash[:error] = 'Product was not updated'
-      redirect_to admin_product_path(store_id: current_store.to_param, id: @product.id), notice: 'Product was successfully created.'
+      redirect_to admin_product_path(store_id: current_store.to_param, id: @product.id),
+        notice: 'Product was successfully created.'
     end
   end
 

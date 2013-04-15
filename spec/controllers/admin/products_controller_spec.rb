@@ -35,6 +35,7 @@ describe Admin::ProductsController do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
+    subject.stub(:current_store).and_return(store)
     subject.stub_chain(:current_store, :products, :find).and_return(product)
   end
 
@@ -76,7 +77,7 @@ describe Admin::ProductsController do
 
       it "redirects to the created product" do
         post :create, {:product => valid_attributes, :store_id => store.to_param}
-        response.should redirect_to(admin_products_path(store_id: store.to_param, id: product.id))
+        response.should redirect_to(admin_product_path(store_id: store.to_param, id: product.id))
       end
     end
 
@@ -109,7 +110,8 @@ describe Admin::ProductsController do
 
       it "redirects to the product" do
         put :update, {store_id: store.to_param, :id => product.to_param, :product => valid_attributes}
-        expect(response).to redirect_to(product_path(product))
+        expect(response).to redirect_to(admin_product_path(store_id: store.to_param,
+                                                           id: product.id))
         expect(flash.notice).to include("success")
       end
     end
@@ -133,7 +135,7 @@ describe Admin::ProductsController do
 
     it "redirects to the products list" do
       delete :destroy, {store_id: store.to_param, :id => product.to_param}
-      response.should redirect_to(admin_products_path(store_id: store.to_param))
+      response.should redirect_to(admin_products_path(store))
     end
   end
 
