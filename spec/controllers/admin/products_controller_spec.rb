@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Admin::ProductsController do
+  let(:store) {
+    Store.new.tap do | store |
+    store.name = "name"
+    store.slug = "slug"
+    store.id = 42
+    end
+  }
 
   let(:product) {
     Product.new.tap do |product|
@@ -28,26 +35,27 @@ describe Admin::ProductsController do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
-    Product.stub(:find).with(product.id.to_s).and_return(product)
+    subject.stub_chain(:current_store, :products, :find).and_return(product)
   end
 
   describe "GET show" do
     it "assigns the requested product as @product" do
-      get :show, {:id => product.to_param}
+      get :show, {store_id: 42, :id => product.to_param}
       assigns(:product).should eq(product)
     end
   end
 
   describe "GET new" do
     it "assigns a new product as @product" do
-      get :new
+      subject.stub(:current_store).and_return(store)
+      get :new, {store_id: 42}
       assigns(:product).should be_a_new(Product)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested product as @product" do
-      get :edit, {:id => product.to_param}
+      get :edit, {store_id: 42, :id => product.to_param}
       assigns(:product).should eq(product)
     end
   end
@@ -61,12 +69,12 @@ describe Admin::ProductsController do
       end
 
       it "assigns a newly created product as @product" do
-        post :create, {:product => valid_attributes}
+        post :create, {:store_id => 42, :product => valid_attributes}
         assigns(:product).should be_a(Product)
       end
 
       it "redirects to the created product" do
-        post :create, {:product => valid_attributes}
+        post :create, {:product => valid_attributes, :store_id => 42}
         response.should redirect_to(product)
       end
     end
@@ -75,7 +83,7 @@ describe Admin::ProductsController do
       it "assigns a newly created but unsaved product as @product" do
         @ability.can :create, Product
         Product.any_instance.should_receive(:save).and_return(false)
-        post :create, {:product => { "name" => "invalid value" }}
+        post :create, {:product => { "name" => "invalid value" }, store_id: 42}
         assigns(:product).should be_a_new(Product)
       end
     end
@@ -93,12 +101,13 @@ describe Admin::ProductsController do
       end
 
       it "assigns the requested product as @product" do
-        put :update, {:id => product.to_param, :product => valid_attributes}
+        put :update, {:id => product.to_param, :product => valid_attributes,
+        :store_id  => 42}
         assigns(:product).should eq(product)
       end
 
       it "redirects to the product" do
-        put :update, {:id => product.to_param, :product => valid_attributes}
+        put :update, {store_id: 42, :id => product.to_param, :product => valid_attributes}
         expect(response).to redirect_to(product_path(product))
         expect(flash.notice).to include("success")
       end
@@ -108,7 +117,7 @@ describe Admin::ProductsController do
       it "assigns the product as @product" do
         # Trigger the behavior that occurs when invalid params are submitted
         product.stub(:save).and_return(false)
-        put :update, {:id => product.to_param, :product => { "name" => "invalid value" }}
+        put :update, {store_id: 42, :id => product.to_param, :product => { "name" => "invalid value" }}
         assigns(:product).should eq(product)
       end
     end
@@ -122,7 +131,7 @@ describe Admin::ProductsController do
     end
 
     it "redirects to the products list" do
-      delete :destroy, {:id => product.to_param}
+      delete :destroy, {store_id: 42, :id => product.to_param}
       response.should redirect_to(products_path)
     end
   end

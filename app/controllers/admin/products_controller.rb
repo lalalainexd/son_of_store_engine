@@ -12,7 +12,6 @@ class Admin::ProductsController < ApplicationController
 
   def edit
     @product = current_store.products.find(params[:id])
-
     @categories = Category.all
   end
 
@@ -27,11 +26,9 @@ class Admin::ProductsController < ApplicationController
   end
 
   def update
-    @product = current_store.products.find(params[:id])
-
     params[:product][:retired] ||= []
     params[:product][:category_ids] ||= []
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
 
     if @product.update_attributes(params[:product])
       redirect_to product_path(@product), notice: 'Product was successfully updated.'
@@ -78,6 +75,5 @@ class Admin::ProductsController < ApplicationController
 
   def current_store
     @current_store ||= Store.find(params[:store_id])
-
   end
 end

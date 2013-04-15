@@ -36,7 +36,6 @@ describe ProductsController do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
-    #store.stub_chain(:products, :find).and_return(product)
     subject.stub_chain(:current_store, :products, :find).and_return(product)
   end
 
