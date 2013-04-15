@@ -66,7 +66,7 @@ StoreEngine::Application.routes.draw do
     get "/" => "products#index", as: "home"
 
     namespace :admin do
-      resources :products, :except => :index do
+      resources :products do
         member do
           put :retire
           put :unretire
@@ -75,7 +75,7 @@ StoreEngine::Application.routes.draw do
       resources :orders
     end
 
-    resources :products, :except => :index
+    resources :products, :only => :show
   end
 
 #  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code

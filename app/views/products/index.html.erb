@@ -4,7 +4,7 @@
     <div class="main_col with_ribbon">
       <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
-      <% @categories.each do |category| %>
+      <% @dashboard.categories.each do |category| %>
         <%#<%= link_to "#{category.name} (#{category.products.where(retired: false).count} items)", category_path(category.id) %>
         <li><%= link_to "#{category.name}", category_path(category.id) %></li>
 
@@ -15,14 +15,14 @@
 
   <div class="span9">
     <ul class="thumbnails">
-      <% @products.each do |product| %>
+      <% @dashboard.products.each do |product| %>
         <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
       <% end %>
     </ul>
   </div>
 </div>
 
-<% @products.each do |product| %>
+<% @dashboard.products.each do |product| %>
   <div class="big_product" id="big_product_<%= product.id %>" >
    <%= render :partial => 'products/big_product', :locals => { :product => product } %>
   </div>

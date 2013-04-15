@@ -11,13 +11,13 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
 
     @categories = Category.all
   end
 
   def create
-    @product = Product.new(params[:product])
+    @product = current_store.products.new(params[:product])
 
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
@@ -27,7 +27,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
 
     params[:product][:retired] ||= []
     params[:product][:category_ids] ||= []
@@ -42,14 +42,14 @@ class Admin::ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
     @product.destroy
 
     redirect_to products_url
   end
 
   def show
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
 
     if @product.retired == true
       redirect_to home_show_path
@@ -59,7 +59,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def retire
-    product = Product.find(params[:id])
+    product = current_store.products.find(params[:id])
     product.retired = true
     product.save
 
@@ -67,7 +67,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def unretire
-    product = Product.find(params[:id])
+    product = current_store.products.find(params[:id])
     product.retired = false
     product.save
 
