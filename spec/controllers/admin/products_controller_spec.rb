@@ -37,6 +37,7 @@ describe Admin::ProductsController do
     @controller.stub(:current_ability).and_return(@ability)
     subject.stub(:current_store).and_return(store)
     subject.stub_chain(:current_store, :products, :find).and_return(product)
+    subject.stub_chain(:current_store, :products, :build).and_return(product)
   end
 
   describe "GET show" do
