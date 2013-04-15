@@ -61,14 +61,21 @@ StoreEngine::Application.routes.draw do
 
  # resources :stores
 
-  scope "/:id" do
-    match "/" => "products#index", as: "home"
-    resources :products, :except => :index do
-      member do
-        put :retire
-        put :unretire
+  scope "/:store_id" do
+
+    get "/" => "products#index", as: "home"
+
+    namespace :admin do
+      resources :products, :except => :index do
+        member do
+          put :retire
+          put :unretire
+        end
       end
+      resources :orders
     end
+
+    resources :products, :except => :index
   end
 
 #  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code

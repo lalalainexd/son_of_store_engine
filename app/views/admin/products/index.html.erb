@@ -3,27 +3,6 @@
   <div class="row">
 
     <div class="span11">
-      <div id="orders">
-        <h3>Orders:</h3>
-        <!-- Tabs by status -->
-        <ul class="nav nav-tabs" id="ordersTab">
-          <% @dashboard.statuses.each do |status| %>
-          <li><a href="#<%= status %>" data-toggle="tab"><%= status.humanize %></a></li>
-          <% end %>
-        </ul>
-
-        <!-- Table bodies by status -->
-        <div class="tab-content">
-          <% @dashboard.orders_by_status.each do |status, orders| %>
-            <div class="tab-pane" id="<%= status %>">
-              <%= render :partial => 'orders/order_table', :locals =>
-                    { :orders => orders } %>
-              <!-- This probably needs to be hidden in the controller. -->
-            </div>
-          <% end %>
-        </div>
-      </div>
-
       <div id="products">
         <h3>Product Management:</h3>
           <!-- Tabs by category -->

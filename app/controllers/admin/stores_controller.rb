@@ -17,6 +17,10 @@ class Admin::StoresController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   def decline
     authorize! :manage, Store
     @store = Store.find(params[:store_id])
