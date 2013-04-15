@@ -12,7 +12,7 @@ class Store < ActiveRecord::Base
     # users << admin
     user_store = UserStore.new
     user_store.store = self
-    user_store.role = Role.find_by_title("admin")
+    user_store.role = Role.admin
     user_store.user = admin
     user_store.save
     # save
@@ -49,6 +49,7 @@ class Store < ActiveRecord::Base
     self.status = "enabled"
     save
   end
+
   def approved?
     status == "approved"
   end

@@ -10,6 +10,7 @@ require 'rspec/autorun'
 
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'rack_session_access/capybara'
 require 'factory_girl'
 require "cancan/matchers"
 
