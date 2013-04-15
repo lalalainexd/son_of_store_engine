@@ -21,7 +21,7 @@ class Admin::StoresController < ApplicationController
     authorize! :manage, Store
     @store = Store.find(params[:store_id])
     user = @store.users.first
-    UserMailer.delay.store_decline_notification(user, @store)
+    UserMailer.store_decline_notification(user, @store).deliver
     if @store.decline_status
       redirect_to admin_stores_path, notice: "The status for #{@store.name} has been set to 'declined' and a message has been sent to #{user.email}."
     else
