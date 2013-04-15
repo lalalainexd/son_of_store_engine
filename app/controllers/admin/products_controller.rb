@@ -20,7 +20,7 @@ class Admin::ProductsController < ApplicationController
     @product = current_store.products.new(params[:product])
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to admin_product_path(store_id: current_store, id: @product.id), notice: 'Product was successfully created.'
     else
       render :new
     end
@@ -37,7 +37,7 @@ class Admin::ProductsController < ApplicationController
       redirect_to product_path(@product), notice: 'Product was successfully updated.'
     else
       flash[:error] = 'Product was not updated'
-      redirect_to product_path(@product)
+      redirect_to admin_product_path(store_id: current_store, id: @product.id), notice: 'Product was successfully created.'
     end
   end
 
@@ -45,7 +45,7 @@ class Admin::ProductsController < ApplicationController
     @product = current_store.products.find(params[:id])
     @product.destroy
 
-    redirect_to products_url
+    redirect_to admin_products_path
   end
 
   def show
@@ -80,5 +80,4 @@ class Admin::ProductsController < ApplicationController
     @current_store ||= Store.find(params[:store_id])
 
   end
-
 end

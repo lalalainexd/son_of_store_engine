@@ -15,19 +15,18 @@ class ProductsController < ApplicationController
     end
   end
 
-  def list
-    @products = Product.order("name").active
-    @categories = Category.all
-  end
-
   def show
-    @product = Product.find(params[:id])
+    @product = current_store.products.find(params[:id])
 
     if @product.retired == true
       redirect_to home_show_path
     else
       render :show
     end
+  end
+
+  def current_store
+    @current_store ||= Store.find(params[:store_id])
   end
 
 end
