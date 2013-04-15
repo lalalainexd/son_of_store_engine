@@ -74,7 +74,7 @@ class OrdersController < ApplicationController
   end
 
   def deliver_confirmation user, order
-    UserMailer.order_confirmation(user, order).deliver
+    UserMailer.delay.order_confirmation(user, order)
   end
 
   def clear_cart
