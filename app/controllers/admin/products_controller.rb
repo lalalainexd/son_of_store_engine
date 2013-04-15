@@ -7,7 +7,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = current_store.products.build
   end
 
   def edit

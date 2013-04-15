@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  load_and_authorize_resource
-  skip_authorize_resource :except => [ :new, :create, :show ]
+  #load_and_authorize_resource
+  #skip_authorize_resource :except => [ :new, :create, :show ]
 
   def index
 

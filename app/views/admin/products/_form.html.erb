@@ -1,5 +1,5 @@
 
-<%= form_for @product, :html => {class: 'form-horizontal', multipart: true } do |f| %>
+<%= form_for [:admin, @product], :html => {class: 'form-horizontal', multipart: true } do |f| %>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
@@ -42,9 +42,9 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                products_path, :class => 'btn' %>
+                admin_products_path, :class => 'btn' %>
   </div>
 
-  
+
 
 <% end %>
