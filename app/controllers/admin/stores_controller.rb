@@ -9,7 +9,7 @@ class Admin::StoresController < ApplicationController
     authorize! :manage, Store
     @store = Store.find(params[:store_id])
     if @store.approve_status
-      UserMailer.store_approval_confirmation(@store.users.first, @store).deliver
+      UserMailer.delay.store_approval_confirmation(@store.users.first, @store)
       redirect_to admin_stores_path, notice: "#{@store.name} has been approved."
     else
       flash[:errors] = "We're sorry. There was a problem approving #{@store.name}."
