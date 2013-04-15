@@ -3,6 +3,6 @@ class Role < ActiveRecord::Base
   has_many :user_stores
 
   def self.admin
-    @admin ||= Role.find_by_title("admin")
+    @admin ||= find_or_create_by_title(title: "admin")
   end
 end

@@ -47,6 +47,7 @@ class Store < ActiveRecord::Base
     self.status = "enabled"
     save
   end
+
   def approved?
     status == "approved"
   end
