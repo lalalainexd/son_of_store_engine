@@ -40,7 +40,7 @@ describe Admin::ProductsController do
 
   describe "GET show" do
     it "assigns the requested product as @product" do
-      get :show, {store_id: 42, :id => product.to_param}
+      get :show, {store_id: store.to_param, :id => product.to_param}
       assigns(:product).should eq(product)
     end
   end
@@ -48,14 +48,14 @@ describe Admin::ProductsController do
   describe "GET new" do
     it "assigns a new product as @product" do
       subject.stub(:current_store).and_return(store)
-      get :new, {store_id: 42}
+      get :new, {store_id: store.to_param}
       assigns(:product).should be_a_new(Product)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested product as @product" do
-      get :edit, {store_id: 42, :id => product.to_param}
+      get :edit, {store_id: store.to_param, :id => product.to_param}
       assigns(:product).should eq(product)
     end
   end
@@ -65,17 +65,18 @@ describe Admin::ProductsController do
 
       before (:each) do
         Product.any_instance.should_receive(:save).and_return(true)
+        subject.stub_chain(:current_store, :products, :build).and_return(product)
         @ability.can :create, Product
       end
 
       it "assigns a newly created product as @product" do
-        post :create, {:store_id => 42, :product => valid_attributes}
+        post :create, {:store_id => store.to_param, :product => valid_attributes}
         assigns(:product).should be_a(Product)
       end
 
       it "redirects to the created product" do
-        post :create, {:product => valid_attributes, :store_id => 42}
-        response.should redirect_to(product)
+        post :create, {:product => valid_attributes, :store_id => store.to_param}
+        response.should redirect_to(admin_products_path(store_id: store.to_param, id: product.id))
       end
     end
 
@@ -83,7 +84,7 @@ describe Admin::ProductsController do
       it "assigns a newly created but unsaved product as @product" do
         @ability.can :create, Product
         Product.any_instance.should_receive(:save).and_return(false)
-        post :create, {:product => { "name" => "invalid value" }, store_id: 42}
+        post :create, {:product => { "name" => "invalid value" }, store_id: store.to_param}
         assigns(:product).should be_a_new(Product)
       end
     end
@@ -102,12 +103,12 @@ describe Admin::ProductsController do
 
       it "assigns the requested product as @product" do
         put :update, {:id => product.to_param, :product => valid_attributes,
-        :store_id  => 42}
+        :store_id  => store.to_param}
         assigns(:product).should eq(product)
       end
 
       it "redirects to the product" do
-        put :update, {store_id: 42, :id => product.to_param, :product => valid_attributes}
+        put :update, {store_id: store.to_param, :id => product.to_param, :product => valid_attributes}
         expect(response).to redirect_to(product_path(product))
         expect(flash.notice).to include("success")
       end
@@ -117,7 +118,7 @@ describe Admin::ProductsController do
       it "assigns the product as @product" do
         # Trigger the behavior that occurs when invalid params are submitted
         product.stub(:save).and_return(false)
-        put :update, {store_id: 42, :id => product.to_param, :product => { "name" => "invalid value" }}
+        put :update, {store_id: store.to_param, :id => product.to_param, :product => { "name" => "invalid value" }}
         assigns(:product).should eq(product)
       end
     end
@@ -131,8 +132,8 @@ describe Admin::ProductsController do
     end
 
     it "redirects to the products list" do
-      delete :destroy, {store_id: 42, :id => product.to_param}
-      response.should redirect_to(products_path)
+      delete :destroy, {store_id: store.to_param, :id => product.to_param}
+      response.should redirect_to(admin_products_path(store_id: store.to_param))
     end
   end
 
@@ -140,19 +141,18 @@ describe Admin::ProductsController do
     before (:each) do
       @ability.can :manage, Product
     end
-  end
 
-  describe "GET list" do
-    it "assigns all categories as @categories" do
-      category = Category.create(name: "test")
-      get :list
-      assigns(:categories).should eq([category])
+    it "retires a product" do
+      product.should_receive(:retired=).with(true)
+      put :retire, {:store_id => store.to_param, id: product.id}
+
     end
 
-    it "assigns active products as @products" do
-      Product.stub_chain(:order, :active).and_return([product])
-      get :list
-      assigns(:products).should eq([product])
+    it "unretires a product" do
+      product.should_receive(:retired=).with(false)
+      put :unretire, {:store_id => store.to_param, id: product.id}
     end
+
   end
+
 end

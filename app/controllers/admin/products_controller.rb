@@ -16,10 +16,10 @@ class Admin::ProductsController < ApplicationController
   end
 
   def create
-    @product = current_store.products.new(params[:product])
+    @product = current_store.products.build(params[:product])
 
     if @product.save
-      redirect_to admin_product_path(store_id: current_store, id: @product.id), notice: 'Product was successfully created.'
+      redirect_to admin_product_path(store_id: current_store.to_param, id: @product.id), notice: 'Product was successfully created.'
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Admin::ProductsController < ApplicationController
       redirect_to product_path(@product), notice: 'Product was successfully updated.'
     else
       flash[:error] = 'Product was not updated'
-      redirect_to admin_product_path(store_id: current_store, id: @product.id), notice: 'Product was successfully created.'
+      redirect_to admin_product_path(store_id: current_store.to_param, id: @product.id), notice: 'Product was successfully created.'
     end
   end
 
@@ -60,7 +60,7 @@ class Admin::ProductsController < ApplicationController
     product.retired = true
     product.save
 
-    redirect_to admin_path
+    redirect_to admin_products_path
   end
 
   def unretire
@@ -68,7 +68,7 @@ class Admin::ProductsController < ApplicationController
     product.retired = false
     product.save
 
-    redirect_to admin_path
+    redirect_to admin_products_path
   end
 
   private
