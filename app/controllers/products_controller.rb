@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
    # @dashboard = Dashboard.new
    # render :index
     store = Store.find(params[:id])
-    if store.approved?
+    if store && store.approved?
     @products = store.products.order("name").active
     @categories = @products.collect(&:categories).flatten.to_set
     else
