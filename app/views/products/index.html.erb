@@ -5,13 +5,12 @@
       <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
       <% @categories.each do |category| %>
-        <%#<%= link_to "#{category.name} (#{category.products.where(retired: false).count} items)", category_path(category.id) %>
-        <li><%= link_to "#{category.name}", category_path(category.id) %></li>
-
+        <li><%= link_to "#{category.name} (#{category.products.where(retired: false).count} items)", category_path(category.id) %></li>
       <% end %>
       </ul>
     </div>
   </div>
+
 
   <div class="span9">
     <ul class="thumbnails">
@@ -19,6 +18,7 @@
         <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
       <% end %>
     </ul>
+
   </div>
 </div>
 

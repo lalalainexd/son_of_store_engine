@@ -1,10 +1,18 @@
 class Dashboard
+  attr_reader :store, :admin
+
+  def initialize(store, admin)
+    @store = store
+    @admin = admin
+
+  end
+
   def products
-    @products ||= Product.all
+    @products ||= store.products
   end
 
   def orders
-    @orders ||= Order.all
+    #@orders ||= Order.all
   end
 
   def statuses
@@ -16,7 +24,7 @@ class Dashboard
   end
 
   def retired_products
-    @retired_products ||= Product.retired
+    @retired_products ||= store.products.retired
   end
 
   def orders_by_status

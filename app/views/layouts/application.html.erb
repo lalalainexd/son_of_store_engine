@@ -22,12 +22,11 @@
   <!-- Signup links -->
   <div class="container">
     <div class="pull-left btn-group">
-      <%= link_to " Create Your Trip", new_trip_path, :class => "btn btn-info trip-button" %>
-      <%= link_to "All Products", all_products_path, :class => "btn btn-info trip-button" %>
+      <%= link_to "All stores", stores_path, :class => "btn btn-info trip-button" %>
     </div>
     <div class="main_nav">
       <% if current_user %>
-        Pioneering 
+        Pioneering
           <% if current_user.platform_administrator %>
             <%= link_to "(admin mode)", admin_path %>
           <% end %>
