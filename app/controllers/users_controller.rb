@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   skip_authorize_resource :only => [ :new, :create ]
 
   def new
+    capture_previous_page
     @user = User.new
   end
 
@@ -15,7 +16,9 @@ class UsersController < ApplicationController
 
     if @user.save
       auto_login(@user)
-      redirect_to root_url, :notice => "Signed up"
+      UserMailer.delay.account_confirmation(@user.email, @user.full_name)
+      redirect_to(session[:referer],
+                  :notice => "Successfully signed up. <a href='/edit/profile'>Edit Your Account.</a>")
     else
       render :new
     end
@@ -31,14 +34,19 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
+    unless @user
+      redirect_to login_path
+      flash[:error] = "Please login to edit your profile."
+      return
+    end
   end
 
   def update
     @user = User.find(params[:id])
 
     if @user.update_attributes(params[:user])
-      redirect_to @user, notice: 'Product was successfully updated.'
+      redirect_to profile_path, notice: 'Your profile has been successfully updated.'
     end
   end
 end

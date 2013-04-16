@@ -1,7 +1,7 @@
 <div class="well well-large">
   <h2>Profile for <%= @user.full_name %></h2>
+  <p><%= link_to " Create New Store", new_store_path, :class => "btn btn-success icon-plus"%> <%= link_to " Edit Profile", edit_profile_path, class: "btn btn-success icon-edit" %></p>
   <h3>Manageable Stores</h3>
-  <p><%= link_to " Create New Store", new_store_path, :class => "btn btn-success icon-plus"%></p>
   <table class="table">
     <tr>
       <th>Store Name</th>

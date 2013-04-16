@@ -9,7 +9,7 @@ class Ability
     else
       # Standard User
       can :create, Store
-      can :read, User, :user_id => user.id
+      can :manage, User, :id => user.id
 
       if user.platform_administrator
         can :manage, :all

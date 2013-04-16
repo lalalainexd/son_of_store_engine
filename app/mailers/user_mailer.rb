@@ -15,9 +15,12 @@ class UserMailer < ActionMailer::Base
   end
 
   def store_decline_notification(user_email, store_name)
-    #@user = user
     @store_name = store_name
-    #mail to: user.email
+    mail to: user_email
+  end
+
+  def account_confirmation(user_email, full_name)
+    @full_name = full_name
     mail to: user_email
   end
 end

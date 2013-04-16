@@ -2,6 +2,7 @@ StoreEngine::Application.routes.draw do
 
   root :to => 'home#show'
 
+  resources :users
 
   namespace :admin do
     get "dashboard/show"
@@ -45,10 +46,8 @@ StoreEngine::Application.routes.draw do
   resources :categories
 
   get "profile" => "users#show"
+  match "edit/profile" => "users#edit"
 
-  resources :users do
-    match "/" => "stores#index"
-  end
 
   resource :session
 

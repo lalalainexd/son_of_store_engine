@@ -1,12 +1,11 @@
 <%= form_for @user do |f| %>
 
-
   <% if @user.errors.any? %>
     <div class="error_messages">
       <h2>Form is invalid</h2>
       <ul>
         <% for message in @user.errors.full_messages %>
-          <li><%= message %></li>
+          <li><%= message.html_safe %></li>
         <% end %>
       </ul>
     </div>
@@ -35,7 +34,7 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
   </div>
-  <% if can? :manage, User %>
+  <% if current_user && current_user.platform_administrator %>
     <h3>Site Permissions:</h3>
     <div class="field">
       Platform Administrator?
@@ -48,6 +47,5 @@
     </div>
   <% end %>
 
-  <div class="actions"><%= f.submit %></div>
-
+  <%= f.submit nil, :class => 'btn btn-primary' %>
 <% end %>
