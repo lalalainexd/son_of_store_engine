@@ -76,7 +76,7 @@ StoreEngine::Application.routes.draw do
       end
       resources :orders
       post "create_admin" => "stores#create_admin"
-      
+
     end
   end
 
