@@ -2,10 +2,10 @@
 
   <div class="span3">
     <div class="main_col with_ribbon">
-      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
+      <h2 class="ribbon"><%= image_tag("stores.png") %></h2>
       <ul class="nav nav-tabs nav-stacked">
-      <% @categories.each do |category| %>
-        <li><%= link_to "#{category.name} (#{category.products.active.count} items)", category_path(category.id) %></li>
+      <% @stores.each do |store| %>
+        <li><%= link_to store.name, home_path(store) %></li>
       <% end %>
       </ul>
     </div>
