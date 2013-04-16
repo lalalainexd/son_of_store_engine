@@ -28,7 +28,6 @@
       <% if current_user %>
         Pioneering
           <% if current_user.platform_administrator %>
-            <%= link_to "(admin mode)", admin_path %>
           <% end %>
         as <%= link_to current_user.full_name, profile_path %>.
         <%= link_to "Log out", logout_path %>

@@ -1,5 +1,7 @@
 StoreEngine::Application.routes.draw do
 
+  get "dashboard/show"
+
   root :to => 'home#show'
 
   namespace :admin do
