@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_cart
+  helper_method :capture_previous_page
 
   def current_cart
     Cart.find(session[:cart_id])
@@ -19,5 +20,9 @@ class ApplicationController < ActionController::Base
     cart = Cart.create
     session[:cart_id] = cart.id
     cart
+  end
+
+  def capture_previous_page
+    session[:referer] = request.env["HTTP_REFERER"]
   end
 end
