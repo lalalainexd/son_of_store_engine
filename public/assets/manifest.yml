@@ -37,8 +37,10 @@ slider-03.png: slider-03-86228329c891306084f3543de7c5fa4e.png
 slider-03/index.png: slider-03-86228329c891306084f3543de7c5fa4e.png
 stlou.png: stlou-582d9838684010a87c4301f1df2c5663.png
 stlou/index.png: stlou-582d9838684010a87c4301f1df2c5663.png
-application.js: application-7666b45983040ddf61361edef22a0cdf.js
-application/index.js: application-7666b45983040ddf61361edef22a0cdf.js
+stores.png: stores-97dc4cdcc89d44e32bc7a653b97dbd62.png
+stores/index.png: stores-97dc4cdcc89d44e32bc7a653b97dbd62.png
+application.js: application-82d4767a6d8a823cf9e2f4574c156fbb.js
+application/index.js: application-82d4767a6d8a823cf9e2f4574c156fbb.js
 application.css: application-7efb267442ce2156482d2bb5313aa92e.css
 application/index.css: application-7efb267442ce2156482d2bb5313aa92e.css
 fontawesome-webfont.eot: fontawesome-webfont-635909f146e208b3509acdf3b154bf0d.eot

@@ -3,6 +3,6 @@ class HomeController < ApplicationController
 #    @categories = Category.all.sort
 #    @products = Category.find_by_name("Essentials").products.shuffle[0..2]
     @products = []
-    @categories = []
+    @stores = Store.order("name")
   end
 end
