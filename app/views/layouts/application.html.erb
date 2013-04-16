@@ -26,10 +26,10 @@
     </div>
     <div class="main_nav">
       <% if current_user %>
-        Pioneering
-          <% if current_user.platform_administrator %>
-          <% end %>
-        as <%= link_to current_user.full_name, profile_path %>.
+        <% if current_user.platform_administrator %>
+          <%= link_to "Admin Dashboard", admin_dashboard_show_path %> |
+        <% end %>
+        <%= link_to "Account", profile_path %> |
         <%= link_to "Log out", logout_path %>
       <% else %>
         <%= link_to "Sign up", signup_path %> or
