@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  attr_accessible :status, :user_id, :total_cost, :confirmation, :visitor
+  attr_accessible :status, :user_id, :total_cost, :confirmation, :visitor, :stripe_card_token
   attr_accessor :stripe_card_token
 
   has_many :line_items, :dependent => :destroy
@@ -45,9 +45,10 @@ class Order < ActiveRecord::Base
   def self.create_visitor_order cart, email, card
     Order.new.tap do |order|
       order.total_cost = cart.calculate_total_cost
-      order.visitor = Visitor.create(email: email)
+      order.visitor = Visitor.find_or_create_by_email(email)
       order.add_line_items(cart)
       order.save_with_payment(card)
+      order.generate_confirmation_code
       order.save
     end
   end
@@ -63,6 +64,10 @@ class Order < ActiveRecord::Base
     logger.error "Stripe error while creating charge: #{e.message}"
     errors.add :base, "There was a problem with your credit card."
     false
+  end
+
+  def owner
+    user || visitor
   end
 
 

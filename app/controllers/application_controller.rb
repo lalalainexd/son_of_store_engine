@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  def current_ablity
+
+  end
+
   helper_method :current_cart
 
   def current_cart

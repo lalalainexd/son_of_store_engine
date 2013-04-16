@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:create]
   skip_authorize_resource :except => [ :new, :create, :show ]
 
   def index
@@ -47,10 +47,10 @@ class OrdersController < ApplicationController
     @order = create_order(params)
 
     if @order.valid?
-      deliver_confirmation(current_user, @order)
+      deliver_confirmation(@order.owner, @order)
       current_cart.destroy
       session[:cart_id] = nil
-      redirect_to order_path(@order), notice: 'Thanks! Your order was submitted.'
+      redirect_to order_path(@order.to_param), notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
     end
@@ -92,10 +92,9 @@ class OrdersController < ApplicationController
     if current_user
       Order.create_from_cart_for_user(current_cart, current_user,
                                       params[:order]["stripe_card_token"])
-
     else
       Order.create_visitor_order(current_cart,
-                                 params[:email],
+                                 params[:order][:visitor][:email],
                                  params["stripe_card_token"])
     end
 
