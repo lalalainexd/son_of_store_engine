@@ -21,8 +21,15 @@ class Admin::StoresController < ApplicationController
 
   end
 
+  def create_admin
+    new_admin = User.find_by_email(params[:email])
+    store = Store.find(params[:store_id])
+    store.add_admin(new_admin)
+    redirect_to admin_stores_path(params[:store_id])
+  end
+
   def decline
-    authorize! :manage, Store
+    #authorize! :manage, Store
     @store = Store.find(params[:store_id])
     user = @store.users.first
     if @store.decline_status

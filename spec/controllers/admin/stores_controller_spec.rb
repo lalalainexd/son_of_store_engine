@@ -29,6 +29,7 @@ describe Admin::StoresController do
                         role_id: 1 })
   end
 
+
   describe "GET index" do
     it "assigns non-declined stores as @stores" do
       get :index
@@ -38,6 +39,8 @@ describe Admin::StoresController do
 
   describe "PUT activate" do
     it "changes status to activated if successful" do
+      mail = stub(:mail, deliver: "")
+      UserMailer.should_receive(:store_approval_confirmation).and_return(mail)
       put :activate, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)
     end
@@ -51,6 +54,11 @@ describe Admin::StoresController do
 
   describe "PUT decline" do
     it "changes status to declined if successful" do
+      store.should_receive(:decline_status).and_return(true)
+      mail = stub(:mail, deliver: "")
+      UserMailer.should_receive(:store_decline_notification).and_return(mail)
+      store.should_receive(:users).and_return([])
+      Store.stub(:find).and_return(store)
       put :decline, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)
     end
@@ -85,6 +93,39 @@ describe Admin::StoresController do
       Store.any_instance.stub(:valid?) {false}
       put :enable, {store_id: store}
       expect(flash[:errors]).to include("We're sorry")
+    end
+  end
+end
+
+describe Admin::StoresController do
+  context "adding an admin" do
+    let!(:standard_user) { User.create( { full_name: "John Doe",
+                                          email: "john@example.com",
+                                          password: "password",
+                                          platform_administrator: false} )}
+
+    let(:store) { Store.new}
+    before do
+      @ability = Object.new
+      @ability.extend(CanCan::Ability)
+      @controller.stub(:current_ability).and_return(@ability)
+      @ability.can :create_admin, Store
+      login_user(standard_user)
+      UserStore.create( { user_id: standard_user.id,
+                          store_id: store.id,
+                          role_id: 1 })
+      Store.should_receive(:find).with("slug").and_return(store)
+    end
+
+    it "adds an admin" do
+      user = User.new( { full_name: "Austen Ito",
+                         email: "austen@ito.com",
+                         password: "password",
+                         platform_administrator: false} )
+
+      User.should_receive(:find_by_email).with(user.email).and_return(user)
+      store.should_receive(:add_admin).with(user)
+      post :create_admin, store_id: "slug", email: user.email
     end
   end
 end
