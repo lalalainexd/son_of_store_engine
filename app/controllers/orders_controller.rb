@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource :except => [:create]
+  load_and_authorize_resource :except => [:create, :new, :show]
   skip_authorize_resource :except => [ :new, :create, :show ]
 
   def index

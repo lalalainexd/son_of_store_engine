@@ -7,12 +7,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
-  def current_ablity
-
-  end
-
   helper_method :current_cart
   helper_method :capture_previous_page
+  helper_method :previous_page
 
   def current_cart
     Cart.find(session[:cart_id])
@@ -24,5 +21,9 @@ class ApplicationController < ActionController::Base
 
   def capture_previous_page
     session[:referer] = request.env["HTTP_REFERER"]
+  end
+
+  def previous_page
+    session[:referer]
   end
 end
