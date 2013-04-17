@@ -15,7 +15,7 @@
     <tbody>
       <% @stores.each do |store| %>
         <tr>
-          <td><%= link_to store.name, store_path(store) %></td>
+          <td><%= link_to store.name, home_path(store) %></td>
           <td><%= store.slug %></td>
           <td><%= truncate(store.description, :length => 32) %></td>
           <td>
