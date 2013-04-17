@@ -56,7 +56,6 @@ class Admin::StoresController < ApplicationController
   end
 
 private
-
   def store
     @store ||= Store.find(params[:store_id])
   end
