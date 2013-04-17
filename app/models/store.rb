@@ -14,7 +14,7 @@ class Store < ActiveRecord::Base
     user_store.store = self
     user_store.role = Role.admin
     user_store.user = admin
-    user_store.save
+    user_store.save!
   end
 
   def add_stocker stocker

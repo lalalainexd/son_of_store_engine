@@ -6,6 +6,10 @@ class Admin::StoresController < ApplicationController
     @stores = Store.order("name")
   end
 
+  def show
+
+  end
+
   def activate
     authorize! :manage, Store
     if store.approve_status
@@ -17,10 +21,23 @@ class Admin::StoresController < ApplicationController
     end
   end
 
+  def new_admin
+    render :new_admin
+  end
+
   def create_admin
     new_admin = User.find_by_email(params[:email])
-    store.add_admin(new_admin)
-    redirect_to admin_stores_path(params[:store_id])
+
+    if new_admin && store.add_admin(new_admin)
+      UserMailer.delay.new_admin_notification(new_admin, @store)
+      redirect_to admin_stores_path(params[:store_id])
+    elsif new_admin.nil?
+      UserMailer.delay.invite_notification(params[:email])
+      redirect_to admin_stores_path(params[:store_id])
+    else
+      render :new_admin,
+        notice: "We're sorry. There was a problem adding #{params[:email]}"
+    end
   end
 
   def decline

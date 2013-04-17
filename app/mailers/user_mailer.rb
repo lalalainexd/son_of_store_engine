@@ -23,4 +23,13 @@ class UserMailer < ActionMailer::Base
     @full_name = full_name
     mail to: user_email
   end
+
+  def new_admin_notification(user, store)
+    @store = store
+    mail to: user.email
+  end
+
+  def signup_notification(invitee_email)
+    mail to: invitee_email
+  end
 end

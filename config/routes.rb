@@ -68,6 +68,7 @@ StoreEngine::Application.routes.draw do
     resources :products, :only => :show
 
     namespace :admin do
+      get "/" => "stores#show", :as => "home"
       resources :products do
         member do
           put :retire
@@ -76,6 +77,7 @@ StoreEngine::Application.routes.draw do
       end
       resources :orders
       post "create_admin" => "stores#create_admin"
+      get "new_admin" => "stores#new_admin"
     end
   end
 
