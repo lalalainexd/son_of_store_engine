@@ -33,7 +33,7 @@ describe CategoriesController do
       category = stub(:category)
       categories = stub(:categories)
       categories.should_receive(:find).with("1").and_return(category)
-      current_store.should_receive(:categories).and_return(categories)
+      subject.should_receive(:categories).twice.and_return(categories)
       get :show, {store_id: slug, :id => 1}, valid_session
       assigns(:category).should eq(category)
     end
@@ -41,7 +41,7 @@ describe CategoriesController do
 
   describe "GET new" do
     it "assigns a new category as @category" do
-      get :new, {}, valid_session
+      get :new, {store_id: slug}, valid_session
       assigns(:category).should be_a_new(Category)
     end
   end

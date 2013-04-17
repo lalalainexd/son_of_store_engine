@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = current_store.categories.find(params[:id])
+    @category = categories.find(params[:id])
     render :show
   end
 
@@ -55,6 +55,6 @@ class CategoriesController < ApplicationController
   end
 
   def categories
-    @categories = current_store.categories.sort
+    @categories ||= current_store.categories
   end
 end
