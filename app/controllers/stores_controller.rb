@@ -18,7 +18,6 @@ class StoresController < ApplicationController
 
   def create
     @store = Store.new(params[:store])
-    @store.add_admin(current_user)
 
     if @store.save && @store.add_admin(current_user)
       current_user.reload
@@ -54,4 +53,5 @@ class StoresController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

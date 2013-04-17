@@ -35,8 +35,8 @@ FactoryGirl.define do
   factory :user do
     full_name "John Doe"
     email
-   # password "password"
-   # password_confirmation "password"
+    password "password"
+    password_confirmation "password"
   end
 
   factory :platform_admin, class: User do

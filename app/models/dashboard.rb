@@ -8,7 +8,7 @@ class Dashboard
   end
 
   def products
-    @products ||= store.products
+    @products = store.products.active
   end
 
   def orders

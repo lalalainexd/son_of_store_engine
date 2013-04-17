@@ -43,7 +43,6 @@ StoreEngine::Application.routes.draw do
   #get "all_products" => "products#list"
 
 
-  resources :categories
 
   get "profile" => "users#show"
   match "edit/profile" => "users#edit"
@@ -64,7 +63,9 @@ StoreEngine::Application.routes.draw do
 
   scope "/:store_id" do
 
+    resources :categories
     get "/" => "products#index", as: "home"
+    resources :products, :only => :show
 
     namespace :admin do
       resources :products do
@@ -75,8 +76,6 @@ StoreEngine::Application.routes.draw do
       end
       resources :orders
     end
-
-    resources :products, :only => :show
   end
 
 #  match "code" => redirect("http://www.github.com/jmejia/store_engine"), :as => :code

@@ -4,11 +4,15 @@ describe CategoriesController do
   def valid_attributes
     { "name" => "MyString" }
   end
+    let(:current_store) { Store.new }
+    let(:slug) {"slug"}
 
   before (:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
+
+    Store.should_receive(:find).with(slug).and_return(current_store)
   end
 
   def valid_session
@@ -17,16 +21,20 @@ describe CategoriesController do
 
   describe "GET index" do
     it "assigns all categories as @categories" do
-      category = Category.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:categories).should eq([category])
+      categories = []
+      current_store.should_receive(:categories).and_return(categories)
+      get :index, store_id: slug
+      assigns(:categories).should eq(categories)
     end
   end
 
   describe "GET show" do
     it "assigns the requested category as @category" do
-      category = Category.create! valid_attributes
-      get :show, {:id => category.to_param}, valid_session
+      category = stub(:category)
+      categories = stub(:categories)
+      categories.should_receive(:find).with("1").and_return(category)
+      current_store.should_receive(:categories).and_return(categories)
+      get :show, {store_id: slug, :id => 1}, valid_session
       assigns(:category).should eq(category)
     end
   end

@@ -1,15 +1,14 @@
 class CategoriesController < ApplicationController
+  before_filter :current_store, :categories
+
   def index
-    @categories = Category.all
     authorize! :manage, @category
 
     render :index
   end
 
   def show
-    @category = Category.find(params[:id])
-    @categories = Category.all.sort
-
+    @category = current_store.categories.find(params[:id])
     render :show
   end
 
@@ -48,5 +47,14 @@ class CategoriesController < ApplicationController
     @category.destroy
 
     redirect_to categories_path
+  end
+
+  private
+  def current_store
+    @current_store ||= Store.find(params[:store_id])
+  end
+
+  def categories
+    @categories = current_store.categories.sort
   end
 end
