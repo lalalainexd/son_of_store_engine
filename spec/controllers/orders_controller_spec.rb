@@ -33,14 +33,14 @@ describe OrdersController do
 
   describe "POST create" do
     let(:checkout_attributes) do
-      { email: "foo@bar.com",
+      { order: {visitor: {email: "foo@bar.com"}},
         "stripe_card_token" => "42"
       }
     end
 
     context "with valid params" do
 
-      let(:order) {stub(:order, valid?: true, to_param:"order")}
+      let(:order) {stub(:order, valid?: true, to_param:"order", owner:"")}
       before do
         subject.should_receive(:deliver_confirmation)
       end

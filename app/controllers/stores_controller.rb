@@ -3,7 +3,7 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find(params[:id])
-    if @store.pending?
+    if !@store || @store.pending? || @store.disabled?
       render file: "#{Rails.root}/public/404.html", status: 404
     end
   end
@@ -31,14 +31,10 @@ class StoresController < ApplicationController
   def update
     @store = Store.find(params[:id])
 
-    respond_to do |format|
-      if @store.update_attributes(params[:store])
-        format.html { redirect_to @store, notice: 'Store was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @store.errors, status: :unprocessable_entity }
-      end
+    if @store.update_attributes(params[:store])
+      redirect_to @store, notice: 'Store was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
@@ -48,10 +44,7 @@ class StoresController < ApplicationController
     @store = Store.find(params[:id])
     @store.destroy
 
-    respond_to do |format|
-      format.html { redirect_to stores_path }
-      format.json { head :no_content }
-    end
+    redirect_to stores_path
   end
 
 end

@@ -64,4 +64,8 @@ class Store < ActiveRecord::Base
   def enabled?
     status == "enabled"
   end
+
+  def disabled?
+    status == "disabled"
+  end
 end

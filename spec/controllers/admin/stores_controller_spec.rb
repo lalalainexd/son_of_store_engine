@@ -39,8 +39,10 @@ describe Admin::StoresController do
 
   describe "PUT activate" do
     it "changes status to activated if successful" do
-      mail = stub(:mail, deliver: "")
-      UserMailer.should_receive(:store_approval_confirmation).and_return(mail)
+      #mail = stub(:mail, deliver: "")
+      delay = stub(:delay)
+      delay.should_receive(:store_approval_confirmation)
+      UserMailer.should_receive(:delay).and_return(delay)
       put :activate, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)
     end
@@ -55,9 +57,10 @@ describe Admin::StoresController do
   describe "PUT decline" do
     it "changes status to declined if successful" do
       store.should_receive(:decline_status).and_return(true)
-      mail = stub(:mail, deliver: "")
-      UserMailer.should_receive(:store_decline_notification).and_return(mail)
-      store.should_receive(:users).and_return([])
+      delay = stub(:delay)
+      delay.should_receive(:store_decline_notification)
+      UserMailer.should_receive(:delay).and_return(delay)
+      store.should_receive(:users).and_return([standard_user])
       Store.stub(:find).and_return(store)
       put :decline, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)

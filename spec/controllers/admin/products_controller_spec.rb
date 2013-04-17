@@ -78,7 +78,7 @@ describe Admin::ProductsController do
 
       it "redirects to the created product" do
         post :create, {:product => valid_attributes, :store_id => store.to_param}
-        response.should redirect_to(admin_product_path(store_id: store.to_param, id: product.id))
+        response.should redirect_to(admin_products_path(store_id: store))
       end
     end
 
@@ -111,8 +111,7 @@ describe Admin::ProductsController do
 
       it "redirects to the product" do
         put :update, {store_id: store.to_param, :id => product.to_param, :product => valid_attributes}
-        expect(response).to redirect_to(admin_product_path(store_id: store.to_param,
-                                                           id: product.id))
+        expect(response).to redirect_to(admin_products_path(store_id: store.to_param))
         expect(flash.notice).to include("success")
       end
     end

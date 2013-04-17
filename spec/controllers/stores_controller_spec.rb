@@ -126,15 +126,21 @@ describe StoresController do
   end
 
   describe "PUT update" do
+
+    before do
+      @ability = Object.new
+      @ability.extend(CanCan::Ability)
+      @controller.stub(:current_ability).and_return(@ability)
+      @ability.can :update, Store
+      login_user(user)
+    end
+
     describe "with valid params" do
       it "updates the requested store" do
-        store = Store.create! valid_attributes
-        # Assuming there are no other stores in the database, this
-        # specifies that the Store created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Store.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
-        put :update, {:id => store.to_param, :store => { "name" => "MyString" }}, valid_session
+        store = Store.new
+        Store.stub(:find).with("foo").and_return(store)
+        store.should_receive(:update_attributes).with({ "name" => "MyString" })
+        put :update, {id: "foo", :store => { "name" => "MyString" }}
       end
 
       it "assigns the requested store as @store" do
