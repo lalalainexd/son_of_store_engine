@@ -1,6 +1,6 @@
-<%= form_for user do |f| %>
+<%= form_for @user do |f| %>
 
-  <% if user.errors.any? %>
+  <% if @user.errors.any? %>
     <div class="error_messages">
       <h2>Form is invalid</h2>
       <ul>
@@ -34,15 +34,12 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
   </div>
-  <div class="field">
-    Platform Administrator?
-    <%= f.check_box :platform_administrator %>
-  </div>
-
-  <h3>Store Permissions</h3>
-  <div class="field">
-    <%= f.collection_select :role, User::ROLES, :to_s, :titleize %>
-  </div>
+  <% if @user && @user.platform_administrator %>
+    <div class="field">
+      Platform Administrator?
+      <%= f.check_box :platform_administrator %>
+    </div>
+  <% end %>
 
 <%= f.submit nil, :class => 'btn btn-primary' %>
 <% end %>

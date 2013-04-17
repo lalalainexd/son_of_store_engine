@@ -2,9 +2,21 @@ class ProductsController < ApplicationController
   #load_and_authorize_resource
   #skip_authorize_resource :except => [ :new, :create, :show ]
 
+  def set_current_store
+    if session[:carts] && session[:carts][current_store.id]
+      cart_id = session[:carts][current_store.id]
+      session[:cart_id] = Cart.find(cart_id).id
+    else
+      cart = Cart.create
+      session[:carts] ||= {}
+      session[:carts][current_store.id] = cart.id
+      session[:cart_id] = cart.id
+    end
+  end
+
   def index
-   # @dashboard = Dashboard.new
-   # render :index
+    set_current_store
+
     @store = Store.find(params[:store_id])
     if @store.nil? || @store.pending?
       render file: "#{Rails.root}/public/404", formats: :html, status: 404
@@ -17,6 +29,7 @@ class ProductsController < ApplicationController
   end
 
   def list
+    set_current_store
     @products = Product.order("name").active
     @categories = Category.all
   end
@@ -38,6 +51,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    set_current_store
     @product = current_store.products.find(params[:id])
 
     if @product.retired == true

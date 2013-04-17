@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_cart
   helper_method :capture_previous_page
   helper_method :previous_page
+  helper_method :current_store
 
   def current_cart
     Cart.find(session[:cart_id])
@@ -25,5 +26,9 @@ class ApplicationController < ActionController::Base
 
   def previous_page
     session[:referer]
+  end
+
+  def current_store
+    Store.find(params[:store_id])
   end
 end

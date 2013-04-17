@@ -5,6 +5,7 @@ class Store < ActiveRecord::Base
   has_many :users, through: :user_stores
   has_many :products, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :carts, dependent: :destroy
 
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
