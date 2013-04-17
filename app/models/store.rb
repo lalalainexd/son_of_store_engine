@@ -9,12 +9,33 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
 
+  def admins
+    user_stores.where("role_id = ?", Role.admin.id).map(&:user)
+  end
+
+  def stockers
+    user_stores.where("role_id = ?", Role.stocker.id).map(&:user)
+  end
   def add_admin admin
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.admin
     user_store.user = admin
-    user_store.save!
+    user_store.save
+  end
+
+  def remove_admin admin
+    user_store = user_stores.find_by_user_id(admin.id)
+    if user_store
+      user_store.destroy
+    end
+  end
+
+  def remove_stocker stocker
+    user_store = user_stores.find_by_user_id(stocker.id)
+    if user_store
+      user_store.destroy
+    end
   end
 
   def add_stocker stocker
