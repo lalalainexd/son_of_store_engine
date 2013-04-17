@@ -64,8 +64,10 @@ feature "Store administrator works with products as in StoreEngine", %q{
   end
 
   scenario "Stocker adds a product" do
-   # page.set_rack_session(user_id: stocker.id)
+   page.set_rack_session(user_id: stocker.id)
+   visit admin_products_path(store)
 
+   puts current_path
     within('table>tbody>tr:first-child') do
       click_link("Retire")
     end
@@ -73,5 +75,4 @@ feature "Store administrator works with products as in StoreEngine", %q{
     expect(current_path).to eq admin_products_path(store)
     expect(page).to have_content("Product is now retired")
   end
-
 end
