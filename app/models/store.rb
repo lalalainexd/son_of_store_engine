@@ -52,4 +52,8 @@ class Store < ActiveRecord::Base
   def approved?
     status == "approved"
   end
+
+  def enabled?
+    status == "enabled"
+  end
 end

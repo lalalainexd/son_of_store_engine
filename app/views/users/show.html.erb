@@ -12,7 +12,7 @@
     <% @user.user_stores.each do |user_store| %>
     <tr>
       <td><%= user_store.name %></td>
-      <td><%= link_to_if user_store.store.approved?, user_store.slug, home_path(user_store.slug) %></td>
+      <td><%= link_to_if (user_store.store.approved? || user_store.store.enabled?), user_store.slug, home_path(user_store.slug) %></td>
       <td><%= user_store.role.title %></td>
       <td><%= user_store.status %><td>
     </tr>

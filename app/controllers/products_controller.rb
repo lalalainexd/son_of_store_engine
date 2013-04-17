@@ -3,8 +3,8 @@ class ProductsController < ApplicationController
   #skip_authorize_resource :except => [ :new, :create, :show ]
 
   def index
-    store = Store.find(params[:id])
-    if store && store.approved?
+    store = Store.find(params[:store_id])
+    if store && (store.approved? || store.enabled?)
     @products = store.products.order("name").active
     @categories = @products.collect(&:categories).flatten.to_set
     else

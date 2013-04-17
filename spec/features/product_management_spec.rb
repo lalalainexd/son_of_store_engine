@@ -31,8 +31,9 @@ feature "Store administrator works with products as in StoreEngine", %q{
 
   end
 
-  scnario "Admin adds a product" do
-
+  scenario "Admin adds a product" do
+    click_link("New Product")
+    expect(current_path).to eq(new_product_path(store_id: store.to_param))
   end
 
 end

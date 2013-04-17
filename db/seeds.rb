@@ -1,13 +1,25 @@
 # STORES
-store = Store.create!(name: "Oregon Sale", slug:"oregon-sale")
+store = Store.create!(name: "Oregon Sale", slug:"oregon-sale", status: "enabled")
 
 # CATEGORIES
-Category.create!(name: "Grub")
-Category.create!(name: "Clothing")
-Category.create!(name: "Weapons")
-Category.create!(name: "Tools")
-Category.create!(name: "Medicine")
-Category.create!(name: "Essentials")
+c = Category.new(name: "Grub")
+c.store = store
+c.save!
+c = Category.new(name: "Clothing")
+c.store = store
+c.save!
+c = Category.new(name: "Weapons")
+c.store = store
+c.save!
+c = Category.new(name: "Tools")
+c.store = store
+c.save!
+c = Category.new(name: "Medicine")
+c.store = store
+c.save!
+c = Category.new(name: "Essentials")
+c.store = store
+c.save!
 
 #GRUB
 p=Product.new( name: "Rations", price: 24,
