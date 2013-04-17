@@ -6,4 +6,5 @@ class UserStore < ActiveRecord::Base
   delegate :name, :slug, :status, to: :store
 
   validates_presence_of :user, :store, :role
+
 end

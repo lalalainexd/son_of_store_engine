@@ -39,7 +39,7 @@ feature "Platform Administrator approves a new store", %q{
 
     expect(page).to have_content("Cool Runnings has been set to 'declined'")
     expect(page).to_not have_link("Approve")
-    expect(page).to have_link("Decline")
+    expect(page).to_not have_link("Decline")
   end
 end
 
