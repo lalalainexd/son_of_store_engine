@@ -21,6 +21,11 @@ FactoryGirl.define do
     end
   end
 
+  factory :category do
+    store
+    name "a category"
+  end
+
   factory :product do
     name "product"
     description "dummy product"
