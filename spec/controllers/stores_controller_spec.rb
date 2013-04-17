@@ -11,25 +11,15 @@ describe StoresController do
   end
 
   let(:user) {FactoryGirl.create(:user)}
+  let(:store) { FactoryGirl.create(:store, status: "enabled") }
 
   before do
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    @controller.stub(:current_ability).and_return(@ability)
+    @ability.can :manage, Store
+    store.add_admin(user)
     login_user(user)
-  end
-
-  describe "GET show" do
-    it "assigns the requested store as @store" do
-      store = Store.create! valid_attributes
-      get :show, {:id => store.to_param}, valid_session
-      assigns(:store).should eq(store)
-    end
-
-    it "sends a not found error for a pending store" do
-      store = Store.create! valid_attributes
-      get :show, {:id => store.to_param}, valid_session
-
-      expect(response).to be_not_found
-
-    end
   end
 
   describe "GET new" do
@@ -41,7 +31,6 @@ describe StoresController do
 
   describe "GET edit" do
     it "assigns the requested store as @store" do
-      store = Store.create! valid_attributes
       get :edit, {:id => store.to_param}, valid_session
       assigns(:store).should eq(store)
     end
@@ -49,19 +38,17 @@ describe StoresController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Store" do
-        expect {
-          post :create, {:store => valid_attributes}, valid_session
-        }.to change(Store, :count).by(1)
+      before do
+        Store.any_instance.should_receive(:save).and_return(true)
+        Store.any_instance.should_receive(:add_admin).and_return(true)
       end
 
       it "assigns a newly created store as @store" do
         post :create, {:store => valid_attributes}, valid_session
         assigns(:store).should be_a(Store)
-        assigns(:store).should be_persisted
       end
 
-      it "redirects to the created store" do
+      it "redirects to the user's profile" do
         post :create, {:store => valid_attributes}, valid_session
         response.should redirect_to(profile_path)
       end
@@ -70,11 +57,6 @@ describe StoresController do
     describe "with invalid params" do
 
       before do
-        @ability = Object.new
-        @ability.extend(CanCan::Ability)
-        @controller.stub(:current_ability).and_return(@ability)
-        @ability.can :create, Store
-        login_user(user)
       end
 
       it "assigns a newly created but unsaved store as @store" do
