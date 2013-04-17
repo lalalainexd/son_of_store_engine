@@ -17,8 +17,6 @@ class StoresController < ApplicationController
   end
 
   def create
-    @store = Store.new(params[:store])
-
     if @store.save && @store.add_admin(current_user)
       current_user.reload
       redirect_to profile_path, notice: 'Store was successfully created.'
@@ -38,8 +36,6 @@ class StoresController < ApplicationController
     end
   end
 
-  # DELETE /stores/1
-  # DELETE /stores/1.json
   def destroy
     @store = Store.find(params[:id])
     @store.destroy

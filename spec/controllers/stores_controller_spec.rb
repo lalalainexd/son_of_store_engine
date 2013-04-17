@@ -68,6 +68,15 @@ describe StoresController do
     end
 
     describe "with invalid params" do
+
+      before do
+        @ability = Object.new
+        @ability.extend(CanCan::Ability)
+        @controller.stub(:current_ability).and_return(@ability)
+        @ability.can :create, Store
+        login_user(user)
+      end
+
       it "assigns a newly created but unsaved store as @store" do
         # Trigger the behavior that occurs when invalid params are submitted
         Store.any_instance.stub(:save).and_return(false)
@@ -115,10 +124,14 @@ describe StoresController do
       end
 
       context "setting an admin for a store" do
+
+
         it "sets the current user as a manager for the new store" do
-          pending "store isn't being created. figure out why!"
-          post :create, {:store => {name: "name"}}
-          expect(Store.first.users).to include(user)
+          store = Store.new
+          store.should_receive(:save).and_return(true)
+          store.should_receive(:add_admin).with(user).and_return(true)
+          Store.should_receive(:new).with({"name" => "name"}).and_return(store)
+          post :create, {store: {name: "name"}}
         end
       end
     end
@@ -136,56 +149,61 @@ describe StoresController do
     end
 
     describe "with valid params" do
-      it "updates the requested store" do
-        store = Store.new
+
+      let(:store) { Store.new(slug: "foo")}
+
+      before do
         Store.stub(:find).with("foo").and_return(store)
-        store.should_receive(:update_attributes).with({ "name" => "MyString" })
-        put :update, {id: "foo", :store => { "name" => "MyString" }}
+        store.should_receive(:update_attributes).with(valid_attributes).and_return(true)
       end
 
       it "assigns the requested store as @store" do
-        store = Store.create! valid_attributes
-        put :update, {:id => store.to_param, :store => valid_attributes}, valid_session
+        put :update, {:id => store.to_param, :store => valid_attributes}
         assigns(:store).should eq(store)
       end
 
       it "redirects to the store" do
-        store = Store.create! valid_attributes
-        put :update, {:id => store.to_param, :store => valid_attributes}, valid_session
+        put :update, {:id => store.to_param, :store => valid_attributes}
         response.should redirect_to(store)
       end
     end
 
     describe "with invalid params" do
+      let(:store) { Store.new(slug: "foo")}
+      let(:invalid_attributes) {{ "name" => "invalid value" }}
+
+      before do
+        Store.stub(:find).with("foo").and_return(store)
+        store.should_receive(:update_attributes).with(invalid_attributes).and_return(false)
+      end
+
       it "assigns the store as @store" do
-        store = Store.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Store.any_instance.stub(:save).and_return(false)
-        put :update, {:id => store.to_param, :store => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => store.to_param, :store => invalid_attributes}
         assigns(:store).should eq(store)
       end
 
       it "re-renders the 'edit' template" do
-        store = Store.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Store.any_instance.stub(:save).and_return(false)
-        put :update, {:id => store.to_param, :store => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => store.to_param, :store => invalid_attributes}
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested store" do
-      store = Store.create! valid_attributes
-      expect {
-        delete :destroy, {:id => store.to_param}, valid_session
-      }.to change(Store, :count).by(-1)
-    end
+
 
     it "redirects to the stores list" do
-      store = Store.create! valid_attributes
-      delete :destroy, {:id => store.to_param}, valid_session
+      @ability = Object.new
+      @ability.extend(CanCan::Ability)
+      @controller.stub(:current_ability).and_return(@ability)
+      @ability.can :destroy, Store
+      login_user(user)
+
+      store = Store.new(slug: "foo")
+      Store.stub(:find).with("foo").and_return(store)
+      store.should_receive(:destroy).and_return(true)
+
+      delete :destroy, {:id => store.to_param}
       response.should redirect_to(stores_path)
     end
   end
