@@ -4,15 +4,16 @@ describe CategoriesController do
   def valid_attributes
     { "name" => "MyString" }
   end
-    let(:current_store) { Store.new }
-    let(:slug) {"slug"}
+
+  let(:slug) {"slug"}
+  let(:current_store) { Store.new(slug: slug) }
 
   before (:each) do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
 
-    Store.should_receive(:find).with(slug).and_return(current_store)
+    subject.stub(:current_store).and_return(current_store)
   end
 
   def valid_session
@@ -22,7 +23,6 @@ describe CategoriesController do
   describe "GET index" do
     it "assigns all categories as @categories" do
       categories = []
-      current_store.should_receive(:categories).and_return(categories)
       get :index, store_id: slug
       assigns(:categories).should eq(categories)
     end
@@ -30,7 +30,7 @@ describe CategoriesController do
 
   describe "GET show" do
     it "assigns the requested category as @category" do
-      category = stub(:category)
+      category = Category.new
       categories = stub(:categories)
       categories.should_receive(:find).with("1").and_return(category)
       subject.should_receive(:categories).twice.and_return(categories)
@@ -48,71 +48,83 @@ describe CategoriesController do
 
   describe "GET edit" do
     it "assigns the requested category as @category" do
-      category = Category.create! valid_attributes
-      get :edit, {:id => category.to_param}, valid_session
+      category = Category.new
+      categories = stub(:categories)
+      categories.should_receive(:find).with("1").and_return(category)
+      subject.should_receive(:categories).twice.and_return(categories)
+      get :edit, {store_id: slug, id: "1"}
       assigns(:category).should eq(category)
     end
   end
 
   describe "POST create" do
+
+    let(:category) {Category.new}
+
+    before (:each) do
+      @ability.can :create, Category
+      categories = stub(:categories)
+      categories.should_receive(:build).and_return(category)
+      subject.stub(:categories).and_return(categories)
+    end
+
     context "with valid params and admin access" do
-      before (:each) do
-        @ability.can :create, Category
-      end
 
-      it "creates a new Category" do
-        expect {
-          post :create, {:category => valid_attributes}, valid_session
-        }.to change(Category, :count).by(1)
-      end
-
-      it "assigns a newly created category as @category" do
-        post :create, {:category => valid_attributes}, valid_session
-        assigns(:category).should be_a(Category)
-        assigns(:category).should be_persisted
+      before do
+        category.should_receive(:save).and_return(true)
       end
 
       it "redirects to the created category" do
-        post :create, {:category => valid_attributes}, valid_session
-        response.should redirect_to(Category.last)
+        subject.should_receive(:store_category_path).with(category).and_return(root_path)
+        post :create, {store_id: slug, category: valid_attributes}, valid_session
       end
+
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       it "assigns a newly created but unsaved category as @category" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        post :create, {:category => { "name" => "invalid value" }}, valid_session
+        category.stub(:save).and_return(false)
+        post :create, {store_id: slug,
+          :category => { "name" => "invalid value" }}, valid_session
         assigns(:category).should be_a_new(Category)
       end
     end
   end
 
   describe "PUT update" do
-    context "with valid params and admin access" do
-    before (:each) do
-      @ability.can :update, Category
+
+    let(:category) {Category.new}
+
+    before do
+
+      categories = stub(:categories)
+      categories.should_receive(:find).with("1").and_return(category)
+      subject.stub(:categories).and_return(categories)
     end
 
+    context "with valid params and admin access" do
+
+      before (:each) do
+        @ability.can :update, Category
+
+        category.should_receive(:update_attributes).and_return(true)
+        subject.should_receive(:store_category_path).with(category).and_return(root_path)
+       end
+
       it "assigns the requested category as @category" do
-        category = Category.create! valid_attributes
-        put :update, {:id => category.to_param, :category => valid_attributes}, valid_session
+        put :update, {store_id: slug, id: "1", category: valid_attributes}
         assigns(:category).should eq(category)
       end
 
-      it "redirects to the category" do
-        category = Category.create! valid_attributes
-        put :update, {:id => category.to_param, :category => valid_attributes}, valid_session
-        response.should redirect_to(category)
-      end
     end
 
     describe "with invalid params" do
+
       it "assigns the category as @category" do
-        category = Category.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Category.any_instance.stub(:save).and_return(false)
-        put :update, {:id => category.to_param, :category => { "name" => "invalid value" }}, valid_session
+
+        category.stub(:update_attributes).and_return(false)
+        put :update, {store_id: slug, :id => "1", :category => { "name" => "invalid value" }}
         assigns(:category).should eq(category)
       end
     end
@@ -124,17 +136,16 @@ describe CategoriesController do
     end
 
     it "destroys the requested category" do
-      category = Category.create! valid_attributes
-      expect {
-        delete :destroy, {:id => category.to_param}, valid_session
-      }.to change(Category, :count).by(-1)
+      category = Category.new
+      category.should_receive(:destroy)
+      categories = stub(:categories)
+      categories.should_receive(:find).with("1").and_return(category)
+      subject.should_receive(:categories).at_least(:twice).and_return(categories)
+      subject.should_receive(:store_categories_path).and_return(root_path)
+
+      delete :destroy, {store_id: slug, id: "1" }
     end
 
-    it "redirects to the categories list" do
-      category = Category.create! valid_attributes
-      delete :destroy, {:id => category.to_param}, valid_session
-      response.should redirect_to(categories_path)
-    end
   end
 
 end
