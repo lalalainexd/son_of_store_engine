@@ -6,10 +6,12 @@ class ProductsController < ApplicationController
 
    # @dashboard = Dashboard.new
    # render :index
-    store = Store.find(params[:store_id])
-    if store
-    @products = store.products.order("name").active
-    @categories = @products.collect(&:categories).flatten.to_set
+    @store = Store.find(params[:store_id])
+    if @store.disabled?
+      render(file: "#{Rails.root}/public/maintenance", formats: :html, status: 404)
+    elsif @store
+      @products = @store.products.order("name").active
+      @categories = @products.collect(&:categories).flatten.to_set
     else
       redirect_to root_path, notice: "Sorry but that doesn't store doesn't exist. Perhaps you should create it?"
     end
