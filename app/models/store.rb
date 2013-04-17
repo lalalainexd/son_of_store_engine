@@ -37,6 +37,10 @@ class Store < ActiveRecord::Base
     status == "pending"
   end
 
+  def disabled?
+    status == "disabled"
+  end
+
   def approve_status
     self.status = "approved"
     save

@@ -24,9 +24,10 @@ describe Admin::StoresController do
   let(:store) { Store.create! valid_attributes }
   before do
     login_user(platform_admin)
-    UserStore.create( { user_id: standard_user.id,
+    role = Role.create!( { title: "test" } )
+    UserStore.create!( { user_id: standard_user.id,
                         store_id: store.id,
-                        role_id: 1 })
+                        role_id: role.id })
   end
 
 
@@ -62,6 +63,12 @@ describe Admin::StoresController do
       UserMailer.should_receive(:delay).and_return(delay)
       store.should_receive(:users).and_return([standard_user])
       Store.stub(:find).and_return(store)
+      #store = mock('Store', name: 'My Store')
+      #Store.stub(:find) { store }
+      #store.stub(:users) { [platform_admin] }
+
+      #store.should_receive(:decline_status) { false }
+
       put :decline, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)
     end

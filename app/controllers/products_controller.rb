@@ -3,12 +3,16 @@ class ProductsController < ApplicationController
   #skip_authorize_resource :except => [ :new, :create, :show ]
 
   def index
-    store = Store.find(params[:store_id])
-    if store && (store.approved? || store.enabled?)
-    @products = store.products.order("name").active
-    @categories = @products.collect(&:categories).flatten.to_set
+   # @dashboard = Dashboard.new
+   # render :index
+    @store = Store.find(params[:store_id])
+    if @store.nil? || @store.pending?
+      render file: "#{Rails.root}/public/404", formats: :html, status: 404
+    elsif @store.disabled?
+      render(file: "#{Rails.root}/public/maintenance", formats: :html, status: 404)
     else
-      render file: "#{Rails.root}/public/404.html", status: 404
+      @products = @store.products.order("name").active
+      @categories = @products.collect(&:categories).flatten.to_set
     end
   end
 

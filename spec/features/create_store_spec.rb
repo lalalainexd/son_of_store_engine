@@ -56,7 +56,6 @@ feature "StoreEngine user creates a new store", %q{
 
     #Visiting the newly created store
     visit home_path("cool-sunglasses")
-    puts current_path
     expect(page).to have_content("The page you were looking for doesn't exist")
     expect(status_code).to eq 404
   end
