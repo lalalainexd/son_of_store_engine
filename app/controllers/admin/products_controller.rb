@@ -8,18 +8,20 @@ class Admin::ProductsController < ApplicationController
 
   def new
     @product = current_store.products.build
+    @categories = current_store.categories
   end
 
   def edit
     @product = current_store.products.find(params[:id])
-    @categories = Category.all
+    @categories = current_store.categories
   end
 
   def create
     @product = current_store.products.build(params[:product])
 
     if @product.save
-      redirect_to admin_product_path(store_id: current_store.to_param, id: @product.id), notice: 'Product was successfully created.'
+      redirect_to admin_products_path(current_store),
+        notice: 'Product was successfully created.'
     else
       render :new
     end
@@ -31,7 +33,7 @@ class Admin::ProductsController < ApplicationController
     @product = current_store.products.find(params[:id])
 
     if @product.update_attributes(params[:product])
-      redirect_to admin_product_path(store_id: current_store.to_param, id:@product.id),
+      redirect_to admin_products_path(current_store),
         notice: 'Product was successfully updated.'
     else
       flash[:error] = 'Product was not updated'
@@ -62,7 +64,7 @@ class Admin::ProductsController < ApplicationController
     product.retired = true
     product.save
 
-    redirect_to admin_products_path
+    redirect_to admin_products_path, notice: "Product is now retired"
   end
 
   def unretire
@@ -70,7 +72,7 @@ class Admin::ProductsController < ApplicationController
     product.retired = false
     product.save
 
-    redirect_to admin_products_path
+    redirect_to admin_products_path, notice: "Product is active"
   end
 
   private

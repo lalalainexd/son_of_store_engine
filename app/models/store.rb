@@ -17,6 +17,14 @@ class Store < ActiveRecord::Base
     user_store.save
   end
 
+  def add_stocker stocker
+    user_store = UserStore.new
+    user_store.store = self
+    user_store.role = Role.stocker
+    user_store.user = stocker
+    user_store.save
+  end
+
   def to_param
     slug
   end

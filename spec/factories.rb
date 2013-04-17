@@ -23,7 +23,7 @@ FactoryGirl.define do
 
   factory :category do
     store
-    name "a category"
+    name "Stuff"
   end
 
   factory :product do
