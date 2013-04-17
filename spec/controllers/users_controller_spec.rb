@@ -17,25 +17,32 @@ describe UsersController do
 
   describe "POST 'create' with valid params" do
     let(:valid_attributes) do
-      { user: { full_name: "name", email: "user@oregonstore.com", 
+      { user: { full_name: "name", email: "user@oregonstore.com",
         password: "password", password_confirmation: "password" } }
     end
 
     it "saves the new user to the database" do
-      expect {
-        post :create, valid_attributes
-      }.to change(User, :count).by(1)
+      session[:referer] = root_path
+      delay = stub(:delay)
+      delay.should_receive(:account_confirmation).with("user@oregonstore.com", "name")
+      UserMailer.should_receive(:delay).and_return(delay)
+
+      user = User.new(full_name: "name", email: "user@oregonstore.com")
+      user.should_receive(:save).and_return(true)
+      User.should_receive(:new).and_return(user)
+      post :create, valid_attributes
+      expect(response).to redirect_to root_path
     end
 
-    it "redirects user to root url" do
-      post :create, valid_attributes
-      # expect(response).to redirect_back_or_to root_url
-    end
   end
 
   describe "POST 'create' with invalid params" do
-    let(:invalid_attributes) do
-      { user: {email: "", password: "password"}}
+    it "saves the new user to the database" do
+      user = User.new
+      user.should_receive(:save).and_return(false)
+      User.should_receive(:new).and_return(user)
+      post :create
+      expect(response).to render_template(:new)
     end
   end
 end
