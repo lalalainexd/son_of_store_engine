@@ -5,7 +5,7 @@ StoreEngine::Application.routes.draw do
   resources :users
 
   namespace :admin do
-    get "dashboard/show"
+    get "dashboard" => "dashboard#show"
     resources :stores do
       put :activate
       put :decline

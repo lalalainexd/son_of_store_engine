@@ -27,7 +27,7 @@
     <div class="main_nav">
       <% if current_user %>
         <% if current_user.platform_administrator %>
-          <%= link_to "Admin Dashboard", admin_dashboard_show_path %> |
+          <%= link_to "Admin Dashboard", admin_dashboard_path %> |
         <% end %>
         <%= link_to "Account", profile_path %> |
         <%= link_to "Log out", logout_path %>

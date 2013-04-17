@@ -24,9 +24,10 @@ describe Admin::StoresController do
   let(:store) { Store.create! valid_attributes }
   before do
     login_user(platform_admin)
-    UserStore.create( { user_id: standard_user.id,
+    role = Role.create!( { title: "test" } )
+    UserStore.create!( { user_id: standard_user.id,
                         store_id: store.id,
-                        role_id: 1 })
+                        role_id: role.id })
   end
 
   describe "GET index" do
@@ -51,6 +52,12 @@ describe Admin::StoresController do
 
   describe "PUT decline" do
     it "changes status to declined if successful" do
+      store = mock('Store', name: 'My Store')
+      Store.stub(:find) { store }
+      store.stub(:users) { [platform_admin] }
+
+      store.should_receive(:decline_status) { false }
+
       put :decline, {store_id: store}
       expect(response).to redirect_to(admin_stores_path)
     end

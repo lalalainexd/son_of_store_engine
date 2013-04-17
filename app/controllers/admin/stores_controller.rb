@@ -26,8 +26,8 @@ class Admin::StoresController < ApplicationController
     @store = Store.find(params[:store_id])
     user = @store.users.first
     if @store.decline_status
-      UserMailer.delay.store_decline_notification(user.email, @store.name)
       redirect_to admin_stores_path, notice: "The status for #{@store.name} has been set to 'declined' and a message has been sent to #{user.email}."
+      UserMailer.delay.store_decline_notification(user.email, @store.name)
     else
       flash[:errors] = "We're sorry. There was a problem declining #{@store.name}."
       redirect_to admin_stores_path
