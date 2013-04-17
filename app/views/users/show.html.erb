@@ -46,7 +46,7 @@
               </tr>
             <% order.line_items.each do |item| %>
               <tr>
-                <td><%= link_to item.product.name, product_path(item.product) %></td>
+                <td><%= link_to item.product.name, product_path(store_id: item.product.store.to_param, id: item.product.id) %></td>
                 <td><%= item.quantity %></td>
                 <td><%= amount_in_dollars(item.price) %></td>
                 <td><%= amount_in_dollars(item.historical_total) %></td>
