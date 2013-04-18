@@ -94,7 +94,7 @@
   <% unless @store.stocker(current_user) %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_store_path(@store), :class => 'btn' %>
-              <% if current_user.platform_administrator? %>
+  <% if current_user.platform_administrator? %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               store_path(@store),
               :method => 'delete',
