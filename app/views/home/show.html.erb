@@ -34,16 +34,15 @@
 
     <ul class="thumbnails">
       <% @products.each do |product| %>
-        <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+        <li class="span3" id="<%= product.id %>">
+          <div class="thumbnail adtl_col" id="<%= product.id %>">
+            <p><%= image_tag "https://s3.amazonaws.com/epicsale/#{product.image_name}.jpg", :class => "small_product" %></p>
+            <p><strong><%= product.store.name %></strong></p>
+            <%= link_to 'Visit Store', home_path(product.store), :class => "btn btn-success", :id => "prod_#{product.id}" %>
+          </div>
+        </li>
       <% end %>
     </ul>
 
   </div>
 </div>
-
-<% @products.each do |product| %>
-  <div class="big_product" id="big_product_<%= product.id %>" >
-   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-  </div>
-<% end %>
-
