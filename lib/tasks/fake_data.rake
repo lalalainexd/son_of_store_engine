@@ -10,6 +10,14 @@ namespace :db do
                     )
     end
 
+    # creates fake categories for each store
+    13.times do |c|
+      name = Faker::Lorem.word.capitalize
+      stores.each do |store|
+        store.categories.create!(name: name)
+      end
+    end
+
     # creates fake products for each store
     10.times do |p|
       description = Faker::Lorem.sentence
@@ -20,20 +28,14 @@ namespace :db do
       retired = "retired"
       stores.each {|store| store.products.create!(description: description,
                                                   name: name,
-                                                  # price: price,
-                                                  category_ids: [store.category_ids.sample],
-                                                  retired: retired
+                                                  price: price,
+                                                  #category_ids: [store.category_ids.sample],
+                                                  category_ids: store.categories.sample.id,
+                                                  retired: retired,
                                                   image_name: image_name
                                                   )}
     end
 
-    # creates fake categories for each store
-    13.times do |c|
-      name = Faker::Lorem.word.capitalize
-      stores.each do |store|
-        store.categories.create!(name: name)
-      end
-    end
 
     # creates fake admins and fake stockers for each store
     stores.each do |store|
