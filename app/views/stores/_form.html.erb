@@ -1,4 +1,14 @@
 <%= form_for @store, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @store.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @store.errors.full_messages %>
+          <li><%= message.html_safe %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
@@ -21,6 +31,6 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                admin_stores_path, :class => 'btn' %>
+                admin_home_path(@store), :class => 'btn' %>
   </div>
 <% end %>

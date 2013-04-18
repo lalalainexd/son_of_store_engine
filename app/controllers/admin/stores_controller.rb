@@ -63,10 +63,10 @@ class Admin::StoresController < ApplicationController
 
     if new_stocker && store.add_stocker(new_stocker)
       UserMailer.delay.new_stocker_notification(new_stocker, @store)
-      redirect_to admin_stores_path(params[:store_id])
+      redirect_to admin_home_path(params[:store_id])
     elsif new_stocker.nil?
-      UserMailer.delay.invite_notification(params[:email])
-      redirect_to admin_stores_path(params[:store_id])
+      UserMailer.delay.signup_notification(params[:email])
+      redirect_to admin_home_path(params[:store_id])
     else
       render :new_stocker,
         notice: "We're sorry. There was a problem adding #{params[:email]}"
@@ -78,10 +78,10 @@ class Admin::StoresController < ApplicationController
 
     if new_admin && store.add_admin(new_admin)
       UserMailer.delay.new_admin_notification(new_admin, @store)
-      redirect_to admin_stores_path(params[:store_id])
+      redirect_to admin_home_path(params[:store_id])
     elsif new_admin.nil?
-      UserMailer.delay.invite_notification(params[:email])
-      redirect_to admin_stores_path(params[:store_id])
+      UserMailer.delay.signup_notification(params[:email])
+      redirect_to admin_home_path(params[:store_id])
     else
       render :new_admin,
         notice: "We're sorry. There was a problem adding #{params[:email]}"
@@ -121,7 +121,7 @@ class Admin::StoresController < ApplicationController
     end
   end
 
-private
+  private
   def store
     @store ||= Store.find(params[:store_id])
   end

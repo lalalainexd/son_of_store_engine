@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
       render(file: "#{Rails.root}/public/maintenance", formats: :html, status: 404)
     else
       @products = @store.products.order("name").active
-      @categories = @products.collect(&:categories).flatten.to_set
+      @categories = @store.categories.order("name")
     end
   end
 

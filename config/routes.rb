@@ -14,7 +14,7 @@ StoreEngine::Application.routes.draw do
     end
   end
 
-  resources :stores, :except => :index
+  resources :stores, :except => [:index, :show]
 
   resources :trips
 
