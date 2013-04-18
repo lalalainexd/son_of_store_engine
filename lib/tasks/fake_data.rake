@@ -5,17 +5,17 @@ namespace :db do
     15.times do |s|
       stores << Store.create!(description: Faker::Lorem.sentence,
                     name: Faker::Lorem.word.capitalize + (" ") + Faker::Lorem.word.capitalize,
-                    slug: "random-url-#{s+1}.com",
+                    slug: "random-url-#{s+1}",
                     status: "status"
                     )
     end
 
     # creates fake products for each store
-    1000.times do |p|
+    10.times do |p|
       description = Faker::Lorem.sentence
       name = Faker::Lorem.word.capitalize
-      # price = number_to_currency(123456)
-      # image = "image"
+      price = rand(300000..4000000)
+      image_name = rand(1..110)
       category_ids = Category.all.sample(rand(1..4))
       retired = "retired"
       stores.each {|store| store.products.create!(description: description,
@@ -23,6 +23,7 @@ namespace :db do
                                                   # price: price,
                                                   category_ids: [store.category_ids.sample],
                                                   retired: retired
+                                                  image_name: image_name
                                                   )}
     end
 
@@ -31,7 +32,6 @@ namespace :db do
       name = Faker::Lorem.word.capitalize
       stores.each do |store|
         store.categories.create!(name: name)
-        # puts "Category #{name} created for Store #{store.name}"
       end
     end
 
@@ -49,7 +49,6 @@ namespace :db do
           retry
         end
       end
-      # puts "admin added"
 
       3.times do |i|
         begin
@@ -63,13 +62,12 @@ namespace :db do
           retry
         end
       end
-      # puts "stocker added"
     end
   end
 
   desc "Fill database with fake users"
   task populate: :environment do
-    1000.times do |u|
+    10.times do |u|
       first_name = Faker::Name.first_name
       last_name = Faker::Name.last_name
       user = User.create!(full_name: "#{first_name} #{last_name}",
@@ -80,7 +78,6 @@ namespace :db do
                    platform_administrator: false,
                    role: ["stocker", "admin", nil].sample
                   )
-      # puts "User #{user} created"
     end
   end
 
