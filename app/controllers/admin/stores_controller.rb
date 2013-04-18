@@ -41,6 +41,38 @@ class Admin::StoresController < ApplicationController
     end
   end
 
+  def new_stocker
+    render :new_stocker
+  end
+
+  def remove_stocker
+    stocker = @store.stocker(params[:id])
+
+    if stocker
+      @store.remove_stocker(stocker)
+      UserMailer.delay.remove_stocker_notification(stocker, @store)
+      redirect_to admin_home_path(@store),notice:"The stocker has been removed"
+    else
+      flash[:error] = "There was problem removing the stocker"
+      redirect_to admin_home_path(@store)
+    end
+  end
+
+  def create_stocker
+    new_stocker = User.find_by_email(params[:email])
+
+    if new_stocker && store.add_stocker(new_stocker)
+      UserMailer.delay.new_stocker_notification(new_stocker, @store)
+      redirect_to admin_stores_path(params[:store_id])
+    elsif new_stocker.nil?
+      UserMailer.delay.invite_notification(params[:email])
+      redirect_to admin_stores_path(params[:store_id])
+    else
+      render :new_stocker,
+        notice: "We're sorry. There was a problem adding #{params[:email]}"
+    end
+  end
+
   def create_admin
     new_admin = User.find_by_email(params[:email])
 

@@ -34,10 +34,40 @@
           <td><%= admin.full_name %></td>
           <td><%= admin.email %></td>
           <td>
-            <% if admin != current_user%>
+            <% if admin != current_user && @store.admin(current_user)%>
               <%= button_to "Remove Admin", admin_remove_admin_path(@store, id: admin.id),
                 {:class => 'btn', method: :delete,
                   confirm: "Are you sure you want remove #{admin.full_name} as an admin?" }%>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+
+  <%= link_to 'Add a New Stocker', admin_new_stocker_path(params[:store_id]), :class => 'btn' %>
+  <table id="stockers">
+    <thead>
+      <tr>
+        <th colspan="3">Stockers</th>
+      </tr>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store.stockers.each do | stocker | %>
+        <tr>
+          <td><%= stocker.full_name %></td>
+          <td><%= stocker.email %></td>
+          <td>
+            <% if @store.admin(current_user)%>
+              <%= button_to "Remove Stocker", admin_remove_stocker_path(@store, id: stocker.id),
+                {:class => 'btn', method: :delete,
+                  confirm: "Are you sure you want remove #{stocker.full_name} as a stocker?" }%>
           <% end %>
           </td>
         </tr>

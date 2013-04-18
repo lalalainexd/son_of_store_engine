@@ -1,0 +1,14 @@
+<%= form_tag admin_create_stocker_path(params[:store_id]) do %>
+
+  <div class="control-group">
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+  </div>
+
+  <div class="form-actions">
+    <%= submit_tag "Add Stocker", :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                admin_products_path, :class => 'btn' %>
+  </div>
+
+<% end %>

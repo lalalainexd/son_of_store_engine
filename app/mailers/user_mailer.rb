@@ -38,4 +38,15 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail to: user.email
   end
+
+  def new_store_notification(user, store)
+    @store = store
+    mail to: user.email
+  end
+
+  def remove_stocker_notification(user, store)
+    @store = store
+    @user = user
+    mail to: user.email
+  end
 end
