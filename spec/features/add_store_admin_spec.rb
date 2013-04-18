@@ -37,7 +37,7 @@ feature "Store administrator adds a new admin", %q{
   scenario "Adding an admin without a StoreEngine user account" do
     fill_in("Email", with: "email@email.com")
 
-    delay.should_receive(:invite_notification).with("email@email.com")
+    delay.should_receive(:signup_notification).with("email@email.com")
     click_button("Add Admin")
   end
 

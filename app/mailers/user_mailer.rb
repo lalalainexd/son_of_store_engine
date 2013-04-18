@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
     mail to: user.email
   end
 
-  def new_store_notification(user, store)
+  def new_stocker_notification(user, store)
     @store = store
     mail to: user.email
   end
