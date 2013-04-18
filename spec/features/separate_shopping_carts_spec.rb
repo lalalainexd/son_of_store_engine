@@ -14,7 +14,6 @@ feature "maintain separate shopping carts for each store a user visits" do
                                status: "enabled",
                                slug: "cool-sunglasses")
       visit home_path(store)
-      save_and_open_page
 
       within('.thumbnails') do
         click_button "Add to Cart"
