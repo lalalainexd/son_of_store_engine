@@ -72,4 +72,10 @@ describe Store do
   it "returns the slug as the param" do
     expect(subject.to_param).to eq "slug"
   end
+
+  it "can be disabpled" do
+    subject.disable_status
+    expect(subject).to be_disabled
+  end
+
 end
