@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:index, :show]
   before_filter :current_store, :categories
 
   def index
@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
 
   def show
     @store = current_store
-    @categories = @store.categories.order("name")
+    @categories = categories.order("name")
     @stores = Store.order("name")
     @category = categories.find(params[:id])
     render :show
