@@ -23,7 +23,7 @@ namespace :db do
       description = Faker::Lorem.sentence
       name = Faker::Lorem.word.capitalize
       price = 300000 + Random.rand(100000)
-      image_name = 1 + rand(111)
+      #image_name = 
       retired = "retired"
       stores.each {|store| store.products.create!(description: description,
                                                   name: name,
@@ -31,7 +31,7 @@ namespace :db do
                                                   #category_ids: [store.category_ids.sample],
                                                   category_ids: store.categories.sample.id,
                                                   retired: retired,
-                                                  image_name: image_name
+                                                  image_name: 1 + rand(111)
                                                   )}
     end
 
