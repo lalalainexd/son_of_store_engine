@@ -7,6 +7,6 @@ class Role < ActiveRecord::Base
   end
 
   def self.stocker
-    @admin ||= find_or_create_by_title(title: "stocker")
+    @stocker ||= find_or_create_by_title(title: "stocker")
   end
 end

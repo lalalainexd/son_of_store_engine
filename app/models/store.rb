@@ -9,19 +9,19 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
 
-  def add_admin admin
+  def add_admin user
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.admin
-    user_store.user = admin
+    user_store.user = user
     user_store.save
   end
 
-  def add_stocker stocker
+  def add_stocker user
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.stocker
-    user_store.user = stocker
+    user_store.user = user
     user_store.save
   end
 
