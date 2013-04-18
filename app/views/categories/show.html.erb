@@ -15,7 +15,7 @@
         <%= link_to t('.back', :default => t("helpers.links.back")),
                     categories_path, :class => 'btn'  %>
         <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_category_path(@category), :class => 'btn' %>
+                    edit_category_path(params[:store_id], @category), :class => 'btn' %>
         <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                     category_path(@category),
                     :method => 'delete',

@@ -14,6 +14,11 @@ class Ability
         p.store.users.include?(user)
       end
 
+      can :manage, Category do | c|
+
+        c.new_record? || c.store.users.include?(user)
+      end
+
       can :read, Store do | store |
         store.stocker(user)
       end

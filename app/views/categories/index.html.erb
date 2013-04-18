@@ -14,14 +14,14 @@
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= link_to category.id, category_path(category) %></td>
+        <td><%= link_to (category.id), category_path(category.store, category) %></td>
         <td><%= category.name %></td>
         <td><%= category.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_category_path(category), :class => 'btn btn-mini' %>
+                      edit_category_path(params[:store_id], category), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      category_path(category),
+                      category_path(params[:store_id], category),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
