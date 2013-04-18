@@ -2,7 +2,7 @@ namespace :db do
   desc "Fill database with fake stores"
   task populate: :environment do
     stores = Store.all
-    15.times do |s|
+    10.times do |s|
       stores << Store.create!(description: Faker::Lorem.sentence,
                     name: Faker::Lorem.word.capitalize + (" ") + Faker::Lorem.word.capitalize,
                     slug: "random-url-#{s+1}",
@@ -11,34 +11,29 @@ namespace :db do
     end
 
     # creates fake categories for each store
-    13.times do |c|
-      name = Faker::Lorem.word.capitalize
+    10.times do |c|
       stores.each do |store|
-        store.categories.create!(name: name)
+        store.categories.create!(name: Faker::Lorem.word.capitalize)
       end
     end
 
     # creates fake products for each store
-    10.times do |p|
-      description = Faker::Lorem.sentence
-      name = Faker::Lorem.word.capitalize
-      price = 300000 + Random.rand(100000)
-      #image_name = 
+    10_000.times do |p|
       retired = "retired"
-      stores.each {|store| store.products.create!(description: description,
-                                                  name: name,
-                                                  price: price,
+      stores.each {|store| store.products.create!(description: Faker::Lorem.sentence,
+                                                  name: Faker::Lorem.word.capitalize,
+                                                  price: 300000 + Random.rand(100000),
                                                   #category_ids: [store.category_ids.sample],
                                                   category_ids: store.categories.sample.id,
                                                   retired: retired,
-                                                  image_name: 1 + rand(111)
+                                                  image_name: 1 + rand(110)
                                                   )}
     end
 
 
     # creates fake admins and fake stockers for each store
     stores.each do |store|
-      3.times do |i|
+      2.times do |i|
         begin
           user = User.create!(full_name: Faker::Name.first_name,
                               password: "password",
@@ -51,7 +46,7 @@ namespace :db do
         end
       end
 
-      3.times do |i|
+      2.times do |i|
         begin
           user = User.create!(full_name: Faker::Name.first_name,
                               password: "password",
@@ -68,7 +63,7 @@ namespace :db do
 
   desc "Fill database with fake users"
   task populate: :environment do
-    10.times do |u|
+    10_000.times do |u|
       first_name = Faker::Name.first_name
       last_name = Faker::Name.last_name
       user = User.create!(full_name: "#{first_name} #{last_name}",
