@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130417193228) do
+ActiveRecord::Schema.define(:version => 20130418032458) do
 
   create_table "carts", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20130417193228) do
     t.datetime "image_updated_at"
     t.boolean  "retired",            :default => false
     t.integer  "store_id"
+    t.string   "image_name",         :default => "98"
   end
 
   create_table "roles", :force => true do |t|

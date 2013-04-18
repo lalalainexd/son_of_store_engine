@@ -1,6 +1,6 @@
 <li class="span3" id="<%= p.id %>">
   <div class="thumbnail adtl_col" id="<%= p.id %>">
-    <p><%= image_tag "https://s3.amazonaws.com/epicsale/#{rand(1..110)}.jpg", :class => "small_product" %></p>
+    <p><%= image_tag "https://s3.amazonaws.com/epicsale/#{p.image_name}.jpg", :class => "small_product" %></p>
     <p><strong><%= p.name %></strong><i> - <%= amount_in_dollars(p.price) %></i></p>
     <%= button_to 'Add to Cart', line_items_path(:product_id => p), :class => "btn btn-success", :id => "prod_#{p.id}" %>
   </div>
