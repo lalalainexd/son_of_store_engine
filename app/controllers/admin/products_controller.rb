@@ -1,5 +1,4 @@
 class Admin::ProductsController < ApplicationController
-
 #  load_and_authorize_resource
 
   def index
@@ -75,9 +74,5 @@ class Admin::ProductsController < ApplicationController
     redirect_to admin_products_path, notice: "Product is active"
   end
 
-  private
 
-  def current_store
-    @current_store ||= Store.find(params[:store_id])
-  end
 end

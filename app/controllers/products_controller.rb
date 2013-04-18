@@ -2,21 +2,7 @@ class ProductsController < ApplicationController
   #load_and_authorize_resource
   #skip_authorize_resource :except => [ :new, :create, :show ]
 
-  def set_current_store
-    #reset_session
-    if session[:carts] && session[:carts][current_store.id]
-      cart_id = session[:carts][current_store.id]
-      session[:cart_id] = Cart.find(cart_id).id
-    else
-      cart = Cart.create
-      session[:carts] ||= {}
-      session[:carts][current_store.id] = cart.id
-      session[:cart_id] = cart.id
-    end
-  end
-
   def index
-    set_current_store
     @stores = Store.order("name")
 
     @store = Store.find(params[:store_id])
@@ -31,7 +17,6 @@ class ProductsController < ApplicationController
   end
 
   def list
-    set_current_store
     @products = Product.order("name").active
     @categories = Category.all
   end
@@ -53,7 +38,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    set_current_store
     @product = current_store.products.find(params[:id])
 
     if @product.retired == true
@@ -61,10 +45,6 @@ class ProductsController < ApplicationController
     else
       render :show
     end
-  end
-
-  def current_store
-    @current_store ||= Store.find(params[:store_id])
   end
 
 end

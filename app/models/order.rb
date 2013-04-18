@@ -2,7 +2,7 @@ class Order < ActiveRecord::Base
   attr_accessible :status, :user_id, :total_cost, :confirmation, :visitor, :stripe_card_token
   attr_accessor :stripe_card_token
 
-  has_many :line_items, :dependent => :destroy
+  has_many :line_items
   belongs_to :user
   has_one :visitor_order
   has_one :visitor, through: :visitor_order
@@ -23,9 +23,9 @@ class Order < ActiveRecord::Base
 
   def generate_confirmation_code
     if user
-    self.confirmation ||= Digest::SHA1.hexdigest("#{user.email}#{created_at}")[0..8]
+    self.confirmation ||= Digest::SHA1.hexdigest("#{user.email}#{DateTime.now}")[0..15]
     elsif visitor
-    self.confirmation ||= Digest::SHA1.hexdigest("#{visitor.email}#{created_at}")[0..8]
+    self.confirmation ||= Digest::SHA1.hexdigest("#{visitor.email}#{DateTime.now}")[0..15]
     end
   end
 
