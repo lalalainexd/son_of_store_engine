@@ -9,13 +9,20 @@ describe LineItemsController do
     { product_id: product.id, cart_id: cart.id }
   end
 
+  let(:cart) {Cart.new}
+
+  before do
+    subject.stub(:current_cart).and_return(cart)
+  end
+
   describe "POST create" do
     let(:product) {stub(:product, id: 1)}
 
     before do
       @request.env['HTTP_REFERER'] = 'http://localhost:3000/'
-      Product.stub(:find).and_return(product)
-      Cart.any_instance.should_receive(:add_product).and_return(line_item)
+      #Product.stub(:find).and_return(product)
+      cart.stub_chain(:store, :products, :find).and_return(:product)
+      cart.should_receive(:add_product).and_return(line_item)
     end
 
     describe "with valid params" do
@@ -51,7 +58,7 @@ describe LineItemsController do
 
   describe "DELETE destroy" do
     it "destroys the requested line_item" do
-      Cart.any_instance.stub_chain(:line_items, :find).and_return(line_item)
+      cart.stub_chain(:line_items, :find).and_return(line_item)
       line_item.should_receive(:destroy)
       delete :destroy, {:id => 3}
     end
