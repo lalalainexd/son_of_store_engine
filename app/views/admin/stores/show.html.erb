@@ -45,7 +45,9 @@
     </tbody>
 
   </table>
+</div>
 
+<div class="form-actions">
   <%= link_to 'Add a New Stocker', admin_new_stocker_path(params[:store_id]), :class => 'btn' %>
   <table id="stockers">
     <thead>
@@ -75,6 +77,9 @@
     </tbody>
 
   </table>
+
+</div>
+<div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               stores_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
