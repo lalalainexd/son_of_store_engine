@@ -81,7 +81,7 @@ class Store < ActiveRecord::Base
   end
 
   def approve_status
-    self.status = "approved"
+    self.status = "enabled"
     save
   end
 
@@ -101,7 +101,7 @@ class Store < ActiveRecord::Base
   end
 
   def approved?
-    status == "approved"
+    !pending?
   end
 
   def enabled?

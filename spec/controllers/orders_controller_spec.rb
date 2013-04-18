@@ -2,9 +2,14 @@ require 'spec_helper'
 
 describe OrdersController do
   let(:user) {User.create(full_name: "josh", email: "josh@example.com", role: "user")}
+  let(:cart) {Cart.new}
 
   def valid_attributes
     { "status" => "pending", "user_id" => user.id, "total_cost" => 300 }
+  end
+
+  before do
+    subject.stub(:current_cart).and_return(cart)
   end
 
   describe "GET index" do
@@ -26,7 +31,8 @@ describe OrdersController do
 
   describe "GET new" do
     it "new order without items redirects" do
-      get :new, {}, {}
+      cart.should_receive(:calculate_total_cost).and_return(0)
+      get :new
       response.should redirect_to(root_path)
     end
   end
@@ -40,9 +46,12 @@ describe OrdersController do
 
     context "with valid params" do
 
-      let(:order) {stub(:order, valid?: true, to_param:"order", owner:"")}
+      let(:order) {Order.new}
+
       before do
+        order.should_receive(:valid?).and_return(true)
         subject.should_receive(:deliver_confirmation)
+        subject.should_receive(:clear_cart)
       end
 
       context "with anonymous user" do
@@ -50,7 +59,7 @@ describe OrdersController do
         it "redirects to the order summary" do
           Order.should_receive(:create_visitor_order).with(kind_of(Cart), "foo@bar.com", "42").and_return(order)
           post :create, checkout_attributes
-          expect(response).to redirect_to order_path(order)
+          expect(response).to redirect_to order
         end
       end
 
@@ -60,7 +69,7 @@ describe OrdersController do
           login_user(user)
           Order.should_receive(:create_from_cart_for_user).and_return(order)
           post :create, {:order => valid_attributes}
-          expect(response).to redirect_to order_path(order)
+          expect(response).to redirect_to order
         end
 
       end

@@ -14,8 +14,11 @@ feature "maintain separate shopping carts for each store a user visits" do
                                status: "enabled",
                                slug: "cool-sunglasses")
       visit home_path(store)
-      click_button "Add to Cart"
-      expect(page).to have_content("Checkout")
+
+      within('.thumbnails') do
+        click_button "Add to Cart"
+      end
+      expect(page).to have_content("Product successfully added to your cart")
 
     end
   end

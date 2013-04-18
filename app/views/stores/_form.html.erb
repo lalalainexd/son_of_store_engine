@@ -31,6 +31,6 @@
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                admin_home_path(@store), :class => 'btn' %>
+                @store.new_record? ? profile_path : admin_home_path(@store), :class => 'btn' %>
   </div>
 <% end %>

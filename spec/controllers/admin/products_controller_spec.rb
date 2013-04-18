@@ -31,7 +31,7 @@ describe Admin::ProductsController do
   end
 
 
-  before (:each) do
+  before do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
@@ -44,6 +44,12 @@ describe Admin::ProductsController do
     it "assigns the requested product as @product" do
       get :show, {store_id: store.to_param, :id => product.to_param}
       assigns(:product).should eq(product)
+    end
+
+    it "doesn't show a retired product" do
+      product.retired = true
+      get :show, {store_id: store.to_param, :id => product.to_param}
+      expect(response).to redirect_to home_path(store)
     end
   end
 
@@ -65,7 +71,7 @@ describe Admin::ProductsController do
   describe "POST create" do
     describe "with valid params and admin access" do
 
-      before (:each) do
+      before do
         Product.any_instance.should_receive(:save).and_return(true)
         subject.stub_chain(:current_store, :products, :build).and_return(product)
         @ability.can :create, Product
@@ -127,7 +133,7 @@ describe Admin::ProductsController do
   end
 
   describe "DELETE destroy" do
-    before (:each) do
+    before do
       @ability.can :destroy, Product
       Product.stub(:find).with(product.to_param).and_return(product)
       product.should_receive(:destroy)
@@ -140,7 +146,7 @@ describe Admin::ProductsController do
   end
 
   describe "retire and unretire" do
-    before (:each) do
+    before do
       @ability.can :manage, Product
     end
 

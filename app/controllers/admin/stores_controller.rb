@@ -3,11 +3,19 @@ class Admin::StoresController < ApplicationController
   before_filter :store, except: [:index]
 
   def index
-    @stores = Store.order("name")
+    if current_user && current_user.platform_administrator
+      @stores = Store.order("name")
+    else
+      redirect_to root_path
+    end
   end
 
   def show
-
+    if current_user && (@store.users.include?(current_user) || current_user.platform_administrator)
+      render :show
+    else
+      redirect_to home_path(@store)
+    end
   end
 
   def activate

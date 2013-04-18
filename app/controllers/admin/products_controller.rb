@@ -52,7 +52,7 @@ class Admin::ProductsController < ApplicationController
     @product = current_store.products.find(params[:id])
 
     if @product.retired == true
-      redirect_to home_show_path
+      redirect_to home_path(current_store)
     else
       render :show
     end

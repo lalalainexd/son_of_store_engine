@@ -6,18 +6,16 @@ describe CategoriesController do
   end
 
   let(:slug) {"slug"}
+
   let(:current_store) { Store.new(slug: slug) }
 
-  before (:each) do
+  before do
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @controller.stub(:current_ability).and_return(@ability)
+    @ability.can :manage, Category
 
     subject.stub(:current_store).and_return(current_store)
-  end
-
-  def valid_session
-    {}
   end
 
   describe "GET index" do
@@ -30,29 +28,30 @@ describe CategoriesController do
 
   describe "GET show" do
     it "assigns the requested category as @category" do
-      category = Category.new
-      categories = stub(:categories)
+      category = FactoryGirl.create(:category)
+      categories = stub(:categories, order: categories)
+      categories.should_receive(:order).with("name").and_return(categories)
       categories.should_receive(:find).with("1").and_return(category)
-      subject.should_receive(:categories).twice.and_return(categories)
-      get :show, {store_id: slug, :id => 1}, valid_session
+      subject.should_receive(:categories).at_least(:twice).and_return(categories)
+      get :show, {store_id: slug, :id => 1}
       assigns(:category).should eq(category)
     end
   end
 
   describe "GET new" do
     it "assigns a new category as @category" do
-      get :new, {store_id: slug}, valid_session
+      get :new, {store_id: slug}
       assigns(:category).should be_a_new(Category)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested category as @category" do
-      category = Category.new
+      category = FactoryGirl.create(:category)
       categories = stub(:categories)
-      categories.should_receive(:find).with("1").and_return(category)
+      categories.should_receive(:find).with(category.id.to_s).and_return(category)
       subject.should_receive(:categories).twice.and_return(categories)
-      get :edit, {store_id: slug, id: "1"}
+      get :edit, {store_id: slug, id: category.id}
       assigns(:category).should eq(category)
     end
   end
@@ -61,7 +60,7 @@ describe CategoriesController do
 
     let(:category) {Category.new}
 
-    before (:each) do
+    before do
       @ability.can :create, Category
       categories = stub(:categories)
       categories.should_receive(:build).and_return(category)
@@ -76,7 +75,7 @@ describe CategoriesController do
 
       it "redirects to the created category" do
         subject.should_receive(:store_category_path).with(category).and_return(root_path)
-        post :create, {store_id: slug, category: valid_attributes}, valid_session
+        post :create, {store_id: slug, category: valid_attributes}
       end
 
     end
@@ -86,7 +85,7 @@ describe CategoriesController do
         # Trigger the behavior that occurs when invalid params are submitted
         category.stub(:save).and_return(false)
         post :create, {store_id: slug,
-          :category => { "name" => "invalid value" }}, valid_session
+          :category => { "name" => "invalid value" }}
         assigns(:category).should be_a_new(Category)
       end
     end
@@ -94,18 +93,18 @@ describe CategoriesController do
 
   describe "PUT update" do
 
-    let(:category) {Category.new}
+    let(:category) {FactoryGirl.create(:category)}
 
     before do
 
       categories = stub(:categories)
-      categories.should_receive(:find).with("1").and_return(category)
+      categories.should_receive(:find).with(category.id.to_s).and_return(category)
       subject.stub(:categories).and_return(categories)
     end
 
     context "with valid params and admin access" do
 
-      before (:each) do
+      before do
         @ability.can :update, Category
 
         category.should_receive(:update_attributes).and_return(true)
@@ -113,7 +112,7 @@ describe CategoriesController do
        end
 
       it "assigns the requested category as @category" do
-        put :update, {store_id: slug, id: "1", category: valid_attributes}
+        put :update, {store_id: slug, id: category.id, category: valid_attributes}
         assigns(:category).should eq(category)
       end
 
@@ -124,26 +123,26 @@ describe CategoriesController do
       it "assigns the category as @category" do
 
         category.stub(:update_attributes).and_return(false)
-        put :update, {store_id: slug, :id => "1", :category => { "name" => "invalid value" }}
+        put :update, {store_id: slug, :id => category.id, :category => { "name" => "invalid value" }}
         assigns(:category).should eq(category)
       end
     end
   end
 
   describe "DELETE destroy" do
-    before (:each) do
+    let(:category) {FactoryGirl.create(:category)}
+    before do
       @ability.can :destroy, Category
     end
 
     it "destroys the requested category" do
-      category = Category.new
       category.should_receive(:destroy)
       categories = stub(:categories)
-      categories.should_receive(:find).with("1").and_return(category)
+      categories.should_receive(:find).with(category.id.to_s).and_return(category)
       subject.should_receive(:categories).at_least(:twice).and_return(categories)
       subject.should_receive(:store_categories_path).and_return(root_path)
 
-      delete :destroy, {store_id: slug, id: "1" }
+      delete :destroy, {store_id: slug, id: category.id }
     end
 
   end
