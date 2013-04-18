@@ -16,7 +16,6 @@
 </dl>
 
 <div class="form-actions">
-  <%= link_to 'Add a New Admin', admin_new_admin_path(params[:store_id]), :class => 'btn' %>
   <table id="admins">
     <thead>
       <tr>
@@ -45,10 +44,10 @@
     </tbody>
 
   </table>
+  <%= link_to 'Add a New Admin', admin_new_admin_path(params[:store_id]), :class => 'btn' %>
 </div>
 
 <div class="form-actions">
-  <%= link_to 'Add a New Stocker', admin_new_stocker_path(params[:store_id]), :class => 'btn' %>
   <table id="stockers">
     <thead>
       <tr>
@@ -78,6 +77,7 @@
 
   </table>
 
+  <%= link_to 'Add a New Stocker', admin_new_stocker_path(params[:store_id]), :class => 'btn' %>
 </div>
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
