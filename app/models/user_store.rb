@@ -7,4 +7,6 @@ class UserStore < ActiveRecord::Base
 
   validates_presence_of :user, :store, :role
 
+  scope :admins, where(role_id: Role.admin.id)
+  scope :stockers, where(role_id: Role.stocker.id)
 end

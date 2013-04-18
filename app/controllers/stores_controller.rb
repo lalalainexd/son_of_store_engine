@@ -1,12 +1,5 @@
 class StoresController < ApplicationController
-  load_and_authorize_resource :except => :show
-
-  def show
-    @store = Store.find(params[:id])
-    if !@store || @store.pending? || @store.disabled?
-      render file: "#{Rails.root}/public/404", formats: :html, status: 404
-    end
-  end
+  load_and_authorize_resource
 
   def new
     @store = Store.new

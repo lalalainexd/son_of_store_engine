@@ -9,22 +9,15 @@ class Ability
     else
       # Standard User
       can :create, Store
+      can :manage, Store do | store |
+        store.users.include?(user)
+      end
+
       can :manage, User, :id => user.id
 
       if user.platform_administrator
         can :manage, :all
       end
     end
-    #user ||= User.new
-
-    #if user.platform_administrator
-    #  can :manage, :all
-    #elsif user
-    #  can :read, User, :user_id => user.id
-    #  can :create, Store
-    #else
-    #  cannot :read, User
-    #  can :create, Order; cannot :read, Order
-    #end
   end
 end

@@ -10,12 +10,50 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name, :slug
   validates_presence_of :name, :slug
 
+  def admins
+    User.joins(:user_stores).where("user_stores.store_id = ? AND user_stores.role_id = ?",
+                                  id, Role.admin.id)
+  end
+
+  def stockers
+    User.joins(:user_stores).where("user_stores.store_id = ? AND user_stores.role_id = ?",
+                                  id, Role.stocker.id)
+  end
+
+  def admin user_id
+    User.joins(:user_stores).where(%q{
+    user_stores.store_id = ?
+    AND user_stores.role_id = ?
+    AND user_stores.user_id = ?}, id, Role.admin.id, user_id).first
+  end
+
+  def stocker user_id
+    User.joins(:user_stores).where(%q{
+    user_stores.store_id = ?
+    AND user_stores.role_id = ?
+    AND user_stores.user_id = ?}, id, Role.stocker.id, user_id).first
+  end
+
   def add_admin admin
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.admin
     user_store.user = admin
     user_store.save
+  end
+
+  def remove_admin admin
+    user_store = user_stores.find_by_user_id(admin.id)
+    if user_store
+      user_store.destroy
+    end
+  end
+
+  def remove_stocker stocker
+    user_store = user_stores.find_by_user_id(stocker.id)
+    if user_store
+      user_store.destroy
+    end
   end
 
   def add_stocker stocker
