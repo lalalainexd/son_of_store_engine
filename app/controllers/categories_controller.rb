@@ -9,7 +9,7 @@ class CategoriesController < ApplicationController
 
   def show
     @store = current_store
-    @categories = Category.order("name")
+    @categories = @store.categories.order("name")
     @stores = Store.order("name")
     @category = categories.find(params[:id])
     render :show
