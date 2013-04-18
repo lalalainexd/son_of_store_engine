@@ -136,6 +136,7 @@ describe StoresController do
 
       before do
         Store.stub(:find).with("foo").and_return(store)
+        subject.stub(:current_store).and_return(store)
         store.should_receive(:update_attributes).with(valid_attributes).and_return(true)
       end
 
@@ -146,7 +147,7 @@ describe StoresController do
 
       it "redirects to the store" do
         put :update, {:id => store.to_param, :store => valid_attributes}
-        response.should redirect_to(store)
+        response.should redirect_to(admin_home_path(store))
       end
     end
 
@@ -156,6 +157,7 @@ describe StoresController do
 
       before do
         Store.stub(:find).with("foo").and_return(store)
+        subject.stub(:current_store).and_return(store)
         store.should_receive(:update_attributes).with(invalid_attributes).and_return(false)
       end
 
@@ -183,6 +185,7 @@ describe StoresController do
 
       store = Store.new(slug: "foo")
       Store.stub(:find).with("foo").and_return(store)
+      subject.stub(:current_store).and_return(store)
       store.should_receive(:destroy).and_return(true)
 
       delete :destroy, {:id => store.to_param}
