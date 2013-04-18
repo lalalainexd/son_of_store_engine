@@ -8,6 +8,7 @@
       <th>URL Identifier</th>
       <th>Role</th>
       <th>Status</th>
+      <th> </th>
     </tr>
     <% @user.user_stores.each do |user_store| %>
     <tr>
@@ -15,6 +16,7 @@
       <td><%= link_to_if (user_store.store.approved? || user_store.store.enabled?), user_store.slug, home_path(user_store.slug) %></td>
       <td><%= user_store.role.title %></td>
       <td><%= user_store.status %><td>
+      <td><%= link_to "Manage", admin_home_path(user_store.store) %><td>
     </tr>
     <% end %>
   </table>

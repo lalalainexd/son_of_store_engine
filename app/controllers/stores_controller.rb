@@ -23,7 +23,7 @@ class StoresController < ApplicationController
     @store = Store.find(params[:id])
 
     if @store.update_attributes(params[:store])
-      redirect_to @store, notice: 'Store was successfully updated.'
+      redirect_to admin_home_path(@store), notice: 'Store was successfully updated.'
     else
       render action: "edit"
     end

@@ -36,7 +36,7 @@ class OrdersController < ApplicationController
     end
     @order = Order.new
 
-    session[:return_to] = request.fullpath
+    capture_previous_page
     render :new
   end
 
@@ -49,9 +49,8 @@ class OrdersController < ApplicationController
 
     if @order.valid?
       deliver_confirmation(@order.owner, @order)
-      current_cart.destroy
-      session[:cart_id] = nil
-      redirect_to order_path(@order.to_param), notice: 'Thanks! Your order was submitted.'
+      clear_cart
+      redirect_to @order, notice: 'Thanks! Your order was submitted.'
     else
       render action: "new"
     end
@@ -79,8 +78,9 @@ class OrdersController < ApplicationController
   end
 
   def clear_cart
+    session[:carts].delete(current_cart.store.id)
     current_cart.destroy
-    session[:cart_id] = nil
+    session.delete(:cart_id)
   end
 
   private

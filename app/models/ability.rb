@@ -9,9 +9,19 @@ class Ability
     else
       # Standard User
       can :create, Store
-      can :manage, Store do | store |
-        store.users.include?(user)
+
+      can :manage, Product do | p |
+        p.store.users.include?(user)
       end
+
+      can :read, Store do | store |
+        store.stocker(user)
+      end
+
+      can :manage, Store do | store |
+        store.admin(user)
+      end
+
 
       can :manage, User, :id => user.id
 

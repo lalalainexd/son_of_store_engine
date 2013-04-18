@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     if @user.save
       auto_login(@user)
       UserMailer.delay.account_confirmation(@user.email, @user.full_name)
-      redirect_to(session[:referer],
+      redirect_to(previous_page || root_path,
                   :notice => "Successfully signed up. <a href='/edit/profile'>Edit Your Account.</a>")
     else
       render :new
