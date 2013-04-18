@@ -1,7 +1,6 @@
 class LineItemsController < ApplicationController
   def create
     @cart = current_cart
-    raise current_cart.inspect
     product = current_cart.store.products.find(params[:product_id])
 
     quantity = params[:quantity] || 1
