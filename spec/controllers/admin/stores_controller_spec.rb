@@ -125,6 +125,7 @@ describe Admin::StoresController do
                           store_id: store.id,
                           role_id: 1 })
       Store.should_receive(:find).with("slug").and_return(store)
+      subject.stub(:current_store)
     end
 
     it "adds an admin" do
