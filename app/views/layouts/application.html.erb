@@ -21,9 +21,6 @@
 
   <!-- Signup links -->
   <div class="container">
-    <div class="pull-left btn-group">
-      <%= link_to "All stores", stores_path, :class => "btn btn-info trip-button" %>
-    </div>
     <div class="main_nav">
       <% if current_user %>
         <% if current_user.platform_administrator %>
@@ -42,20 +39,19 @@
       <div class="navbar-inner">
         <div class="left">
           <%= link_to image_tag("logo.png"), root_url, :class => "brand" %>
-          <%= render :partial => 'search/search' %>
         </div>
-        <div class="cart">
-          <% unless session[:cart_id] %>Empty<% end %> Cart
-          <ul>
+
+        <div class="pull-right nav-cart">
           <% if session[:cart_id] %>
-            <li><%= cart_cost %><br /><%= link_to "View", my_cart_path %></li>
-            <li><%= link_to "Checkout", new_order_path, :class => 'btn btn-small btn-success' %></li>
-            <li><%= link_to image_tag("cart.png"), my_cart_path %></li>
+            <%= link_to " Checkout", new_order_path, :class => 'icon-shopping-cart btn btn-success' %>
+            <%= cart_cost %>
+            <%= link_to "View", my_cart_path %>
           <% else %>
-            <li><%= image_tag("cart.png") %></li>
+            <%= link_to " Empty Cart", "#", :class => 'icon-shopping-cart btn btn-success' %>
           <% end %>
-          </ul>
         </div>
+
+
       </div>
     </div>
   </div>

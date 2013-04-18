@@ -1,19 +1,7 @@
 <div class="row">
-
-  <div class="span3">
-    <div class="main_col with_ribbon">
-      <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
-      <ul class="nav nav-tabs nav-stacked">
-      <% @categories.each do |category| %>
-        <li><%= link_to "#{category.name} (#{category.products.where(retired: false).count} items)", category_path(store_id: category.store.to_param, id:category.id) %></li>
-      <% end %>
-      </ul>
-    </div>
-  </div>
-
+  <%= render "shared/left_nav" %>
 
   <div class="span9">
-    <h2><%= @store.name %></h2>
     <ul class="thumbnails">
       <% @products.each do |product| %>
         <%= render :partial => 'products/sm_product', :locals => { :p => product} %>

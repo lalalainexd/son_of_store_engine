@@ -3,6 +3,7 @@ class ProductsController < ApplicationController
   #skip_authorize_resource :except => [ :new, :create, :show ]
 
   def set_current_store
+    #reset_session
     if session[:carts] && session[:carts][current_store.id]
       cart_id = session[:carts][current_store.id]
       session[:cart_id] = Cart.find(cart_id).id
@@ -16,6 +17,7 @@ class ProductsController < ApplicationController
 
   def index
     set_current_store
+    @stores = Store.order("name")
 
     @store = Store.find(params[:store_id])
     if @store.nil? || @store.pending?

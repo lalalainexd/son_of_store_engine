@@ -23,7 +23,7 @@ class LineItemsController < ApplicationController
   def increase
     @line_item = current_cart.line_items.find(params[:id])
     if @line_item.increase_quantity
-      redirect_to current_cart, notice: 'Product quantity has been updated.'
+      redirect_to my_cart_path, notice: 'Product quantity has been updated.'
     else
       flash[:error] = 'An error occurred while increasing the quantity'
       redirect_to current_cart
@@ -39,7 +39,7 @@ class LineItemsController < ApplicationController
       @line_item.decrease_quantity
     end
 
-    redirect_to current_cart,
+    redirect_to my_cart_path,
       notice: 'Product quantity has been updated.'
   end
 end

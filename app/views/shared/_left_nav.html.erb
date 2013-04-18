@@ -1,0 +1,19 @@
+<div class="span3">
+  <div class="main_col with_ribbon">
+    <h2 class="ribbon"><%= image_tag("categories.png") %></h2>
+    <ul class="nav nav-tabs nav-stacked">
+    <% @categories.each do |category| %>
+      <li><%= link_to category.name, category_path(store_id: current_store.to_param, id:category.id) %></li>
+    <% end %>
+    </ul>
+  </div>
+  <p></p>
+  <div class="main_col with_ribbon">
+    <h2 class="ribbon"><%= image_tag("stores.png") %></h2>
+    <ul class="nav nav-tabs nav-stacked">
+    <% @stores.each do |store| %>
+      <li><%= link_to store.name, home_path(store) %></li>
+    <% end %>
+    </ul>
+  </div>
+</div>
