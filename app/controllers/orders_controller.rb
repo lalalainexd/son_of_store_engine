@@ -32,12 +32,13 @@ class OrdersController < ApplicationController
     if current_cart.calculate_total_cost <= 50
       flash[:error] =
         "Sorry Partner. Your cart must contain at least $0.51 worth of goods."
-      redirect_to root_path and return
-    end
-    @order = Order.new
+      redirect_to root_path
+    else
+      @order = Order.new
 
-    capture_previous_page
-    render :new
+      capture_previous_page
+      render :new
+    end
   end
 
   def edit
