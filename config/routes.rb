@@ -78,6 +78,7 @@ StoreEngine::Application.routes.draw do
       resources :orders
       post "create_admin" => "stores#create_admin"
       get "new_admin" => "stores#new_admin"
+      delete "remove_admin" => "stores#remove_admin"
     end
   end
 

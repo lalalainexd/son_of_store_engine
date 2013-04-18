@@ -32,4 +32,10 @@ class UserMailer < ActionMailer::Base
   def signup_notification(invitee_email)
     mail to: invitee_email
   end
+
+  def remove_admin_notification(user, store)
+    @store = store
+    @user = user
+    mail to: user.email
+  end
 end

@@ -17,6 +17,34 @@
 
 <div class="form-actions">
   <%= link_to 'Add a New Admin', admin_new_admin_path(params[:store_id]), :class => 'btn' %>
+  <table id="admins">
+    <thead>
+      <tr>
+        <th colspan="3">Admins</th>
+      </tr>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store.admins.each do | admin | %>
+        <tr>
+          <td><%= admin.full_name %></td>
+          <td><%= admin.email %></td>
+          <td>
+            <% if admin != current_user%>
+              <%= button_to "Remove Admin", admin_remove_admin_path(@store, id: admin.id),
+                {:class => 'btn', method: :delete,
+                  confirm: "Are you sure you want remove #{admin.full_name} as an admin?" }%>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
   <%= link_to t('.back', :default => t("helpers.links.back")),
               stores_path, :class => 'btn'  %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),

@@ -10,12 +10,29 @@ class Store < ActiveRecord::Base
   validates_presence_of :name, :slug
 
   def admins
-    user_stores.where("role_id = ?", Role.admin.id).map(&:user)
+    User.joins(:user_stores).where("user_stores.store_id = ? AND user_stores.role_id = ?",
+                                  id, Role.admin.id)
   end
 
   def stockers
-    user_stores.where("role_id = ?", Role.stocker.id).map(&:user)
+    User.joins(:user_stores).where("user_stores.store_id = ? AND user_stores.role_id = ?",
+                                  id, Role.stocker.id)
   end
+
+  def admin user_id
+    User.joins(:user_stores).where(%q{
+    user_stores.store_id = ?
+    AND user_stores.role_id = ?
+    AND user_stores.user_id = ?}, id, Role.admin.id, user_id).first
+  end
+
+  def stocker user_id
+    User.joins(:user_stores).where(%q{
+    user_stores.store_id = ?
+    AND user_stores.role_id = ?
+    AND user_stores.user_id = ?}, id, Role.stocker.id, user_id).first
+  end
+
   def add_admin admin
     user_store = UserStore.new
     user_store.store = self

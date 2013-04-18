@@ -25,6 +25,22 @@ class Admin::StoresController < ApplicationController
     render :new_admin
   end
 
+  def remove_admin
+    admin = @store.admin(params[:id])
+
+    if admin && @store.admins.count > 1
+      @store.remove_admin(admin)
+      UserMailer.delay.remove_admin_notification(admin, @store)
+      redirect_to admin_home_path(@store),notice:"The admin has been removed"
+    elsif @store.admins.count == 1
+      flash[:error] = "There must be at least one admin"
+      redirect_to admin_home_path(@store)
+    else
+      flash[:error] = "There was problem removing the admin"
+      redirect_to admin_home_path(@store)
+    end
+  end
+
   def create_admin
     new_admin = User.find_by_email(params[:email])
 

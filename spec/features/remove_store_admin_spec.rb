@@ -1,31 +1,36 @@
 require 'spec_helper'
 
-feature "Store administrator adds a new admin", %q{
+feature "Store administrator removes another admin", %q{
   Given I am a store administrator of 'http://storeengine.com/cool-sunglasses'
   And I visit 'http://storeengine.com/cool-sunglasses/admin'
-  And I click to add a new store admin
+  And there is another admin with email "foo@bar.com"
 }do
 
   let(:admin) {FactoryGirl.create(:user)}
-  let(:new_admin) {FactoryGirl.create(:user, email: "foo@bar.com")}
+  let(:other_admin) {FactoryGirl.create(:user, email: "foo@bar.com")}
   let(:store) {FactoryGirl.create(:store, name: "Cool Sunglasses",
                                  slug:"cool-sunglasses", status: "enabled")}
 
   let(:delay) {stub(:delay)}
+
   background do
     UserMailer.stub(:delay).and_return(delay)
 
     store.add_admin(admin)
+    store.add_admin(other_admin)
     page.set_rack_session(user_id: admin.id)
 
     visit admin_home_path(store)
-    click_link("Add a New Admin")
+    click_button("Remove Admin")
   end
 
-  scenario "Adding an admin with a StoreEngine user account" do
-    fill_in("Email", with: new_admin.email)
+  scenario "Removing an admin", js: true do
+    #delay.should_receive(:new_admin_notification).with(new_admin, store)
+    delay.should_receive(:remove_admin_notification).with(other_admin, store)
 
-    delay.should_receive(:new_admin_notification).with(new_admin, store)
+    page.driver.browser.switch_to.alert.accept
+    expect(page).to have_content("The admin has been removed")
+
     click_button("Add Admin")
 
     page.set_rack_session(user_id: new_admin.id)
@@ -33,12 +38,12 @@ feature "Store administrator adds a new admin", %q{
     expect(current_path).to eq admin_home_path(store)
   end
 
-  scenario "Adding an admin without a StoreEngine user account" do
-    fill_in("Email", with: "email@email.com")
+  scenario "Not removing an admin" do
+    page.driver.browser.switch_to.alert.dismiss
 
-    delay.should_receive(:invite_notification).with("email@email.com")
-    click_button("Add Admin")
+    within("#admins") do
+      expect(page).to have_content(other_admin.email)
+    end
   end
 
 end
-

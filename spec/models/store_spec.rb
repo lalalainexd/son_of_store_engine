@@ -4,20 +4,43 @@ describe Store do
 
   let(:subject){FactoryGirl.create(:store)}
 
-  context "getting all admins" do
-    it "returns a collection of users who are admins" do
-      user1 = FactoryGirl.create(:user)
-      user2 = FactoryGirl.create(:user)
+  context "getting users" do
+      let(:user1) { FactoryGirl.create(:user)}
+      let(:user2) {FactoryGirl.create(:user)}
 
+     before do
       UserStore.create!(user_id: user1.id, store_id:subject.id, role_id:Role.admin.id)
       UserStore.create!(user_id: user2.id, store_id:subject.id, role_id:Role.stocker.id)
 
+     end
+
+     it "returns an admin" do
+       expect(subject.admin(user1.id)).to eq user1
+     end
+
+     it "returns nil for an admin that doesnt exist" do
+       expect(subject.admin(user2.id)).to eq nil
+     end
+
+     it "returns nil for a stocker that doesnt exist" do
+       expect(subject.stocker(user1.id)).to eq nil
+     end
+
+     it "returns a stocker" do
+       expect(subject.stocker(user2.id)).to eq user2
+     end
+
+    it "returns a collection of users who are admins" do
       expect(subject.admins).to include(user1)
       expect(subject.admins).to_not include(user2)
     end
 
-  end
+    it "returns a collection of users who are stockers" do
 
+      expect(subject.admins).to include(user1)
+      expect(subject.admins).to_not include(user2)
+    end
+  end
 
   context "add an admin to a store" do
     it "adds a user as a admin" do
