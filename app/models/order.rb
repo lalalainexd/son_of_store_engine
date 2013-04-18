@@ -32,9 +32,9 @@ class Order < ActiveRecord::Base
   def self.create_from_cart_for_user(cart, user, card)
 
     order = Order.new.tap do |order|
-      status  = "pending",
-      user_id = user.id,
-      total_cost = cart.calculate_total_cost
+      order.status  = "pending",
+      order.user_id = user.id,
+      order.total_cost = cart.calculate_total_cost
       order.add_line_items(cart)
       order.save_with_payment(card)
       order.save
