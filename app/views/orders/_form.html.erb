@@ -15,10 +15,10 @@
 <% if @order.stripe_card_token.present? %>
   Credit card has been provided.
 <% else %>
-  <%= f.fields_for :visitor do |builder| %>
+  <%= f.fields_for (current_user ? current_user : :visitor)  do |builder| %>
   <div class="field">
     <%= builder.label :email, "Email" %>
-    <%= builder.text_field :email %>
+    <%= builder.text_field :email  %>
   </div>
 <% end %>
   <div class="field">
