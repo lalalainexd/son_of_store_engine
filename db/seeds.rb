@@ -180,6 +180,10 @@ User.create!(full_name: "Steve Klabnik", email: "demoXX+steve@jumpstartlab.com",
   password: "password", role: :superuser, display_name: "SkrilleX", platform_administrator: "true")
 User.create!(full_name: "Katrina Owen", email: "demoXX+katrina@jumpstartlab.com",
   password: "password", role: :user, display_name: "Ree-na")
+User.create!(full_name: "Meriwether Lewis", email: "mlewis@epicsale.com",
+  password: "password", role: :superuser, display_name: "MeriLewis", platform_administrator: "true")
+User.create!(full_name: "William Clark", email: "wclark@epicsale.com",
+  password: "password", role: :superuser, display_name: "WillClark", platform_administrator: "true")
 
 #LINE ITEMS
 ##1

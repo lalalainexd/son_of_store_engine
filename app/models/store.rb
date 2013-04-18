@@ -20,47 +20,47 @@ class Store < ActiveRecord::Base
                                   id, Role.stocker.id)
   end
 
-  def admin user_id
+  def admin(user_id)
     User.joins(:user_stores).where(%q{
     user_stores.store_id = ?
     AND user_stores.role_id = ?
     AND user_stores.user_id = ?}, id, Role.admin.id, user_id).first
   end
 
-  def stocker user_id
+  def stocker(user_id)
     User.joins(:user_stores).where(%q{
     user_stores.store_id = ?
     AND user_stores.role_id = ?
     AND user_stores.user_id = ?}, id, Role.stocker.id, user_id).first
   end
 
-  def add_admin admin
+  def add_admin(user)
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.admin
-    user_store.user = admin
+    user_store.user = user
     user_store.save
   end
 
-  def remove_admin admin
+  def remove_admin(admin)
     user_store = user_stores.find_by_user_id(admin.id)
     if user_store
       user_store.destroy
     end
   end
 
-  def remove_stocker stocker
+  def remove_stocker(stocker)
     user_store = user_stores.find_by_user_id(stocker.id)
     if user_store
       user_store.destroy
     end
   end
 
-  def add_stocker stocker
+  def add_stocker(user)
     user_store = UserStore.new
     user_store.store = self
     user_store.role = Role.stocker
-    user_store.user = stocker
+    user_store.user = user
     user_store.save
   end
 
