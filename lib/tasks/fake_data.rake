@@ -22,9 +22,8 @@ namespace :db do
     10.times do |p|
       description = Faker::Lorem.sentence
       name = Faker::Lorem.word.capitalize
-      price = rand(300000..4000000)
-      image_name = rand(1..110)
-      category_ids = Category.all.sample(rand(1..4))
+      price = 300000 + Random.rand(100000)
+      image_name = 1 + rand(111)
       retired = "retired"
       stores.each {|store| store.products.create!(description: description,
                                                   name: name,
