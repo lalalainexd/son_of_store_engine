@@ -1,5 +1,4 @@
 <div class="row">
-
   <div class="span3">
     <div class="main_col with_ribbon">
       <h2 class="ribbon"><%= image_tag("stores.png") %></h2>
@@ -34,16 +33,15 @@
 
     <ul class="thumbnails">
       <% @products.each do |product| %>
-        <%= render :partial => 'products/sm_product', :locals => { :p => product} %>
+        <li class="span3" id="<%= p.id %>">
+        <div class="thumbnail adtl_col" id="<%= p.id %>">
+          <p><%= image_tag "https://s3.amazonaws.com/epicsale/#{p.image_name}.jpg", :class => "small_product" %></p>
+          <p><strong><%= p.name %></strong><i> - <%= amount_in_dollars(p.price) %></i></p>
+          <%= link_to 'Visit the shop', home_path(p.store), :class => "btn btn-success" %>
+        </div>
+        </li>
       <% end %>
     </ul>
 
   </div>
 </div>
-
-<% @products.each do |product| %>
-  <div class="big_product" id="big_product_<%= product.id %>" >
-   <%= render :partial => 'products/big_product', :locals => { :product => product } %>
-  </div>
-<% end %>
-

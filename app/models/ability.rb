@@ -7,7 +7,6 @@ class Ability
       can :read, [Store, Category, Product, Order]
       can :create, [User, Order]
     else
-      # Standard User
       can :create, Store
 
       can :manage, Product do | p |
@@ -15,7 +14,6 @@ class Ability
       end
 
       can :manage, Category do | c|
-
         c.new_record? || c.store.users.include?(user)
       end
 
@@ -26,7 +24,6 @@ class Ability
       can :manage, Store do | store |
         store.admin(user)
       end
-
 
       can :manage, User, :id => user.id
 

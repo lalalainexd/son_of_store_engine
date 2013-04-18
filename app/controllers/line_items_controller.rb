@@ -42,4 +42,5 @@ class LineItemsController < ApplicationController
     redirect_to my_cart_path,
       notice: 'Product quantity has been updated.'
   end
+
 end
