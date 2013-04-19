@@ -13,15 +13,13 @@ feature "Store administrator removes another admin", %q{
 
   let(:delay) {stub(:delay)}
 
-  background do
+  scenario "Removing an admin", js: true do
     store.add_admin(admin)
     store.add_admin(other_admin)
     page.set_rack_session(user_id: admin.id)
 
     visit admin_home_path(store)
-  end
 
-  scenario "Removing an admin", js: true do
     UserMailer.stub(:delay).and_return(delay)
     delay.should_receive(:remove_admin_notification).with(other_admin, store)
     click_button("Remove Admin")
@@ -31,19 +29,31 @@ feature "Store administrator removes another admin", %q{
   end
 
   scenario "Removing the last", js: true do
-    store.remove_admin(admin)
+    store.add_admin(other_admin)
     admin.platform_administrator = true
-    admin.save
+    admin.password = "password"
+    admin.save!
+    page.set_rack_session(user_id: admin.id)
+
+
+    visit admin_home_path(store)
+
     click_button("Remove Admin")
 
     page.driver.browser.switch_to.alert.accept
-    raise current_path
-   #within("#admins") do
-   #  expect(page).to have_content(other_admin.email)
-   #end
+
+    within("#admins") do
+      expect(page).to have_content(other_admin.email)
+    end
   end
 
   scenario "Not removing an admin", js: true do
+    store.add_admin(admin)
+    store.add_admin(other_admin)
+    page.set_rack_session(user_id: admin.id)
+
+    visit admin_home_path(store)
+
     click_button("Remove Admin")
     page.driver.browser.switch_to.alert.dismiss
 
