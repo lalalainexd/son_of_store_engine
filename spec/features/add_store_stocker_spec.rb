@@ -16,6 +16,7 @@ feature "Store administrator adds a new stocker", %q{
   background do
     UserMailer.stub(:delay).and_return(delay)
 
+    store.add_admin(admin)
     store.add_stocker(new_stocker)
     page.set_rack_session(user_id: admin.id)
 

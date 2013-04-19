@@ -37,9 +37,10 @@ feature "Store administrator removes another admin", %q{
     click_button("Remove Admin")
 
     page.driver.browser.switch_to.alert.accept
-    within("#admins") do
-      expect(page).to have_content(other_admin.email)
-    end
+    raise current_path
+   #within("#admins") do
+   #  expect(page).to have_content(other_admin.email)
+   #end
   end
 
   scenario "Not removing an admin", js: true do
