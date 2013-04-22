@@ -35,5 +35,23 @@ feature "StoreEngine visitor creates a new account", %q{
 
   end
 
+  scenario "Visitor uses duplicate email address" do
+    existing_user = FactoryGirl.create(:user)
+
+    fill_in("user_full_name", with: "Joey")
+    fill_in("user_email", with: existing_user.email)
+    fill_in("user_password", with: "password")
+    fill_in("user_password_confirmation", with: "password")
+
+    click_link_or_button("Create Account")
+
+    expect(current_path).to eq users_path
+
+    within("div.error_messages") do
+      expect(find('a')['href']).to include(login_path)
+    end
+
+    save_and_open_page
+  end
 
   end
